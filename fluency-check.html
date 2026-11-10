@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Fluency Check — Workforce 2100</title>
+<meta name="description" content="A 10-question diagnostic for academic leaders: is your institution's AI program building literacy or fluency?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='3' y='19' width='22' height='3' rx='1.5' fill='%239DB3C6'/%3E%3Crect x='3' y='12.5' width='22' height='3' rx='1.5' fill='%235D88AC'/%3E%3Crect x='3' y='6' width='22' height='3' rx='1.5' fill='%231F5F8B'/%3E%3C/svg%3E">
+<style>
+.hl { background: linear-gradient(transparent 58%, #F4DA4F 58%); padding: 0 .1em; }
+.fc-ladder { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid #DDE3E9; border-radius: 10px; background: #FFFFFF; overflow: hidden; margin-top: 28px; }
+.fc-ladder > div { padding: 16px 18px; border-left: 1px solid #DDE3E9; min-width: 0; }
+.fc-ladder > div:first-child { border-left: 0; }
+.fc-ladder .lvl { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--ink-3); }
+.fc-ladder strong { display: block; font-family: var(--serif); font-size: 19px; margin-top: 4px; }
+.fc-ladder q { display: block; color: var(--ink-3); font-size: 14px; margin-top: 4px; }
+.fc-ladder .target { background: #E6EEF5; }
+.fc-ladder .target strong { color: var(--blue); }
+.fc-stats { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px 36px; }
+.fc-stats div { max-width: 32ch; min-width: 0; }
+.fc-stats b { display: block; font-family: var(--serif); font-size: 26px; line-height: 1.1; }
+.fc-stats span { font-size: 14px; color: var(--ink-3); }
+.fc-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 40px; align-items: start; padding-top: 48px; padding-bottom: 32px; }
+.part { margin-bottom: 36px; }
+.part h2 { font-size: 26px; margin-bottom: 4px; }
+.part > p { margin: 0 0 18px; color: var(--ink-3); max-width: 62ch; }
+fieldset { border: 0; margin: 0 0 26px; padding: 0; min-width: 0; }
+legend { padding: 0; margin-bottom: 10px; font-weight: 600; font-size: 17px; display: flex; gap: 12px; align-items: baseline; }
+legend .qn { font-size: 13px; font-weight: 600; color: var(--blue); flex: none; font-variant-numeric: tabular-nums; }
+.opts { display: grid; gap: 8px; }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opt label { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; align-items: start; padding: 12px 14px; border: 1px solid #DDE3E9; border-radius: 8px; background: #FFFFFF; cursor: pointer; font-size: 15px; line-height: 1.5; }
+.opt label::before { content: ""; width: 18px; height: 18px; margin-top: 2px; border: 1.5px solid var(--ink-3); border-radius: 50%; box-sizing: border-box; }
+.opt label:hover { border-color: var(--blue); }
+.opt input:checked + label { border-color: var(--blue); background: #E6EEF5; }
+.opt input:checked + label::before { border-color: var(--blue); background: radial-gradient(var(--blue) 0 4px, transparent 5px); }
+.opt input:focus-visible + label { outline: 2px solid var(--blue); outline-offset: 2px; }
+.why { display: none; margin: 8px 2px 0; font-size: 14px; color: var(--ink-3); }
+fieldset.answered .why { display: block; }
+.sheet { position: sticky; top: 20px; background: #FFFFFF; border: 1px solid #DDE3E9; border-radius: 10px; padding: 22px; display: grid; gap: 18px; }
+.score-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.score { font-family: var(--serif); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.score small { font-size: 16px; font-weight: 400; color: var(--ink-3); }
+.progress { font-size: 13px; color: var(--ink-3); }
+.level { margin: 0; font-family: var(--serif); font-size: 22px; font-weight: 700; }
+.level-text { margin: 4px 0 0; font-size: 15px; }
+.dims { display: grid; gap: 12px; }
+.dim-head { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+.dim-head span:last-child { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.dbar { height: 8px; background: #E9EEF2; border-radius: 4px; overflow: hidden; margin-top: 5px; }
+.dbar i { display: block; height: 100%; width: 0; background: var(--blue); border-radius: 4px; transition: width .3s ease; }
+.dim.weak .dbar i { background: #E2B714; }
+.dim.weak .dim-head span:first-child::after { content: " · weakest"; color: var(--ink-3); font-size: 13px; }
+.advice { border-top: 1px solid var(--line); padding-top: 16px; font-size: 15px; }
+.advice p { margin: 0; }
+.status { font-size: 13px; color: var(--ink-3); min-height: 1.2em; margin: -6px 0 0; }
+.copy-btn { font: inherit; font-size: 15px; font-weight: 600; background: #FFFFFF; color: var(--blue); border: 1px solid var(--line-2); border-radius: 6px; padding: 11px 14px; min-height: 44px; cursor: pointer; }
+#copyFallback { width: 100%; font: inherit; font-size: 14px; border: 1px solid var(--line-2); border-radius: 6px; padding: 8px; }
+.optional { border: 1px solid #DDE3E9; border-radius: 10px; padding: 24px; background: var(--tint); margin-bottom: 36px; scroll-margin-top: 16px; }
+.form-grid { margin-top: 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.form-grid .field.wide { grid-column: 1 / -1; }
+.consent { margin-top: 18px; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+.consent input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--blue); }
+.status.ok { color: #1E6B3A; font-weight: 600; }
+.status.err { color: #8E2A10; }
+@media (max-width: 620px) { .form-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 900px) { .fc-grid { grid-template-columns: minmax(0, 1fr); } .sheet { position: static; } }
+@media (max-width: 620px) { .fc-ladder { grid-template-columns: minmax(0, 1fr); } .fc-ladder > div { border-left: 0; border-top: 1px solid #DDE3E9; } .fc-ladder > div:first-child { border-top: 0; } }
+@media (prefers-reduced-motion: reduce) { .dbar i { transition: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#quiz">Skip to the questions</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="19" width="22" height="3" rx="1.5" fill="#9DB3C6"/><rect x="3" y="12.5" width="22" height="3" rx="1.5" fill="#5D88AC"/><rect x="3" y="6" width="22" height="3" rx="1.5" fill="#1F5F8B"/></svg>
+<span>Workforce 2100<small>Research on AI, work and education</small></span>
+</a>
+<nav class="nav" aria-label="Main">
+<a href="index.html#what-we-study">What we study</a>
+<a href="research.html">Research</a>
+<a href="work-2035.html">Work to 2035</a>
+<a href="surveys.html" aria-current="page">Surveys</a>
+<a href="index.html#team">Team</a>
+<a href="index.html#contact">Contact</a>
+</nav>
+</div>
+</header>
+
+<main>
+<section class="band">
+<div class="wrap" style="padding-top: 64px; padding-bottom: 48px">
+<p class="eyebrow">A 10-question diagnostic for academic leaders</p>
+<h1 style="font-size: clamp(34px, 5vw, 52px); line-height: 1.08; max-width: 18ch">Is your AI program building literacy or fluency?</h1>
+<p class="lede" style="margin: 20px 0 0">Most campus AI initiatives teach students to <em>operate</em> tools. Employers now need graduates who can <span class="hl">decide what to delegate and prove the result is right</span>. The two are different capabilities, built in different ways.</p>
+<p style="margin: 12px 0 0; color: var(--ink-3); max-width: 62ch">Answer ten questions about your institution's current approach. It takes about five minutes. Your score updates as you go, and the result points to the part of the framework that matters most for you.</p>
+<div class="fc-ladder" aria-label="Three levels of capability">
+<div><span class="lvl">LEVEL 1</span><strong>Information literacy</strong><q>Is this source credible, and how do I cite it?</q></div>
+<div><span class="lvl">LEVEL 2</span><strong>AI literacy</strong><q>How do I operate this tool?</q></div>
+<div class="target"><span class="lvl">LEVEL 3</span><strong>AI fluency</strong><q>Should this work be delegated, and how do I know the result is right?</q></div>
+</div>
+<div class="fc-stats">
+<div><b>19%</b><span>below expected employment for workers aged 22–25 in AI-exposed occupations, compared with peers in less-exposed jobs (Brynjolfsson, Chandar &amp; Chen, 2025, revised 2026)</span></div>
+<div><b>47% vs. 31%</b><span>of midlevel managers and individual contributors vs. executives and senior managers reporting negative effects of AI use (McKinsey, <em>The State of AI in 2026</em>)</span></div>
+<div><b>39%</b><span>of workers' core skills expected to change or become outdated by 2030 (World Economic Forum, <em>Future of Jobs Report 2025</em>)</span></div>
+</div>
+</div>
+</section>
+
+<div class="wrap fc-grid">
+<div>
+<div id="quiz"></div>
+<section class="optional" id="submitBox" aria-labelledby="sbTitle">
+<p class="eyebrow" style="margin-bottom: 6px">Step 2 · Optional</p>
+<h2 id="sbTitle" style="font-size: 24px">Add your result to the national picture</h2>
+<p style="margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-2)">Tell us about your institution and submit your answers. We combine responses to show how institutions of different types, sizes and regions are approaching AI. <strong style="color: var(--ink)">We never display or publish any single institution's name or result.</strong></p>
+<div class="form-grid">
+<div class="field wide"><label for="inst">Institution name <span aria-hidden="true">*</span></label><input id="inst" type="text" maxlength="160" autocomplete="organization" required></div>
+<div class="field"><label for="itype">Institution type <span aria-hidden="true">*</span></label><select id="itype" required><option value="">Choose…</option><option>Community or technical college (2-year)</option><option>Public 4-year college or university</option><option>Private nonprofit 4-year college or university</option><option>Private for-profit institution</option><option>System office or state agency</option><option>Other</option></select></div>
+<div class="field"><label for="state">State <span aria-hidden="true">*</span></label><select id="state" required><option value="">Choose…</option></select></div>
+<div class="field"><label for="size">Student enrollment (headcount) <span aria-hidden="true">*</span></label><select id="size" required><option value="">Choose…</option><option>Under 2,500</option><option>2,500–9,999</option><option>10,000–19,999</option><option>20,000–39,999</option><option>40,000 or more</option><option>Not sure</option></select></div>
+<div class="field"><label for="role">Your role</label><select id="role"><option value="">Prefer not to say</option><option>President or chancellor</option><option>Provost or chief academic officer</option><option>Dean or associate dean</option><option>Department chair or program director</option><option>Teaching and learning center</option><option>Faculty</option><option>Other staff</option></select></div>
+</div>
+<div class="consent">
+<input type="checkbox" id="consent">
+<label for="consent">I agree that Workforce 2100 may store my answers together with my institution's name, type, state and size, and use them for research. Results are reported only in aggregate, as summaries across groups of institutions. No individual institution's name or result will be displayed or published. Participation is voluntary, and I am not asked for my name or email.</label>
+</div>
+<button type="button" class="btn btn-primary" id="submitBtn" style="margin-top: 16px">Submit my response</button>
+<p class="status" id="status" aria-live="polite" style="margin-top: 10px"></p>
+</section>
+</div>
+
+<aside class="sheet" aria-live="polite">
+<div class="score-row"><div class="score"><span id="score">0</span><small> / 20</small></div><div class="progress" id="progress">0 of 10 answered</div></div>
+<div><p class="level" id="level">Your profile appears here</p><p class="level-text" id="levelText">Answer the questions on the left. Each answer is scored 0, 1 or 2.</p></div>
+<div class="dims" id="dims"></div>
+<div class="advice" id="advice" hidden><p id="adviceText"></p></div>
+<a class="btn btn-light" style="text-align: center" href="#submitBox" id="toSubmit" hidden>Add my result to the national picture</a>
+<a class="btn btn-primary" style="text-align: center" id="readLink" href="https://papers.ssrn.com/abstract=7670658" target="_blank" rel="noopener">Read the full framework (free preprint)</a>
+<button class="copy-btn" id="copyBtn" type="button">Copy my result to share with my team</button>
+<textarea id="copyFallback" rows="4" readonly hidden aria-label="Result summary to copy"></textarea>
+<p style="margin: 0; font-size: 13px; color: var(--ink-3)">From <em>The AI Fluency Imperative: Cognitive Tax, the Diamond Workforce, and the Case for Consequence-Based Learning</em> by Angelo E. Thalassinidis and Lance Bowen.</p>
+</aside>
+</div>
+
+<section class="wrap" style="padding-bottom: 24px">
+<div style="border-top: 1px solid var(--line); padding-top: 24px; max-width: 80ch; font-size: 14px; line-height: 1.65; color: var(--ink-2); display: grid; gap: 8px">
+<p style="margin: 0"><strong style="color: var(--ink)">Sources.</strong> Brynjolfsson, E., Chandar, B., &amp; Chen, R. (2025, revised 2026). <em>Canaries in the coal mine? Six facts about the recent employment effects of artificial intelligence</em>. Stanford Digital Economy Lab. · McKinsey &amp; Company (2026). <em>The state of AI in 2026: On the road to ROI</em>. · World Economic Forum (2025). <em>The future of jobs report 2025</em>. · Kıyak, Y. S., et al. (2025). <em>Journal of Surgical Education</em>, 82(10), 103639. · Goh, E., et al. (2024). Large language model influence on diagnostic reasoning: A randomized clinical trial. <em>JAMA Network Open</em>.</p>
+<p style="margin: 0"><strong style="color: var(--ink)">About this check.</strong> The questions put into practice the framework in <a href="https://papers.ssrn.com/abstract=7670658" target="_blank" rel="noopener"><em>The AI Fluency Imperative</em></a> (Thalassinidis &amp; Bowen, 2026): the four pillars of fluency (boundary design, sign-off by consequence, adversarial auditing, judgment before capability), and a two-stage model in which classroom friction builds foundations and consequence-bearing experiences, from clinical-model internships to client projects and student ventures, build judgment.</p>
+<p style="margin: 0"><strong style="color: var(--ink)">Your answers and privacy.</strong> Your score is calculated in your browser. Nothing is stored unless you choose to submit it in step 2 and agree to the statement there. Submitted responses include your answers and your institution's name, type, state and size, but not your name or email. We use them only in aggregate and never display or publish an individual institution's name or result. This is a conversation starter for leadership teams, not a validated instrument.</p>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+<div class="wrap">
+<div>© 2026 Workforce 2100 · Text and our own data under CC BY 4.0, except third-party data as credited<br>Contact: <a href="mailto:aethalassinidis@aacc.edu">aethalassinidis@aacc.edu</a></div>
+<nav aria-label="Footer"><a href="index.html">Home</a><a href="research.html">Research</a><a href="work-2035.html">Work to 2035</a></nav>
+</div>
+</footer>
+
+<script>
+(function () {
+  // ---- Settings ----
+  // Web app address (ending in /exec) of the Apps Script attached to the new response sheet.
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbwdH-OxQwlf8hvw7ShTkCOCcvvbPCw0zBF4UhgtRKWk38AXPSQJqjq1HRi7smRAUvmr/exec';
+  var PREPRINT = 'https://papers.ssrn.com/abstract=7670658';
+  var PAGE_VERSION = 'fc-2026-11';
+  var STATES = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming','Puerto Rico','Other U.S. territory','Outside the United States'];
+
+  var PARTS = [
+    { id: 'classroom', title: 'Classroom and assessment', short: 'Classroom & assessment',
+      intro: 'Where AI shows up in courses, and what counts as evidence of learning.',
+      qs: [
+        { q: "How is your institution's AI initiative mainly delivered?",
+          o: ['Policy and syllabus statements, mostly about academic integrity', 'Workshops, modules or badges on how to use AI tools', 'Built into disciplinary courses, where students make and defend decisions about AI use'],
+          why: 'Tool training answers "how do I operate this?" Fluency is exercised inside real disciplinary work.' },
+        { q: 'When a course permits AI, what does the grade reward?',
+          o: ['The finished product', 'The finished product plus a disclosure of how AI was used', "The student's reconciliation of their own attempt with the AI's version: where they differ, why, and which is right"],
+          why: 'When a model can produce the deliverable, the deliverable stops being evidence of learning. Grade the reconciliation, not the artifact.' },
+        { q: 'Do foundational courses require an unassisted attempt before students consult AI?',
+          o: ['No; AI is either banned or freely available', 'Some instructors do this on their own', 'Yes, by design: attempt first, then check against AI, then reconcile'],
+          why: 'In a medical-education study, students who answered questions and then got AI-generated feedback outperformed a comparison group, and the advantage held two weeks later (Kıyak et al., 2025). Simply giving physicians access to an AI model did not improve their diagnostic reasoning (Goh et al., 2024).' }
+      ] },
+    { id: 'pillars', title: 'The four pillars of fluency', short: 'Four pillars',
+      intro: 'The judgment capacities that separate fluency from tool skill.',
+      qs: [
+        { q: 'Do students practice setting boundaries for AI systems, such as what data an agent may touch, what it may do on its own, and when it must stop?',
+          o: ['No', 'Discussed as a risk topic', 'Yes, in at least one assessed task in their program'],
+          why: 'Pillar 1, boundary design. In agentic work the main human task shifts from doing to bounding.' },
+        { q: 'How do your learning outcomes treat human sign-off on AI-assisted work?',
+          o: ['AI is allowed or banned by course or assignment type', 'It varies by instructor', 'Students learn to match oversight to consequence: routine tasks can run unattended, high-stakes decisions always get a human signature'],
+          why: 'Pillar 2, sign-off by consequence, not category. The skill is knowing where to put the tripwires.' },
+        { q: 'How often are students asked to find what is wrong with AI output?',
+          o: ['Rarely', 'Occasionally', 'Routinely, with credit for the errors and discrepancies they find'],
+          why: 'Pillar 3, adversarial auditing. Fluency does not mean trusting machine output; it means knowing how to break it.' },
+        { q: 'Do students practice deciding when AI should not be used at all?',
+          o: ['No; the question is how to use it well', 'It comes up in ethics discussions', 'Yes; they must justify whether to delegate a task, including what a novice would lose by skipping the work'],
+          why: 'Pillar 4, judgment before capability. Literacy asks whether AI can do a task. Fluency first asks whether it should.' }
+      ] },
+    { id: 'consequence', title: 'The consequence stage', short: 'Consequence stage',
+      intro: 'Judgment is formed where outcomes matter. As AI absorbs entry-level work, employers are forming less of it on the job.',
+      qs: [
+        { q: 'Before graduating, how many students make decisions whose consequences someone outside the classroom lives with, through an internship, a client project or a venture?',
+          o: ['Few; these experiences are optional and scarce', 'Many, but supervisors mostly evaluate whether tasks got done', "Most, and partners evaluate students' judgment: boundary-setting, escalation, defending their choices"],
+          why: 'The first rung of the career ladder was where judgment formed. If the workplace no longer forms it at entry, the institution must form it before entry.' },
+        { q: 'Can working, part-time and first-generation students get consequence-bearing experience?',
+          o: ['Mostly not; options are unpaid or full-time', 'Some flexible options exist', 'Yes; paid, part-time or course-embedded routes are open to every student'],
+          why: 'Client projects built into courses are the equity tier: they bring real stakes to students who cannot take an unpaid placement.' },
+        { q: 'How would you know your AI initiative worked?',
+          o: ['Participation or completion counts', "Students' self-reported confidence", "A direct measure of judgment, such as comparing students' unassisted decisions before and after against expert benchmarks"],
+          why: 'Confidence is not competence. Judgment can be measured directly.' }
+      ] }
+  ];
+  var LEVELS = [
+    { max: 7, name: 'Policy stage', text: 'Your program treats AI mainly as a policy and integrity question. That is a common starting point, but students are not yet building the capabilities employers now screen for.' },
+    { max: 13, name: 'AI literacy', text: 'You are teaching students to use AI tools. Most institutions are here. It is necessary, but tool skill dates quickly and does not by itself form the judgment that entry-level work used to build.' },
+    { max: 17, name: 'Emerging fluency', text: 'Parts of your program already build judgment, not just tool skill. The gaps below show where to focus to make it systematic.' },
+    { max: 20, name: 'AI fluency', text: 'Your program forms judgment through friction in the classroom and consequence beyond it. Few institutions are here. Consider publishing what you do.' }
+  ];
+  var ADVICE = {
+    classroom: "Start with assessment. An attempt-check-reconcile sequence lets you keep AI in the course while grading the student's thinking. The paper describes how it works in programming, nursing, business and law.",
+    pillars: "Your gap is the judgment itself. The paper's four pillars give you language for learning outcomes, including the consequence-by-complexity matrix for deciding when humans must sign off.",
+    consequence: 'Your gap is where judgment gets formed. The paper lays out a continuum of consequence (clinical-model internships, client projects, student ventures) and why it is becoming infrastructure rather than enrichment.'
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var answers = {};
+  var n = 0;
+  PARTS.forEach(function (part) {
+    var sec = document.createElement('section');
+    sec.className = 'part';
+    sec.innerHTML = '<h2>' + part.title + '</h2><p>' + part.intro + '</p>';
+    part.qs.forEach(function (item) {
+      n += 1; var qid = 'q' + n; item.id = qid;
+      var fs = document.createElement('fieldset'); fs.id = 'fs-' + qid;
+      var html = '<legend><span class="qn">' + String(n).padStart(2, '0') + '</span><span>' + item.q + '</span></legend><div class="opts">';
+      item.o.forEach(function (text, i) { html += '<div class="opt"><input type="radio" name="' + qid + '" id="' + qid + '-' + i + '" value="' + i + '"><label for="' + qid + '-' + i + '">' + text + '</label></div>'; });
+      fs.innerHTML = html + '</div><p class="why">' + item.why + '</p>';
+      sec.appendChild(fs);
+    });
+    $('quiz').appendChild(sec);
+  });
+  PARTS.forEach(function (part) {
+    var d = document.createElement('div'); d.className = 'dim'; d.id = 'dim-' + part.id;
+    d.innerHTML = '<div class="dim-head"><span>' + part.short + '</span><span id="dimv-' + part.id + '">0 / ' + part.qs.length * 2 + '</span></div><div class="dbar"><i id="bar-' + part.id + '"></i></div>';
+    $('dims').appendChild(d);
+  });
+  $('state').insertAdjacentHTML('beforeend', STATES.map(function (s) { return '<option>' + s + '</option>'; }).join(''));
+
+  // One anonymous id per browser tab, so a changed answer updates the same row.
+  var responseId;
+  try { responseId = sessionStorage.getItem('fc_id'); } catch (e) {}
+  if (!responseId) {
+    responseId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
+    try { sessionStorage.setItem('fc_id', responseId); } catch (e) {}
+  }
+
+  function compute() {
+    var total = 0, answered = 0, dims = {};
+    PARTS.forEach(function (part) {
+      var s = 0;
+      part.qs.forEach(function (item) { if (answers[item.id] !== undefined) { s += answers[item.id]; answered += 1; } });
+      dims[part.id] = s; total += s;
+    });
+    return { total: total, answered: answered, dims: dims };
+  }
+
+  var lastSummary = '', submitted = false;
+  function setStatus(text, kind) { var s = $('status'); s.textContent = text; s.className = 'status' + (kind ? ' ' + kind : ''); }
+
+  function submit() {
+    var r = compute();
+    if (r.answered < 10) { setStatus('Please answer all ten questions first (' + (10 - r.answered) + ' left).', 'err'); return; }
+    var missing = [];
+    if (!$('inst').value.trim()) missing.push('institution name');
+    if (!$('itype').value) missing.push('institution type');
+    if (!$('state').value) missing.push('state');
+    if (!$('size').value) missing.push('enrollment');
+    if (missing.length) { setStatus('Please add your ' + missing.join(', ') + '.', 'err'); return; }
+    if (!$('consent').checked) { setStatus('Please tick the box to agree to how we store and use your response.', 'err'); return; }
+    if (!/^https:\/\/script\.google\.com\//.test(ENDPOINT)) { setStatus('Submissions are not open yet. Your result above is still yours to keep.', 'err'); return; }
+    var lvl = LEVELS.filter(function (l) { return r.total <= l.max; })[0];
+    var list = []; for (var i = 1; i <= 10; i++) list.push(answers['q' + i]);
+    var payload = {
+      response_id: responseId, answers: list, total_score: r.total, level: lvl.name,
+      institution: $('inst').value.trim().slice(0, 160), institution_type: $('itype').value,
+      state: $('state').value, enrollment: $('size').value, role: $('role').value,
+      consent: true, source: 'workforce2100.org', page_version: PAGE_VERSION
+    };
+    $('submitBtn').disabled = true;
+    setStatus('Sending…');
+    fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+      .then(function () {
+        submitted = true;
+        setStatus('Thank you. Your response was submitted. If you change an answer, submit again and we will update it.', 'ok');
+        $('submitBtn').textContent = 'Update my response';
+      })
+      .catch(function () { setStatus('Your response could not be sent. Please check your connection and try again.', 'err'); })
+      .then(function () { $('submitBtn').disabled = false; });
+  }
+  $('submitBtn').addEventListener('click', submit);
+
+  function render() {
+    var r = compute();
+    $('score').textContent = r.total;
+    $('progress').textContent = r.answered + ' of 10 answered';
+    PARTS.forEach(function (part) {
+      var max = part.qs.length * 2;
+      $('dimv-' + part.id).textContent = r.dims[part.id] + ' / ' + max;
+      $('bar-' + part.id).style.width = (r.dims[part.id] / max * 100) + '%';
+      $('dim-' + part.id).classList.remove('weak');
+    });
+    if (r.answered < 10) {
+      $('level').textContent = r.answered === 0 ? 'Your profile appears here' : 'Keep going';
+      $('levelText').textContent = r.answered === 0 ? 'Answer the questions on the left. Each answer is scored 0, 1 or 2.' : (10 - r.answered) + ' question' + (10 - r.answered === 1 ? '' : 's') + ' left before your profile is ready.';
+      $('advice').hidden = true; lastSummary = ''; $('toSubmit').hidden = true;
+      return;
+    }
+    $('toSubmit').hidden = false;
+    if (submitted) setStatus('You changed an answer. Click "Update my response" to send the new version.');
+    var lvl = LEVELS.filter(function (l) { return r.total <= l.max; })[0];
+    $('level').textContent = lvl.name; $('levelText').textContent = lvl.text;
+    var weakest = PARTS[0], weakRatio = Infinity;
+    PARTS.forEach(function (part) { var x = r.dims[part.id] / (part.qs.length * 2); if (x < weakRatio) { weakRatio = x; weakest = part; } });
+    if (weakRatio < 1) { $('dim-' + weakest.id).classList.add('weak'); $('adviceText').textContent = ADVICE[weakest.id]; $('advice').hidden = false; }
+    else { $('advice').hidden = true; }
+    lastSummary = 'Our AI program scored ' + r.total + '/20 on the Fluency Check (' + lvl.name + '). ' + (weakRatio < 1 ? 'Our weakest area: ' + weakest.title.toLowerCase() + '. ' : '') + 'Take it yourself: https://workforce2100.org/fluency-check.html — framework: "The AI Fluency Imperative" by Thalassinidis and Bowen, ' + PREPRINT;
+  }
+
+  $('quiz').addEventListener('change', function (e) {
+    if (e.target.type !== 'radio') return;
+    answers[e.target.name] = Number(e.target.value);
+    $('fs-' + e.target.name).classList.add('answered');
+    render();
+  });
+
+  $('copyBtn').addEventListener('click', function () {
+    var text = lastSummary || 'I just took the Fluency Check, a 10-question diagnostic on whether a college\'s AI program builds literacy or fluency: https://workforce2100.org/fluency-check.html';
+    var fb = $('copyFallback'), btn = $('copyBtn');
+    var showFallback = function () { fb.value = text; fb.hidden = false; fb.focus(); fb.select(); btn.textContent = 'Select the text below and copy it'; };
+    try { navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy my result to share with my team'; }, 2000); }, showFallback); }
+    catch (err) { showFallback(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

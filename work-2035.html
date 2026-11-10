@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work to 2035: occupations, programs and places — Workforce 2100</title>
+<meta name="description" content="Search 830 occupations and 1,432 academic programs: how much work AI is likely to take on by 2035, who should decide, and where the change lands first.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='3' y='19' width='22' height='3' rx='1.5' fill='%239DB3C6'/%3E%3Crect x='3' y='12.5' width='22' height='3' rx='1.5' fill='%235D88AC'/%3E%3Crect x='3' y='6' width='22' height='3' rx='1.5' fill='%231F5F8B'/%3E%3C/svg%3E">
+<style>
+.tile-map { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; max-width: 720px; }
+.tile { aspect-ratio: 1; min-width: 0; padding: 0; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 4px; border: 1px solid rgba(22,32,42,0.12); }
+.tile[aria-pressed="true"] { border: 3px solid var(--ink); }
+.legend { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 28px; height: 14px; border-radius: 3px; border: 1px solid rgba(22,32,42,0.12); }
+.panel { border: 1px solid var(--line); border-radius: 10px; padding: 22px; }
+dl.kv { margin: 14px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; font-size: 14px; }
+dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; }
+.wf { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; }
+.wf .lbl { flex: 1 1 320px; min-width: 0; font-size: 15px; line-height: 1.45; }
+.wf .val { flex: 2 1 420px; min-width: 0; display: flex; align-items: center; gap: 12px; }
+.wf .track { flex: 1; height: 22px; background: #EEF2F5; border-radius: 4px; overflow: hidden; }
+.wf .fill { height: 100%; }
+.quads { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.quad { border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+.quad h3 { font-size: 22px; }
+.panel-dark { margin-top: 40px; background: var(--ink); color: #FFFFFF; border-radius: 12px; padding: 32px; display: flex; flex-wrap: wrap; gap: 28px; align-items: center; }
+.panel-dark dl { flex: 1 1 300px; min-width: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; font-size: 14px; }
+.panel-dark dt { color: #C9D6E2; } .panel-dark dd { margin: 2px 0 0; font-size: 22px; font-weight: 700; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="19" width="22" height="3" rx="1.5" fill="#9DB3C6"/><rect x="3" y="12.5" width="22" height="3" rx="1.5" fill="#5D88AC"/><rect x="3" y="6" width="22" height="3" rx="1.5" fill="#1F5F8B"/></svg>
+<span>Workforce 2100<small>Research on AI, work and education</small></span>
+</a>
+<nav class="nav" aria-label="Main">
+<a href="index.html#what-we-study">What we study</a>
+<a href="research.html">Research</a>
+<a href="work-2035.html" aria-current="page">Work to 2035</a>
+<a href="surveys.html">Surveys</a>
+<a href="index.html#team">Team</a>
+<a href="index.html#contact">Contact</a>
+</nav>
+</div>
+</header>
+
+<main id="main">
+<section class="band">
+<div class="wrap" style="padding-top: 64px; padding-bottom: 40px">
+<p class="eyebrow">Data from <a href="https://papers.ssrn.com/abstract=7679758">Where Work Is Moving</a> and <a href="https://papers.ssrn.com/abstract=7665993">The Price of Judgment</a></p>
+<h1 style="font-size: clamp(34px, 5vw, 48px); line-height: 1.12">Work to 2035: occupations, programs and places</h1>
+<p class="lede" style="margin: 16px 0 0">Search 830 occupations and 1,432 academic programs. See how much of each job's work AI is likely to take on by 2035, who should stay in charge of the decisions, and where the change lands first.</p>
+<div class="stats">
+<div class="stat"><b>21.1M</b><span>jobs of labor demand removed by AI automation before growth (13.6% of jobs)</span></div>
+<div class="stat"><b>44%</b><span>of work hours adopted or augmented by AI by 2035</span></div>
+<div class="stat"><b>4.6M</b><span>workers in occupations that shrink and may need to change occupation</span></div>
+<div class="stat"><b>22%</b><span>of AI's headline value is realizable once review and errors are counted</span></div>
+</div>
+<p class="muted" style="margin: 14px 0 0; font-size: 13px">Our own model, base scenario, 2025–2035. Jobs are full-time equivalents of labor demand, not layoffs.</p>
+<p style="margin: 10px 0 0; font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center"><span class="chip chip-blue">2026 edition</span><span class="muted">Released November 2026 · Updated every year · <a href="#updates">What the next edition adds →</a></span></p>
+<div class="pills" role="tablist" aria-label="Data view" id="tabs" style="margin-top: 32px">
+<button type="button" class="pill" role="tab" data-tab="occupations">Occupations</button>
+<button type="button" class="pill" role="tab" data-tab="programs">Academic programs</button>
+<button type="button" class="pill" role="tab" data-tab="states">States</button>
+<button type="button" class="pill" role="tab" data-tab="value">Value of AI &amp; who decides</button>
+</div>
+</div>
+</section>
+
+<p class="wrap muted" id="loading" style="padding-top: 40px">Loading the data…</p>
+
+<!-- Occupations -->
+<section class="wrap" id="tab-occupations" role="tabpanel" hidden style="padding-top: 40px">
+<div class="filters">
+<div class="field wide"><label for="oq">Search occupations</label><input id="oq" type="search" placeholder="Job title or SOC code, e.g. accountant or 13-2011"></div>
+<div class="field"><label for="og">Occupation group</label><select id="og"><option value="all">All groups</option></select></div>
+<div class="field"><label for="oc">Outlook to 2035</label><select id="oc"><option value="all">All outlooks</option><option value="Growing">Growing (over +5%)</option><option value="Stable">Stable (within 5%)</option><option value="Moderate decline">Moderate decline (5–20%)</option><option value="Substantially reduced">Substantially reduced (20–50%)</option></select></div>
+<div class="field"><label for="oqd">Who decides</label><select id="oqd"><option value="all">All governance types</option><option>Person in charge</option><option>AI assists</option><option>AI recommends</option><option>AI runs</option></select></div>
+<div class="field"><label for="os">Sort by</label><select id="os"><option value="r">AI reduction, highest first</option><option value="n">Net change, largest decline first</option><option value="e">Employment, largest first</option><option value="v">AI value per hour, highest first</option><option value="t">Name, A–Z</option></select></div>
+</div>
+<p id="occCount" aria-live="polite" style="margin: 20px 0 0; font-size: 15px; color: var(--ink-2)"></p>
+<div class="table-box"><table style="min-width: 980px">
+<thead><tr><th scope="col">Occupation</th><th scope="col" class="num">Jobs, 2025</th><th scope="col" class="num">Median wage</th><th scope="col">AI reduction by 2035</th><th scope="col">Net change 2025–35 (range)</th><th scope="col">Who decides</th><th scope="col" class="num">AI value per hour</th></tr></thead>
+<tbody id="occBody"></tbody>
+</table></div>
+<button type="button" class="btn btn-light more" id="occMore">Show 50 more</button>
+<div class="notes">
+<div><strong>AI reduction by 2035.</strong> Share of the occupation's labor demand that AI automation removes, before any growth. Our own task model: exposure, observed AI success, review time, cost of errors and who decides.</div>
+<div><strong>Net change.</strong> Reduction plus expected growth in demand. Growth by occupation group follows MGI (2026); the range covers 81 scenarios (10th–90th percentile).</div>
+<div><strong>Who decides.</strong> Governance type from the consequence of errors and the complexity of the work. "Person in charge" work keeps a human deciding; "AI runs" work can be handed over with checks.</div>
+<div><strong>AI value per hour.</strong> Realizable net value of AI per exposed work hour, after paying for review and for errors that slip through (The Price of Judgment).</div>
+</div>
+</section>
+
+<!-- Programs -->
+<section class="wrap" id="tab-programs" role="tabpanel" hidden style="padding-top: 40px">
+<div class="filters">
+<div class="field wide"><label for="pq">Search programs</label><input id="pq" type="search" placeholder="Program name or CIP code, e.g. nursing or 51.38"></div>
+<div class="field"><label for="pl">Award level</label><select id="pl"><option value="all">All levels</option><option value="Certificate">Certificate</option><option value="Associate">Associate</option><option value="Bachelor">Bachelor's</option><option value="Graduate">Graduate</option></select></div>
+<div class="field"><label for="pt">Tier</label><select id="pt"><option value="all">All tiers</option><option>Invest</option><option>Reinvent</option><option>Consolidate or Review</option><option>Transfer-oriented</option></select></div>
+<div class="field"><label for="pc">Curriculum change</label><select id="pc"><option value="all">Any</option><option value="High">High (over 50% of hours)</option><option value="Medium">Medium (30–50%)</option><option value="Lower">Lower (under 30%)</option></select></div>
+</div>
+<div id="tierSummary" style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px"></div>
+<p id="progCount" aria-live="polite" style="margin: 16px 0 0; font-size: 15px; color: var(--ink-2)"></p>
+<div class="table-box"><table style="min-width: 900px">
+<thead><tr><th scope="col">Program family</th><th scope="col">Level</th><th scope="col" class="num">Completions, 2023–24</th><th scope="col" class="num">Demand for graduates, 2025–35</th><th scope="col">Tier</th><th scope="col">AI share of graduates' work hours</th></tr></thead>
+<tbody id="progBody"></tbody>
+</table></div>
+<button type="button" class="btn btn-light more" id="progMore">Show 50 more</button>
+<div class="notes">
+<div><strong>Tiers.</strong> Invest: demand for graduates grows 10% or more. Reinvent: within ±10%. Consolidate or Review: falls 10% or more. Review is a signal to look at local data, not a recommendation to close.</div>
+<div><strong>Transfer-oriented.</strong> Certificates and associate degrees in arts and sciences mostly lead to transfer. They are not tiered; see the bachelor's tier for the same field.</div>
+<div><strong>Curriculum change.</strong> A high share means the program's content needs the most redesign for AI fluency, verification and judgment, whatever its tier.</div>
+</div>
+</section>
+
+<!-- States -->
+<section class="wrap" id="tab-states" role="tabpanel" hidden style="padding-top: 40px">
+<div class="pills" role="group" aria-label="Map measure" id="measures"></div>
+<p id="measureNote" style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 820px"></p>
+<div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+<div style="flex: 999 1 560px; min-width: 0">
+<div class="tile-map" id="map"></div>
+<div class="legend" id="legend"></div>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div class="panel" id="selPanel" aria-live="polite"></div>
+<div><div style="font-size: 14px; font-weight: 600">Highest on this measure</div><ol id="top" style="margin: 8px 0 0; padding-left: 22px; font-size: 14px; line-height: 1.9"></ol></div>
+</div>
+</div>
+</section>
+
+<!-- Value -->
+<section class="wrap" id="tab-value" role="tabpanel" hidden style="padding-top: 40px">
+<h2 style="font-size: 30px">From headline value to realizable value</h2>
+<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); max-width: 820px">AI almost always does a task faster than a person. But someone must check the work, redo what fails, and absorb the cost of errors that slip through. Counting those costs, about a fifth of the headline value of AI-exposed work is realizable today.</p>
+<div id="waterfall" style="margin-top: 28px; display: flex; flex-direction: column; gap: 14px"></div>
+<p class="muted" style="margin: 14px 0 0; font-size: 13px">Value of AI-exposed work hours, U.S. economy, billions of dollars. Base case: 90% of failures caught; an error that escapes costs 5 times the task's value times its consequence.</p>
+<div class="panel-dark">
+<div style="flex: 999 1 460px; min-width: 0">
+<p class="eyebrow" style="color: #9FC3E0; margin-bottom: 8px">Why AI fluency is an economic measure</p>
+<h3 style="font-size: 26px; line-height: 1.3">If reviewers check AI work 25% faster and let 25% fewer errors through, realizable value rises from $649B to $848B.</h3>
+</div>
+<dl>
+<div><dt>Faster review only</dt><dd>$753B</dd></div>
+<div><dt>Fewer escaped errors only</dt><dd>$741B</dd></div>
+<div><dt>Both, 10% better</dt><dd>$727B</dd></div>
+<div><dt>Both, 50% better</dt><dd>$1,061B</dd></div>
+</dl>
+</div>
+<h2 style="font-size: 30px; margin-top: 48px">Who decides: four governance types</h2>
+<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); max-width: 820px">Occupations sorted by how costly an error is and how complex the work is. The type sets how fast AI can take over and how much human review stays in place.</p>
+<div class="quads" id="quads"></div>
+</section>
+
+<section id="updates" style="border-top: 1px solid var(--line); margin-top: 48px; scroll-margin-top: 16px">
+<div class="wrap" style="padding-top: 48px; padding-bottom: 8px">
+<p class="eyebrow">Updates</p>
+<h2 style="font-size: 30px">A living estimate, updated every year</h2>
+<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); max-width: 820px">AI is changing faster than the data that measure it. We treat these results as a starting point and will re-run the full model once a year as new federal data and new evidence on AI use come out, so the picture sharpens over time.</p>
+<div class="notes" style="margin-top: 24px">
+<div><strong>What this edition shows.</strong> The 2026 edition rests on data from before AI agents were widely used: employment and wages through May 2025, and Census age data for 2019 and 2024. It captures the effect of generative AI, which drafts and answers. It does not yet capture agentic AI, which takes actions on its own.</div>
+<div><strong>Waiting for 2025 data.</strong> The Census Bureau's 2025 American Community Survey microdata, the first year in which AI agents were in wide use, have no release date yet. When they come out, we will run our <a href="https://osf.io/hzjgm">pre-registered test</a> of whether agentic AI is thinning out entry-level hiring, and fold the result into the next edition.</div>
+<div><strong>Every year.</strong> Each edition adds the latest federal wage and employment data, the newest O*NET task data and the latest measures of how people actually use AI at work. We also revisit the scenarios and assumptions behind the ranges.</div>
+<div><strong>Known gaps we plan to close.</strong> The model does not yet cover robots and other physical AI. It reads the 2035 scenario nationally, so state results reflect each state's mix of occupations, not local adoption rates.</div>
+</div>
+<div class="table-box" style="margin-top: 28px">
+<table style="min-width: 640px">
+<thead><tr><th scope="col">Edition</th><th scope="col">Status</th><th scope="col">What it includes</th></tr></thead>
+<tbody>
+<tr><td style="white-space: nowrap; font-weight: 600">2026 edition</td><td><span class="chip chip-green">Current</span></td><td>Generative-era baseline: 830 occupations, 1,432 program families, 50 states and DC. Data set on <a href="https://osf.io/ae95y">OSF</a>.</td></tr>
+<tr><td style="white-space: nowrap; font-weight: 600">Agentic-era test</td><td><span class="chip chip-amber">Waiting for data</span></td><td>Pre-registered test of entry-level employment, run as soon as the 2025 Census microdata are released.</td></tr>
+<tr><td style="white-space: nowrap; font-weight: 600">2027 edition</td><td><span class="chip chip-gray">Planned</span></td><td>New federal wage, task and AI-use data, the agentic-era results, and revised scenarios.</td></tr>
+</tbody>
+</table>
+</div>
+<p class="muted" style="margin: 14px 0 0; font-size: 13px">Each edition keeps its own version of the data on OSF, so earlier results stay citable after an update.</p>
+</div>
+</section>
+
+<section id="sources" style="border-top: 1px solid var(--line); margin-top: 48px">
+<div class="wrap" style="padding-top: 48px; padding-bottom: 32px; display: flex; flex-wrap: wrap; gap: 40px">
+<div style="flex: 1 1 320px; min-width: 0">
+<h2 style="font-size: 24px">Cite and download</h2>
+<p style="margin: 12px 0 0; font-size: 15px; line-height: 1.65; color: var(--ink-2)">Thalassinidis, A. E. (2026). <em>Where work is moving</em> [Data set]. OSF. <a href="https://osf.io/ae95y">osf.io/ae95y</a></p>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.65; color: var(--ink-2)">Papers: <a href="https://papers.ssrn.com/abstract=7679758">Where Work Is Moving</a> · <a href="https://papers.ssrn.com/abstract=7665993">The Price of Judgment</a></p>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.65; color: var(--ink-2)">Model results are estimates under stated assumptions, not forecasts for any single employer, program or place.</p>
+</div>
+<div style="flex: 999 1 560px; min-width: 0">
+<h2 style="font-size: 24px">Data sources and credits</h2>
+<ul style="margin: 12px 0 0; padding-left: 20px; font-size: 14px; line-height: 1.7; color: var(--ink-2)">
+<li>Employment and wages: U.S. Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2025.</li>
+<li>This site includes information from the <a href="https://www.onetcenter.org/database.html">O*NET 31.0 Database</a> by the U.S. Department of Labor, Employment and Training Administration (USDOL/ETA), used under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> license. We have modified all or some of this information. USDOL/ETA has not approved, endorsed, or tested these modifications. O*NET® is a trademark of USDOL/ETA.</li>
+<li>AI success rates and review time: Anthropic Economic Index, January 2026 release, used under CC BY.</li>
+<li>Task exposure labels: Eloundou, T., Manning, S., Mishkin, P., &amp; Rock, D. (2024). GPTs are GPTs. <em>Science</em>, 384(6702).</li>
+<li>Age shares and field of degree: U.S. Census Bureau, American Community Survey 2019 and 2024. Population: Census 2023 National Population Projections.</li>
+<li>Programs: NCES IPEDS Completions 2023–24 (provisional) and the NCES CIP 2020–SOC 2018 crosswalk.</li>
+<li>Growth in demand by occupation group and the overall scale of automation: calibrated to McKinsey Global Institute (2026), <a href="https://www.mckinsey.com/mgi/our-research/workforce-in-motion-skills-and-pathways-to-future-jobs-in-the-united-states"><em>Workforce in motion</em></a>. MGI's own figures are not reproduced here.</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="site-footer" style="margin-top: 0">
+<div class="wrap">
+<div>© 2026 Workforce 2100 · Text and our own data under CC BY 4.0, except third-party data as credited above<br>Contact: <a href="mailto:aethalassinidis@aacc.edu">aethalassinidis@aacc.edu</a></div>
+<nav aria-label="Footer"><a href="surveys.html">Surveys</a><a href="index.html">Home</a><a href="research.html">Research</a></nav>
+</div>
+</footer>
+<script src="assets/work2035.js"></script>
+</body>
+</html>

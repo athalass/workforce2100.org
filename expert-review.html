@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expert Review: Calibrated Delegation Assessment — Workforce 2100</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='3' y='19' width='22' height='3' rx='1.5' fill='%239DB3C6'/%3E%3Crect x='3' y='12.5' width='22' height='3' rx='1.5' fill='%235D88AC'/%3E%3Crect x='3' y='6' width='22' height='3' rx='1.5' fill='%231F5F8B'/%3E%3C/svg%3E">
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --ink:#16202A; --muted:#5A6673; --line:#DDE3E9; --bg:#F3F6F9; --card:#ffffff;
+    --accent:#1F5F8B; --accent-soft:#E6EEF5; --warn:#9a3412; --warn-soft:#fff4ec; --ok:#166534;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  h2,h3{font-family:"Source Serif 4",Georgia,serif}
+  .brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-weight:700;font-size:16px;white-space:nowrap;padding-right:12px;border-right:1px solid var(--line)}
+  a{color:var(--accent)}
+  header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+  .bar{max-width:760px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+  .bar h1{font-size:15px;font-weight:600;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .count{font-size:13px;color:var(--muted);white-space:nowrap}
+  .progress{height:4px;background:var(--line)}
+  .progress>div{height:100%;width:0;background:var(--accent);transition:width .25s}
+  main{max-width:760px;margin:0 auto;padding:24px 16px 120px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px;margin-bottom:16px}
+  h2{font-size:22px;line-height:1.3;margin:0 0 12px}
+  h3{font-size:16px;margin:0 0 8px}
+  p{margin:0 0 12px}
+  .muted{color:var(--muted);font-size:14px}
+  ul.defs{padding-left:20px;margin:0 0 12px} ul.defs li{margin-bottom:6px}
+  .stem{font-size:17px;margin-bottom:16px}
+  table.opts{width:100%;border-collapse:collapse}
+  table.opts th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;text-align:center;padding:0 4px 6px}
+  table.opts th:nth-child(2){text-align:left}
+  table.opts td{border-top:1px solid var(--line);padding:12px 4px;vertical-align:top}
+  td.letter{font-weight:700;width:28px;color:var(--accent)}
+  td.pick{width:64px;text-align:center}
+  td.pick input{width:20px;height:20px;accent-color:var(--accent);cursor:pointer;margin-top:2px}
+  tr.is-best td.text{background:#eef6ef} tr.is-worst td.text{background:var(--warn-soft)}
+  .q{margin-top:20px}
+  .q-label{font-weight:600;margin-bottom:8px;display:block}
+  .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .seg label{border:1px solid var(--line);border-radius:8px;padding:10px 8px;cursor:pointer;font-size:14px;text-align:center;background:#fff}
+  .seg label small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  .seg input{position:absolute;opacity:0;pointer-events:none}
+  .seg label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+  .seg label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  .checks label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer}
+  .checks input{width:18px;height:18px;margin-top:3px;accent-color:var(--accent)}
+  textarea{width:100%;min-height:80px;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;resize:vertical}
+  select{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;background:#fff}
+  .consent{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--accent-soft);cursor:pointer}
+  .consent input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
+  nav.footer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line)}
+  nav.footer .in{max-width:760px;margin:0 auto;padding:12px 16px;display:flex;gap:12px;align-items:center}
+  nav.footer .msg{flex:1;font-size:13px;color:var(--muted)}
+  button{font:inherit;border-radius:8px;padding:10px 18px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink)}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .note{border-left:3px solid var(--warn);background:var(--warn-soft);padding:10px 12px;border-radius:4px;font-size:14px;margin-top:12px}
+  .task-block{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+  .task-block:first-of-type{border-top:0;padding-top:0;margin-top:0}
+  .task-body p{margin-bottom:8px;font-size:15px}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .jump{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .jump button{padding:4px 8px;font-size:13px;min-width:38px}
+  .jump button.done{background:var(--accent-soft);border-color:var(--accent)}
+  @media (max-width:420px){ .bar h1{font-size:13px} }
+  @media (max-width:560px){
+    .seg{grid-template-columns:repeat(2,1fr)}
+    td.pick{width:44px}
+    .eff{display:none}
+    table.opts td{padding:10px 2px}
+    .card{padding:16px}
+    h2{font-size:19px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar"><a class="brand" href="index.html" aria-label="Workforce 2100 home"><svg width="22" height="22" viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="19" width="22" height="3" rx="1.5" fill="#9DB3C6"/><rect x="3" y="12.5" width="22" height="3" rx="1.5" fill="#5D88AC"/><rect x="3" y="6" width="22" height="3" rx="1.5" fill="#1F5F8B"/></svg>Workforce 2100</a><h1>Expert Review: Calibrated Delegation Assessment</h1><span class="count" id="count"></span></div>
+  <div class="progress"><div id="prog"></div></div>
+</header>
+<main id="main"></main>
+<nav class="footer"><div class="in">
+  <button id="back">Back</button>
+  <span class="msg" id="msg"></span>
+  <button class="primary" id="next">Next</button>
+</div></nav>
+
+<script>
+// ---- Configuration -------------------------------------------------------
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbwKUMcSt0HNLmGMuJcJHfLGz3CJcgHGmQHCCcrhn2C08LFqmRmoTH7o3lmtfNmFePAt/exec";        // Apps Script web app (/exec) URL
+const CONTACT = "aethalassinidis@aacc.edu";
+const STORE = "cda_expert_review_v1";
+const DATA = {"scenarios": [{"n": 1, "stem": "You are a student in an introductory statistics course. Your homework asks you to run a simple regression on a provided dataset and interpret the results. An AI assistant can run the analysis and write the interpretation.", "opts": {"A": "Set up and run the analysis yourself, write your interpretation, and then ask the AI to critique your interpretation.", "B": "Have the AI run the analysis, then check the assumption plots and confirm the coefficients make sense given the data.", "C": "Have the AI run the analysis and write the interpretation.", "D": "Run and interpret the analysis without any AI assistance."}}, {"n": 2, "stem": "An AI agent can manage your work calendar and schedule internal meetings with colleagues on your behalf.", "opts": {"A": "Allow the agent to propose and accept internal meetings within your working hours, but require your approval before it moves an existing meeting or accepts one with someone outside the organization.", "B": "Let the agent schedule meetings freely, and instruct it to use good judgment.", "C": "Schedule every meeting yourself by email.", "D": "Let the agent accept, decline, or move any meeting as it sees fit."}}, {"n": 3, "stem": "You are a developer with eight years of experience. A loop in an internal reporting script you maintain fails one of its tests, and an AI assistant built into your editor can propose a fix immediately.", "opts": {"A": "Accept the AI's fix and move on.", "B": "Trace the loop by hand, form a hypothesis about the error, and then compare it with the AI's explanation.", "C": "Have the AI propose a fix, review the change, and rerun the tests.", "D": "Avoid the AI entirely and work through the problem alone."}}, {"n": 4, "stem": "You are a charge nurse. An AI system summarizes the 40 shift logs on your unit each night for the morning handoff. You want to know whether it ever omits medication administration times.", "opts": {"A": "Read three summaries each morning to check that they are clear and complete.", "B": "Ask the AI system whether any medication entries were left out.", "C": "For a random sample of logs each week, compare every medication entry in the source log with the summary, and record any discrepancies.", "D": "Reread every summary carefully before each handoff."}}, {"n": 5, "stem": "Your help desk receives about 200 tickets a week. An AI tool can categorize each ticket and route it to the right support queue.", "opts": {"A": "Let the tool route tickets automatically, and review a weekly report of tickets that support staff had to reroute.", "B": "Approve each routing decision before the ticket moves to a queue.", "C": "Let the tool route tickets, and ask it to report its own accuracy each week.", "D": "Let the tool route tickets and also send users troubleshooting steps it generates, without staff review."}}, {"n": 6, "stem": "An AI assistant has summarized a new state regulation that changes financial aid eligibility. Advisors will use the summary when counseling students next week.", "opts": {"A": "Verify each eligibility rule in the summary against the text of the regulation, and check whether any exceptions were omitted.", "B": "Check that the summary is clear and written in an appropriate tone for advisors.", "C": "Ask the assistant to cite the sections of the regulation it relied on, and accept the summary if citations are provided.", "D": "Send the summary to advisors with a note that it was AI-generated."}}, {"n": 7, "stem": "You are a nursing student on a clinical rotation, working under a preceptor. You are assigned to complete the medication reconciliation for a newly admitted patient. An AI tool can generate a reconciled medication list from the patient's records.", "opts": {"A": "Have the AI generate the list, then verify each line against the source records and sign it.", "B": "Have the AI generate the reconciled list, and accept it.", "C": "Complete the reconciliation yourself and do not use the AI.", "D": "Complete the reconciliation yourself from the source records, have the AI flag any discrepancies in your list, and review both with your preceptor."}}, {"n": 8, "stem": "An AI agent has reorganized the 2,000 files in your personal project folder into subfolders by date and topic. It kept a backup of the original folder.", "opts": {"A": "Delete the backup now to save space.", "B": "Ask the agent to confirm that it did not misplace any files.", "C": "Check where every one of the 2,000 files went.", "D": "Open a sample of subfolders to confirm the files landed sensibly, and keep the backup for a week."}}, {"n": 9, "stem": "Your team meets weekly to coordinate routine work. An AI tool can summarize each meeting from the recording and post the summary to the team channel.", "opts": {"A": "Compare every summary line by line against your own notes before it is posted.", "B": "Have the tool rate its confidence in each summary, and post only the high-confidence ones.", "C": "Let the tool post the summaries directly, and ask attendees to correct anything they see is wrong.", "D": "Let the tool post the summaries and also assign action items, with deadlines, to named team members."}}, {"n": 10, "stem": "You are a staff accountant. An AI agent reconciles the month's bank transactions and proposes journal entries to close the books.", "opts": {"A": "Let the agent post routine matched entries below a set dollar threshold, and require your approval for unmatched items, entries above the threshold, and anything affecting a prior period.", "B": "Approve every journal entry individually.", "C": "Let the agent post all entries, and review the trial balance at month end.", "D": "Let the agent post all entries and flag the ones it is unsure about."}}, {"n": 11, "stem": "An AI security agent triaged 500 overnight alerts. It escalated 20 and closed 480 as false positives.", "opts": {"A": "Re-investigate all 480 closed alerts.", "B": "Ask the agent to re-review its closures and confirm them.", "C": "Investigate the 20 escalated alerts; the agent has handled the rest.", "D": "Re-investigate a random sample of the closed alerts plus every closed alert involving a privileged account."}}, {"n": 12, "stem": "You are a data analyst in your college's institutional research office. A dean has asked for a simple regression on a routine dataset, of a kind you have run many times. An AI assistant can run the analysis and write the interpretation.", "opts": {"A": "Set up and run the analysis yourself, write your interpretation, and then ask the AI to critique your interpretation.", "B": "Have the AI run the analysis, then check the assumption plots and confirm the coefficients make sense given the data.", "C": "Have the AI run the analysis and write the interpretation.", "D": "Run and interpret the analysis without any AI assistance."}}, {"n": 13, "stem": "You are a pharmacy technician at a retail pharmacy. While processing a new prescription, you use an AI assistant to check for interactions with the patient's other medications. It reports no interactions.", "opts": {"A": "Ignore the AI assistant and check every prescription in printed references.", "B": "Confirm the result in the pharmacy's validated interaction-checking system, and route any flagged or unusual combination to the pharmacist for review.", "C": "Ask the AI assistant the same question a second time, and proceed if both answers agree.", "D": "Proceed with filling the prescription, since the AI found no interactions."}}, {"n": 14, "stem": "An AI tool has translated a short item for your department's internal staff newsletter into Spanish.", "opts": {"A": "Hire a professional translator.", "B": "Ask a bilingual colleague to skim the translation for meaning errors.", "C": "Translate the Spanish version back into English with the same tool, and compare.", "D": "Publish the translation without any check."}}, {"n": 15, "stem": "You teach three sections of an introductory course. An AI tool connected to your learning management system can send students a weekly reminder of upcoming due dates.", "opts": {"A": "Let the tool send the reminders and also answer students' emails about grades and extensions.", "B": "Write and send each weekly reminder yourself.", "C": "Have the tool draft each reminder, then edit and send each one yourself.", "D": "Let the tool send reminders automatically from your template, using due dates pulled from the course calendar, and glance at one sent message each week."}}, {"n": 16, "stem": "You are an academic advisor. An AI agent can text currently enrolled students who have not yet registered for next term, reminding them of the registration deadline.", "opts": {"A": "Approve each text before it is sent.", "B": "Let the agent send approved reminder templates to unregistered students.", "C": "Let the agent send reminders and also recommend which courses each student should take.", "D": "Turn the agent off and post the deadline on the college website instead."}}, {"n": 17, "stem": "For a personal side project, an AI assistant suggests a regular expression to validate the email field on a sign-up form.", "opts": {"A": "Test the expression on a handful of valid and invalid addresses, including a few unusual cases.", "B": "Read the expression and check that it looks right.", "C": "Ignore the suggestion and write your own expression from scratch.", "D": "Ask the assistant whether the expression is correct."}}, {"n": 18, "stem": "Your team's automated test suite has 14 failing tests. You want an AI coding agent to fix them before Friday's release.", "opts": {"A": "Let the agent commit directly to the main branch, and instruct it never to break existing functionality.", "B": "Fix all 14 tests yourself without the agent.", "C": "Let the agent commit directly to the main branch once all tests pass.", "D": "Let the agent work in a separate branch, modify only application and test files, prohibit it from changing the build configuration or deleting tests, and require it to open a pull request for human review."}}, {"n": 19, "stem": "You are an accounts-payable clerk. Your office is piloting an AI agent that reads vendor invoices from a shared inbox and can schedule payments in the accounting system.", "opts": {"A": "Allow the agent to pay every invoice it receives, and instruct it to flag anything that looks suspicious.", "B": "Allow the agent to pay any invoice that matches an open purchase order up to $5,000, route all others to you, and prohibit it from adding vendors or changing vendor bank details.", "C": "Allow the agent to pay every invoice it receives so vendors are paid on time, and review its payment report weekly.", "D": "Use the agent only to draft payment entries, and enter every payment yourself."}}, {"n": 20, "stem": "You are in the third week of an introductory programming course. A loop in your homework fails one of the provided test cases, and an AI assistant built into your editor can propose a fix immediately.", "opts": {"A": "Accept the AI's fix and move on.", "B": "Trace the loop by hand, form a hypothesis about the error, and then compare it with the AI's explanation.", "C": "Have the AI propose a fix, review the change, and rerun the tests.", "D": "Avoid the AI entirely and work through the problem alone."}}, {"n": 21, "stem": "You are a senior accountant with 12 years of experience. As part of a routine monthly task, you must reconcile a month of bank statement entries against a cash ledger. An AI tool can perform the reconciliation.", "opts": {"A": "Do the reconciliation by hand and do not use the AI.", "B": "Have the AI reconcile the accounts, then review the unmatched items and spot-check several matched ones.", "C": "Do the reconciliation by hand, then compare your result with the AI's and investigate any differences.", "D": "Have the AI reconcile the accounts, and accept its result."}}, {"n": 22, "stem": "You manage the front desk of a busy outpatient clinic. When a provider calls out sick, an AI agent could rebook that provider's patients.", "opts": {"A": "Give the agent full calendar access, and instruct it to prioritize the sickest patients.", "B": "Let the agent reschedule, cancel, or reassign patients to other providers as it judges best.", "C": "Have the agent produce a list of affected patients, and have staff call each patient to rebook.", "D": "Allow the agent to rebook patients only into the same provider's open slots within seven days, never cancel scheduled procedures, notify patients with approved templates, and escalate any patient flagged as urgent to staff."}}, {"n": 23, "stem": "An AI tool has formatted the 45 references in an early draft of your course paper. The draft will be revised twice more before submission.", "opts": {"A": "Ask the tool whether the formatting is correct.", "B": "Recheck all 45 references against the style guide, which will take about two hours.", "C": "Spot-check a few references against the style guide.", "D": "Accept the formatting and never check it, including at final submission."}}, {"n": 24, "stem": "You are a junior IT administrator at a mid-sized college. An AI agent with directory administration rights has identified 340 user accounts as inactive and proposes to disable them tonight. It reports 99% confidence in its classification. Several of the accounts belong to adjunct faculty who teach only in spring.", "opts": {"A": "Approve the batch; the agent's confidence is high, and inactive accounts are a security risk.", "B": "Ask the agent to re-check its list and confirm the result before approving.", "C": "Verify a sample of the accounts against HR and course-assignment records, exclude any category the sample shows to be misclassified, and approve the remainder with your sign-off.", "D": "Cancel the operation and review all 340 accounts manually."}}, {"n": 25, "stem": "You are a registered nurse with 15 years of experience. You are completing the medication reconciliation for a newly admitted patient. An AI tool can generate a reconciled medication list from the patient's records.", "opts": {"A": "Have the AI generate the list, then verify each line against the source records and sign it.", "B": "Have the AI generate the reconciled list, and accept it.", "C": "Complete the reconciliation yourself and do not use the AI.", "D": "Complete the reconciliation yourself from the source records, have the AI flag any discrepancies in your list, and review both with a colleague."}}, {"n": 26, "stem": "You support a college computer lab. You plan to let an AI agent install security patches on 60 lab workstations overnight so the lab is ready for morning classes.", "opts": {"A": "Give the agent administrator rights on all 60 machines and instruct it to be careful and avoid disrupting users.", "B": "Restrict the agent to the lab subnet and vendor-approved patches, allow reboots only after 1 a.m., and have it stop and alert you if more than three machines fail their post-patch checks.", "C": "Skip the agent and patch the machines yourself over the course of the week.", "D": "Give the agent administrator rights on all 60 machines and let it patch and reboot them as needed."}}, {"n": 27, "stem": "Your department's shared drive keeps running out of space because of old temporary files. An AI-assisted cleanup tool can delete files on a schedule.", "opts": {"A": "Allow the tool to delete files only in the temp folder that are older than 30 days, keep a log, and retain deleted files in the recycle bin for seven days.", "B": "Have the tool list candidate files each week, and delete them yourself.", "C": "Review and delete files manually once a month.", "D": "Allow the tool to delete any file it judges unnecessary anywhere on the drive."}}, {"n": 28, "stem": "An AI assistant has built a three-year revenue forecast in a spreadsheet for your department's budget request to the vice president.", "opts": {"A": "Rebuild the entire forecast by hand.", "B": "Ask the assistant to explain its assumptions, and accept the forecast if the explanation is reasonable.", "C": "Change one key input, such as enrollment, by 10% and confirm the outputs move in the expected direction and magnitude, then trace two figures back to the source data.", "D": "Read the forecast narrative and confirm that the numbers look reasonable."}}, {"n": 29, "stem": "You are a student in your first accounting course. For homework, you must reconcile a month of bank statement entries against a cash ledger. An AI tool can perform the reconciliation.", "opts": {"A": "Do the reconciliation by hand and do not use the AI.", "B": "Have the AI reconcile the accounts, then review the unmatched items and spot-check several matched ones.", "C": "Do the reconciliation by hand, then compare your result with the AI's and investigate any differences.", "D": "Have the AI reconcile the accounts, and submit its result."}}, {"n": 30, "stem": "You are an HR specialist conducting a workplace misconduct investigation. An AI tool can summarize the recorded witness interviews, and the summaries will go into the employee's personnel file.", "opts": {"A": "Have the tool produce the summaries, and have a second AI tool check them before filing.", "B": "Let the tool produce the summaries and file them directly.", "C": "Write every summary yourself without the tool.", "D": "Have the tool draft each summary, compare it against the recording, correct it, and sign it before filing."}}], "tasks_intro": "The second component of the assessment observes auditing directly. Each task has three phases. The respondent first completes part of the task without AI (attempt). They then receive an AI-generated version of the full output (check). That version contains four planted errors and two elements that are correct but unexpected. Finally, the respondent produces a final version and justifies each change they made or declined to make (reconcile). Scoring separates the ability to distinguish real errors from correct content from the general tendency to accept or challenge AI output.", "task1": "Task 1: Operational data summary\nMaterials: a one-page table of help-desk ticket volumes for one semester, by month and category. Respondent task: write a short memo summarizing the main patterns for a department head. Planted errors in the AI memo:\nOmission: a large mid-semester spike in one ticket category is not mentioned.\nInconsistency with the source: one monthly total in the memo does not match the table.\nUnsupported inference: the memo attributes a rise in tickets to a new learning management system, which the data do not show.\nNumerical error: a percentage change is computed incorrectly (for example, reported as 18% when it is 28%).\nCorrect but unexpected elements: a sharp decline in password-reset tickets (true in the data), and a median reported instead of a mean (appropriate given an outlier month).", "task2": "Task 2: Procedure from source documentation\nMaterials: a two-page excerpt from an equipment manual for a laboratory device. Respondent task: draft a one-page cleaning and maintenance procedure for student lab assistants. Planted errors in the AI procedure:\nOmission: the step requiring the device to be powered off and unplugged before cleaning is missing.\nInconsistency with the source: the maximum cleaning-solution temperature differs from the manual.\nUnsupported inference: the procedure specifies a monthly inspection interval that the manual does not state.\nNumerical error: a unit conversion is wrong.\nCorrect but unexpected elements: two steps appear in a different order than in the manual, which is acceptable because they are independent; and a requirement that seems excessive but is in the manual."};
+
+const DIMS = [
+  ["Bounding","Limits set in advance"],["Allocating","Sign-off placed by stakes"],
+  ["Auditing","Testing output for errors"],["Withholding","Protecting skill-building"]];
+const REL = [[1,"Not relevant"],[2,"Major revision"],[3,"Minor revision"],[4,"Highly relevant"]];
+const PROBLEMS = ["Wording is unclear","More than one answer is defensible","Situation is not realistic","Dimension does not fit","Other"];
+const TASK_QS = [["Realism","Is the task realistic?"],["Difficulty of planted errors","Is the difficulty of the planted errors appropriate?"],
+  ["Fairness","Is it fair to respondents without specialized training?"],["Relevance to Auditing","How well does it assess the Auditing dimension?"]];
+const RATE4 = [[1,"Poor"],[2,"Fair"],[3,"Good"],[4,"Excellent"]];
+const BACKGROUND = {
+  "B1 Primary expertise":["Teaching or instructional design involving AI","Educational assessment or measurement","Professional use of AI tools in practice","Other"],
+  "B2 Field or industry":["Higher education","Information technology or cybersecurity","Health care","Business, accounting, or operations","Software development","Other"],
+  "B3 Years of professional experience":["3-5","6-10","11-20","More than 20"]};
+const N = DATA.scenarios.length;
+
+// ---- State ---------------------------------------------------------------
+function freshState(){
+  return {page:0, consent:false, website:"", responseId:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()),
+    started:null, scenarios:DATA.scenarios.map(()=>({best:"",worst:"",relevance:null,dimension:"",problems:[],comments:""})),
+    tasks:{}, background:{}, submitted:false};
+}
+let S = freshState();
+try { const saved = JSON.parse(localStorage.getItem(STORE)||"null"); if (saved && saved.scenarios && saved.scenarios.length===N) S = saved; } catch(e) {}
+function save(){ try { localStorage.setItem(STORE, JSON.stringify(S)); } catch(e) {} }
+
+// Pages: 0 welcome, 1 how to rate, 2..N+1 scenarios, N+2 tasks, N+3 background, N+4 review, N+5 thanks
+const P_GUIDE=1, P_FIRST=2, P_TASKS=N+2, P_BG=N+3, P_REVIEW=N+4, P_DONE=N+5;
+
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const paras = t=>t.split("\n").map(l=>`<p>${esc(l)}</p>`).join("");
+
+function seg(name, opts, current, small){
+  return `<div class="seg" role="radiogroup">` + opts.map(([v,l])=>
+    `<label><input type="radio" name="${name}" value="${esc(v)}" ${String(current)===String(v)?"checked":""}>${small?`<strong>${esc(v)}</strong><small>${esc(l)}</small>`:esc(l)}</label>`).join("") + `</div>`;
+}
+
+// ---- Renderers -----------------------------------------------------------
+function renderWelcome(){
+  return `<div class="card">
+    <h2>Thank you for reviewing this assessment</h2>
+    <p>We are developing a short assessment of one form of AI fluency: how well a person decides how much work to hand to an AI system, under what limits, and how to check the result. Your judgments will decide which scenarios are kept, revised, or dropped, and how they are scored.</p>
+    <p>You will read ${N} short scenarios. For each, you pick the most and least effective action, rate how relevant the scenario is, name the skill it mainly tests, and flag any problems. Two short performance tasks and three background questions follow. It takes about 45 minutes. Your answers are saved in this browser as you go, so you can close the page and come back on the same device.</p>
+    <p><strong>Your privacy.</strong> The survey does not ask for your name or email address. Results are reported only in aggregate. Participation is voluntary; you may skip any question or stop at any time. The scenarios are unpublished drafts, so please do not share them, and please work independently.</p>
+    <p class="muted">Questions: <a href="mailto:${esc(CONTACT)}">${esc(CONTACT)}</a> · Dr. Angelo E. Thalassinidis, Anne Arundel Community College</p>
+    <div class="hp" aria-hidden="true"><label>Website <input id="website" tabindex="-1" autocomplete="off" value="${esc(S.website)}"></label></div>
+    <label class="consent"><input type="checkbox" id="consent" ${S.consent?"checked":""}> <span>I have read the information above and agree to take part.</span></label>
+  </div>`;
+}
+
+function renderGuide(){
+  return `<div class="card">
+    <h2>How to rate the scenarios</h2>
+    <p>A good decision about AI use weighs two things. <strong>Consequence</strong> is the cost of an undetected error: how much harm, how hard to reverse, how far it reaches, and whether responsibility can be handed off at all. <strong>Developmental value</strong> is how much doing the task yourself builds the skills you need to supervise it later. It depends on the person as well as the task.</p>
+    <p>Each scenario mainly tests one of four behaviors:</p>
+    <ul class="defs">
+      <li><strong>Bounding:</strong> setting in advance what the AI may do without intervention (permissions, scope, limits, stop conditions).</li>
+      <li><strong>Allocating:</strong> placing human sign-off according to the stakes, where errors would be costly or irreversible.</li>
+      <li><strong>Auditing:</strong> testing AI output by trying to find what is wrong with it, rather than reading it for plausibility.</li>
+      <li><strong>Withholding:</strong> holding back or reshaping AI use when it would bypass skills the person still needs to build.</li>
+    </ul>
+    <p>Over-delegating and under-delegating both count as mistakes: checking low-stakes work more than it warrants wastes attention that high-stakes work needs.</p>
+    <p>Some scenarios describe the same task performed by different people; this is intentional. If your choice would depend on details the scenario does not give, choose based on the most likely reading and say so in the comments.</p>
+  </div>`;
+}
+
+function renderScenario(i){
+  const s = DATA.scenarios[i], a = S.scenarios[i];
+  const rows = ["A","B","C","D"].map(L=>`<tr class="${a.best===L?"is-best":""} ${a.worst===L?"is-worst":""}">
+      <td class="letter">${L}</td><td class="text">${esc(s.opts[L])}</td>
+      <td class="pick"><input type="radio" name="best" value="${L}" aria-label="${L} most effective" ${a.best===L?"checked":""}></td>
+      <td class="pick"><input type="radio" name="worst" value="${L}" aria-label="${L} least effective" ${a.worst===L?"checked":""}></td></tr>`).join("");
+  return `<div class="card">
+    <p class="muted">Scenario ${i+1} of ${N}</p>
+    <div class="stem">${esc(s.stem)}</div>
+    <table class="opts"><thead><tr><th></th><th>Action</th><th>Most<span class="eff"><br>effective</span></th><th>Least<span class="eff"><br>effective</span></th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="q"><span class="q-label">How relevant is this scenario to the skill described at the start?</span>${seg("relevance",REL,a.relevance,true)}</div>
+    <div class="q"><span class="q-label">Which behavior does it mainly test?</span>${seg("dimension",DIMS,a.dimension,true)}</div>
+    <div class="q"><span class="q-label">Any problems with this scenario? <span class="muted">(tick all that apply)</span></span>
+      <div class="checks">${PROBLEMS.map(p=>`<label><input type="checkbox" name="problems" value="${esc(p)}" ${a.problems.includes(p)?"checked":""}> ${esc(p)}</label>`).join("")}</div></div>
+    <div class="q"><label class="q-label" for="comments">Comments <span class="muted">(optional)</span></label>
+      <textarea id="comments" name="comments" placeholder="What would make this scenario better? A missing option, an unrealistic detail, an option that is too obviously right or wrong…">${esc(a.comments)}</textarea></div>
+  </div>`;
+}
+
+function renderTasks(){
+  const block = (key, text)=>{
+    const lines = text.split("\n");
+    return `<div class="task-block"><h3>${esc(lines[0])}</h3><div class="task-body">${paras(lines.slice(1).join("\n"))}</div>
+      ${TASK_QS.map(([q,help])=>`<div class="q"><span class="q-label">${esc(help)}</span>${seg(key+" "+q,RATE4,S.tasks[key+" "+q],true)}</div>`).join("")}
+      <div class="q"><label class="q-label" for="${key}s">Suggestions <span class="muted">(optional)</span></label>
+      <textarea id="${key}s" data-task="${key} Suggestions">${esc(S.tasks[key+" Suggestions"]||"")}</textarea></div></div>`;
+  };
+  return `<div class="card"><h2>Performance tasks</h2><div class="task-body">${paras(DATA.tasks_intro)}</div>
+    <p class="muted">Rate each task from 1 (poor) to 4 (excellent).</p></div>
+    <div class="card">${block("T1",DATA.task1)}${block("T2",DATA.task2)}</div>`;
+}
+
+function renderBackground(){
+  return `<div class="card"><h2>About your background</h2><p class="muted">Used only to describe the panel as a group.</p>
+    ${Object.entries(BACKGROUND).map(([k,opts])=>`<div class="q"><label class="q-label" for="${esc(k)}">${esc(k.replace(/^B\d /,""))}</label>
+      <select id="${esc(k)}" data-bg="${esc(k)}"><option value="">Choose…</option>${opts.map(o=>`<option ${S.background[k]===o?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`).join("")}
+  </div>`;
+}
+
+function renderReview(){
+  const done = S.scenarios.map(a=>!!(a.best&&a.worst&&a.relevance&&a.dimension));
+  const n = done.filter(Boolean).length;
+  return `<div class="card"><h2>Ready to submit</h2>
+    <p>You have completed <strong>${n} of ${N}</strong> scenarios (most and least effective, relevance, and behavior all answered).</p>
+    ${n<N?`<p class="muted">Incomplete scenarios are not shaded below. You can submit anyway, or select a number to go back to it.</p>`:""}
+    <div class="jump">${done.map((d,i)=>`<button data-jump="${i}" class="${d?"done":""}">${i+1}</button>`).join("")}</div>
+    <p class="muted" style="margin-top:16px">After you submit, your answers cannot be changed.</p>
+    <div id="submitError"></div>
+  </div>`;
+}
+
+function renderDone(){
+  return `<div class="card"><h2>Thank you</h2><p>Your review has been submitted. If panel agreement is low on some scenarios, we may send a short follow-up with revised items.</p>
+    <p class="muted">Questions: <a href="mailto:${esc(CONTACT)}">${esc(CONTACT)}</a></p></div>`;
+}
+
+// ---- Navigation ----------------------------------------------------------
+function render(){
+  const p = S.submitted ? P_DONE : S.page;
+  const m = $("#main");
+  m.innerHTML = p===0?renderWelcome():p===P_GUIDE?renderGuide():p<P_TASKS?renderScenario(p-P_FIRST):
+    p===P_TASKS?renderTasks():p===P_BG?renderBackground():p===P_REVIEW?renderReview():renderDone();
+  bind(p);
+  const inScen = p>=P_FIRST && p<P_TASKS;
+  $("#count").textContent = inScen ? `Scenario ${p-P_FIRST+1} of ${N}` : "";
+  $("#prog").style.width = (Math.min(p,P_REVIEW)/P_REVIEW*100)+"%";
+  $("#back").style.visibility = (p===0||p===P_DONE)?"hidden":"visible";
+  $("#next").style.visibility = p===P_DONE?"hidden":"visible";
+  $("#next").textContent = p===0?"Start":p===P_REVIEW?"Submit":"Next";
+  $("#next").disabled = p===0 && !S.consent;
+  $("#msg").textContent = p===0&&!S.consent?"Please confirm you agree to take part.":"";
+  window.scrollTo(0,0);
+}
+
+function bind(p){
+  if (p===0){
+    $("#consent").addEventListener("change",e=>{S.consent=e.target.checked; save(); render();});
+    $("#website").addEventListener("input",e=>{S.website=e.target.value; save();});
+  }
+  if (p>=P_FIRST && p<P_TASKS){
+    const a = S.scenarios[p-P_FIRST], m=$("#main");
+    m.querySelectorAll("input[name=best],input[name=worst]").forEach(el=>el.addEventListener("change",e=>{
+      const k=e.target.name, other=k==="best"?"worst":"best";
+      a[k]=e.target.value; if (a[other]===a[k]) a[other]="";
+      save(); render();
+    }));
+    m.querySelectorAll("input[name=relevance]").forEach(el=>el.addEventListener("change",e=>{a.relevance=Number(e.target.value); save();}));
+    m.querySelectorAll("input[name=dimension]").forEach(el=>el.addEventListener("change",e=>{a.dimension=e.target.value; save();}));
+    m.querySelectorAll("input[name=problems]").forEach(el=>el.addEventListener("change",()=>{
+      a.problems=[...m.querySelectorAll("input[name=problems]:checked")].map(x=>x.value); save();}));
+    $("#comments").addEventListener("input",e=>{a.comments=e.target.value; save();});
+  }
+  if (p===P_TASKS){
+    $("#main").querySelectorAll("input[type=radio]").forEach(el=>el.addEventListener("change",e=>{S.tasks[e.target.name]=Number(e.target.value); save();}));
+    $("#main").querySelectorAll("textarea[data-task]").forEach(el=>el.addEventListener("input",e=>{S.tasks[e.target.dataset.task]=e.target.value; save();}));
+  }
+  if (p===P_BG){
+    $("#main").querySelectorAll("select[data-bg]").forEach(el=>el.addEventListener("change",e=>{S.background[e.target.dataset.bg]=e.target.value; save();}));
+  }
+  if (p===P_REVIEW){
+    $("#main").querySelectorAll("[data-jump]").forEach(b=>b.addEventListener("click",()=>{S.page=P_FIRST+Number(b.dataset.jump); save(); render();}));
+  }
+}
+
+function startClock(){ if (!S.started) { S.started = Date.now(); save(); } }
+
+$("#back").addEventListener("click",()=>{ if (S.page>0){ S.page--; save(); render(); }});
+$("#next").addEventListener("click",()=>{
+  if (S.page===0 && !S.consent) return;
+  if (S.page===0) startClock();
+  if (S.page===P_REVIEW) return submit();
+  S.page++; save(); render();
+});
+
+// ---- Submission ----------------------------------------------------------
+async function submit(){
+  const btn=$("#next"); btn.disabled=true; btn.textContent="Submitting…";
+  const payload = {
+    consent:S.consent, website:S.website, responseId:S.responseId,
+    minutes: S.started ? (Date.now()-S.started)/60000 : null,
+    scenarios:S.scenarios.map(a=>({best:a.best,worst:a.worst,relevance:a.relevance,dimension:a.dimension,problems:a.problems,comments:a.comments})),
+    tasks:S.tasks, background:S.background };
+  try {
+    const res = await fetch(ENDPOINT,{method:"POST",body:JSON.stringify(payload)}); // text/plain: no CORS preflight
+    const out = await res.json();
+    if (!out.ok) throw new Error(out.error||"not saved");
+    S.submitted=true; save(); render();
+  } catch(err){
+    btn.disabled=false; btn.textContent="Submit";
+    const box=$("#submitError");
+    box.innerHTML = `<div class="note">Your answers could not be sent (${esc(err.message)}). They are still saved in this browser. Please check your connection and try again. If it keeps failing, <a href="#" id="dl">download your answers</a> and email the file to ${esc(CONTACT)}.</div>`;
+    $("#dl").addEventListener("click",e=>{e.preventDefault();
+      const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,1)],{type:"application/json"}));
+      const a=document.createElement("a"); a.href=url; a.download="cda_review_answers.json"; a.click(); URL.revokeObjectURL(url);});
+  }
+}
+
+render();
+</script>
+</body>
+</html>

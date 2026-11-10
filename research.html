@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research — Workforce 2100</title>
+<meta name="description" content="Papers and studies on AI fluency, human judgment and the future of work, with citations for each paper.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='3' y='19' width='22' height='3' rx='1.5' fill='%239DB3C6'/%3E%3Crect x='3' y='12.5' width='22' height='3' rx='1.5' fill='%235D88AC'/%3E%3Crect x='3' y='6' width='22' height='3' rx='1.5' fill='%231F5F8B'/%3E%3C/svg%3E">
+<style>
+.paper { border: 1px solid var(--line); border-radius: 10px; padding: 32px; display: flex; flex-wrap: wrap; gap: 32px; scroll-margin-top: 24px; }
+.paper .main { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.paper h2 { font-size: 25px; line-height: 1.3; }
+.paper .side { flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 10px; border-left: 1px solid var(--line); padding-left: 24px; }
+.cite-box { flex: 1 1 100%; min-width: 0; background: var(--tint); border-radius: 8px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+.cite-box .apa { margin: 6px 0 0; font-size: 15px; line-height: 1.6; padding-left: 2em; text-indent: -2em; overflow-wrap: anywhere; }
+.cite-box pre { margin: 6px 0 0; font-family: 'SFMono-Regular', Menlo, Consolas, monospace; font-size: 13px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; background: #FFFFFF; border: 1px solid #DDE3E9; border-radius: 6px; padding: 14px 16px; }
+.label { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--ink-3); }
+.copy { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line-2); background: #fff; color: var(--blue); cursor: pointer; margin-left: 8px; }
+@media (max-width: 720px) { .paper { padding: 24px; } .paper .side { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 16px; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="19" width="22" height="3" rx="1.5" fill="#9DB3C6"/><rect x="3" y="12.5" width="22" height="3" rx="1.5" fill="#5D88AC"/><rect x="3" y="6" width="22" height="3" rx="1.5" fill="#1F5F8B"/></svg>
+<span>Workforce 2100<small>Research on AI, work and education</small></span>
+</a>
+<nav class="nav" aria-label="Main">
+<a href="index.html#what-we-study">What we study</a>
+<a href="research.html" aria-current="page">Research</a>
+<a href="work-2035.html">Work to 2035</a>
+<a href="surveys.html">Surveys</a>
+<a href="index.html#team">Team</a>
+<a href="index.html#contact">Contact</a>
+<a class="btn btn-primary" href="work-2035.html">Explore the data</a>
+</nav>
+</div>
+</header>
+
+<main id="main">
+<section class="band">
+<div class="wrap" style="padding-top: 72px; padding-bottom: 56px">
+<h1 style="font-size: 48px">Research</h1>
+<p class="lede" style="margin: 16px 0 0">Every paper in the program, from published preprints to studies still in progress. Each entry links to the full text and gives its own citation.</p>
+<div class="pills" role="group" aria-label="Filter by status" id="filters" style="margin-top: 32px"></div>
+</div>
+</section>
+
+<section class="wrap" style="padding-top: 48px; padding-bottom: 40px">
+<div id="list" style="display: flex; flex-direction: column; gap: 24px"></div>
+<p style="margin: 40px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 760px"><strong style="color: var(--ink)">Citing our work.</strong> Each paper has its own author list. Use the button on each paper for its APA and BibTeX entries. We update them when a paper moves from preprint to journal.</p>
+</section>
+</main>
+
+<footer class="site-footer">
+<div class="wrap">
+<div>© 2026 Workforce 2100 · Text and our own data under CC BY 4.0, except third-party data as credited<br>Contact: <a href="mailto:aethalassinidis@aacc.edu">aethalassinidis@aacc.edu</a></div>
+<nav aria-label="Footer"><a href="surveys.html">Surveys</a><a href="index.html">Home</a><a href="work-2035.html">Work to 2035</a></nav>
+</div>
+</footer>
+
+<script>
+(function () {
+  var papers = [
+    { id: 'delegation', group: 'preprint', status: 'Preprint', chip: 'chip-green', kind: 'Framework + instrument',
+      title: 'AI Fluency Under Delegation: A Consequence-Based Framework and Assessment Instrument for AI Fluency in Agentic Work',
+      authors: 'Angelo E. Thalassinidis, Athanasios Nathanail · 2026',
+      summary: 'A framework for AI fluency when AI agents do part of the work: deciding what to hand over, checking what comes back, and owning the outcome. It comes with an assessment instrument to measure that judgment.',
+      stage: 'Preprint on EdArXiv. Validation study in preparation.',
+      link: 'https://doi.org/10.35542/osf.io/rmdse_v1', linkLabel: 'Read preprint',
+      apa: 'Thalassinidis, A. E., & Nathanail, A. (2026). AI fluency under delegation: A consequence-based framework and assessment instrument for AI fluency in agentic work [Preprint]. EdArXiv. https://doi.org/10.35542/osf.io/rmdse_v1',
+      bib: '@misc{thalassinidis2026delegation,\n  author = {Thalassinidis, Angelo E. and Nathanail, Athanasios},\n  title = {{AI} Fluency Under Delegation: A Consequence-Based Framework and Assessment Instrument for {AI} Fluency in Agentic Work},\n  year = {2026},\n  howpublished = {EdArXiv preprint},\n  doi = {10.35542/osf.io/rmdse_v1}\n}' },
+    { id: 'imperative', group: 'preprint', status: 'Preprint', chip: 'chip-green', kind: 'Conceptual',
+      title: 'The AI Fluency Imperative: Cognitive Tax, the Diamond Workforce, and the Case for Consequence-Based Learning',
+      authors: 'Angelo E. Thalassinidis, Lance Bowen · 2026',
+      summary: 'Why teaching people to use AI tools is not enough. The paper explains the cognitive tax of checking AI work and the diamond-shaped workforce, and makes the case for learning built around consequences.',
+      stage: 'Preprint on SSRN. Journal submission in preparation.',
+      link: 'https://papers.ssrn.com/abstract=7670658', linkLabel: 'Read preprint',
+      apa: 'Thalassinidis, A. E., & Bowen, L. (2026). The AI fluency imperative: Cognitive tax, the diamond workforce, and the case for consequence-based learning [Preprint]. SSRN. https://papers.ssrn.com/abstract=7670658',
+      bib: '@misc{thalassinidis2026imperative,\n  author = {Thalassinidis, Angelo E. and Bowen, Lance},\n  title = {The {AI} Fluency Imperative: Cognitive Tax, the Diamond Workforce, and the Case for Consequence-Based Learning},\n  year = {2026},\n  howpublished = {SSRN preprint},\n  url = {https://papers.ssrn.com/abstract=7670658}\n}' },
+    { id: 'judgment-course', group: 'preprint', status: 'Preprint', chip: 'chip-green', kind: 'Essay',
+      title: 'AI Fluency Is a Judgment, Not a Course',
+      authors: 'Angelo E. Thalassinidis, Lance Bowen · 2026',
+      summary: 'AI is taking over the entry-level work where graduates used to learn their professions, and tool training will not replace it. Borrowed judgment is not formed judgment. The essay separates AI literacy from AI fluency and warns that the workforce is shifting from a pyramid to a diamond.',
+      stage: 'Preprint on EdArXiv.',
+      link: 'https://doi.org/10.35542/osf.io/3n54p_v2', linkLabel: 'Read preprint',
+      apa: 'Thalassinidis, A. E., & Bowen, L. (2026). AI fluency is a judgment, not a course [Preprint]. EdArXiv. https://doi.org/10.35542/osf.io/3n54p_v2',
+      bib: '@misc{thalassinidis2026judgmentcourse,\n  author = {Thalassinidis, Angelo E. and Bowen, Lance},\n  title = {{AI} Fluency Is a Judgment, Not a Course},\n  year = {2026},\n  howpublished = {EdArXiv preprint},\n  doi = {10.35542/osf.io/3n54p_v2}\n}' },
+    { id: 'literacy-fluency', group: 'preprint', status: 'Preprint', chip: 'chip-green', kind: 'Article',
+      title: 'From AI Literacy to AI Fluency',
+      authors: 'Angelo E. Thalassinidis, Lance Bowen · 2026',
+      summary: 'As AI moves from assisting to acting on its own, teaching students to operate tools is not enough. The article calls for a two-stage, consequence-based model: deliberate friction in coursework, then high-stakes experiential learning before graduation, assessed on judgment rather than the polished product.',
+      stage: 'Preprint on EdArXiv.',
+      link: 'https://doi.org/10.35542/osf.io/49bmu_v1', linkLabel: 'Read preprint',
+      apa: 'Thalassinidis, A. E., & Bowen, L. (2026). From AI literacy to AI fluency [Preprint]. EdArXiv. https://doi.org/10.35542/osf.io/49bmu_v1',
+      bib: '@misc{thalassinidis2026literacyfluency,\n  author = {Thalassinidis, Angelo E. and Bowen, Lance},\n  title = {From {AI} Literacy to {AI} Fluency},\n  year = {2026},\n  howpublished = {EdArXiv preprint},\n  doi = {10.35542/osf.io/49bmu_v1}\n}' },
+    { id: 'judgment', group: 'preprint', status: 'Preprint', chip: 'chip-green', kind: 'Economics of AI',
+      title: 'The Price of Judgment: Verification Capacity, AI Fluency, and the Realizable Value of AI',
+      authors: 'Angelo E. Thalassinidis · 2026',
+      summary: 'Counts the cost of checking AI work and of errors that slip through. Only about a fifth of the headline value of AI-exposed work is realizable, and AI fluency raises that share.',
+      stage: 'Preprint on SSRN. Journal submission in preparation.',
+      link: 'https://papers.ssrn.com/abstract=7665993', linkLabel: 'Read preprint',
+      apa: 'Thalassinidis, A. E. (2026). The price of judgment: Verification capacity, AI fluency, and the realizable value of AI [Preprint]. SSRN. https://papers.ssrn.com/abstract=7665993',
+      bib: '@misc{thalassinidis2026judgment,\n  author = {Thalassinidis, Angelo E.},\n  title = {The Price of Judgment: Verification Capacity, {AI} Fluency, and the Realizable Value of {AI}},\n  year = {2026},\n  howpublished = {SSRN preprint},\n  url = {https://papers.ssrn.com/abstract=7665993}\n}' },
+    { id: 'moving', group: 'preprint', status: 'Preprint', chip: 'chip-green', kind: 'Workforce & programs',
+      title: 'Where Work Is Moving: Occupations, Academic Programs and Places in the 2035 AI Workforce Scenario: A Roadmap for Higher Education',
+      authors: 'Angelo E. Thalassinidis · 2026',
+      summary: 'Reads the 2035 AI workforce scenario occupation by occupation, then maps it to academic programs and places so colleges can decide where to invest, reinvent or review.',
+      stage: 'Preprint on SSRN. Data on OSF. Explore it on the Work to 2035 page.',
+      link: 'https://papers.ssrn.com/abstract=7679758', linkLabel: 'Read preprint',
+      apa: 'Thalassinidis, A. E. (2026). Where work is moving: Occupations, academic programs and places in the 2035 AI workforce scenario: A roadmap for higher education [Preprint]. SSRN. https://papers.ssrn.com/abstract=7679758',
+      bib: '@misc{thalassinidis2026moving,\n  author = {Thalassinidis, Angelo E.},\n  title = {Where Work Is Moving: Occupations, Academic Programs and Places in the 2035 {AI} Workforce Scenario: A Roadmap for Higher Education},\n  year = {2026},\n  howpublished = {SSRN preprint},\n  url = {https://papers.ssrn.com/abstract=7679758}\n}' },
+    { id: 'talent', group: 'preprint', status: 'Preprint', chip: 'chip-green', kind: 'Empirical study',
+      title: 'Where the Talent Goes: Field, Credential, and the Geography of Graduate Retention',
+      authors: 'Angelo E. Thalassinidis, Lance Bowen · 2026',
+      summary: "Census graduate-outcome data for 35 states, checked against IRS migration data, show that technical graduates are the least likely to stay in their state: 63.3% of bachelor's technical graduates work in-state a year after graduating, against 80.1% in fields such as education and health. Associate graduates stay at higher rates.",
+      stage: 'Preprint on EdArXiv.',
+      link: 'https://doi.org/10.35542/osf.io/gwfpx_v1', linkLabel: 'Read preprint',
+      apa: 'Thalassinidis, A. E., & Bowen, L. (2026). Where the talent goes: Field, credential, and the geography of graduate retention [Preprint]. EdArXiv. https://doi.org/10.35542/osf.io/gwfpx_v1',
+      bib: '@misc{thalassinidis2026talent,\n  author = {Thalassinidis, Angelo E. and Bowen, Lance},\n  title = {Where the Talent Goes: Field, Credential, and the Geography of Graduate Retention},\n  year = {2026},\n  howpublished = {EdArXiv preprint},\n  doi = {10.35542/osf.io/gwfpx_v1}\n}' },
+    { id: 'program', group: 'progress', status: 'Manuscript', chip: 'chip-amber', kind: 'Curriculum design',
+      title: 'From Framework to Program: Sequencing AI Autonomy in an Applied AI Associate Degree for Agentic Work',
+      authors: 'Angelo E. Thalassinidis, Athanasios Nathanail · 2026',
+      summary: 'Turns the Calibrated Delegation Framework into a degree. A proposed 31-credit core for an Applied AI A.A.S. at a U.S. community college plans, term by term, when students attempt work themselves and when they delegate it to AI, ending in capstones for real small-business clients.',
+      stage: 'Manuscript prepared for Frontiers in Education. A public version will be linked here when available.' },
+    { id: 'ladder', group: 'progress', status: 'In progress', chip: 'chip-amber', kind: 'Empirical study',
+      title: 'From Information Literacy to AI Fluency: What Community Colleges Commit To',
+      authors: 'Working title · Thalassinidis & Bowen',
+      summary: 'Codes mission and vision statements, strategic plans and institutional core competencies for each rung of the ladder.',
+      stage: 'Data collection under way across three document sets.' },
+    { id: 'prereg', group: 'progress', status: 'Registered study', chip: 'chip-gray', kind: 'Empirical study',
+      title: 'Does Agentic AI Thin Out Entry-Level Employment?',
+      authors: 'Angelo E. Thalassinidis',
+      summary: 'A pre-registered test of whether agentic AI reduces entry-level hiring, using data released after the study plan was fixed.',
+      stage: 'Registered on OSF. Waiting for the next Census data release.',
+      link: 'https://osf.io/hzjgm', linkLabel: 'See the registration',
+      apa: 'Thalassinidis, A. E. (2026). Does agentic AI thin out entry-level employment? [Preregistration]. OSF Registries. https://doi.org/10.17605/OSF.IO/HZJGM',
+      bib: '@misc{thalassinidis2026prereg,\n  author = {Thalassinidis, Angelo E.},\n  title = {Does Agentic {AI} Thin Out Entry-Level Employment?},\n  year = {2026},\n  howpublished = {OSF Registries, preregistration},\n  doi = {10.17605/OSF.IO/HZJGM}\n}' }
+  ];
+  var filter = 'all';
+  var open = (location.hash || '').replace('#', '');
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+
+  function renderFilters() {
+    var defs = [['all', 'All'], ['preprint', 'Preprints'], ['progress', 'In progress & registered']];
+    document.getElementById('filters').innerHTML = defs.map(function (d) {
+      return '<button type="button" class="pill" data-f="' + d[0] + '" aria-pressed="' + (d[0] === filter) + '">' + d[1] + '</button>';
+    }).join('');
+  }
+  function renderList() {
+    var html = papers.filter(function (p) { return filter === 'all' || p.group === filter; }).map(function (p) {
+      var isOpen = open === p.id && p.apa;
+      var side = '<div class="label">WHERE IT STANDS</div><div style="font-size: 15px; line-height: 1.5">' + esc(p.stage) + '</div>';
+      if (p.link) side += '<a href="' + p.link + '" style="margin-top: 6px; font-weight: 600; font-size: 15px">' + esc(p.linkLabel) + ' →</a>';
+      if (p.apa) side += '<button type="button" class="btn btn-light" data-cite="' + p.id + '" aria-expanded="' + (!!isOpen) + '" style="margin-top: 6px; align-self: flex-start; padding: 10px 16px; color: var(--blue) !important">' + (isOpen ? 'Hide citation' : 'Cite this paper') + '</button>';
+      var cite = isOpen ? '<div class="cite-box"><div><span class="label">APA 7</span><button type="button" class="copy" data-copy="apa" data-id="' + p.id + '">Copy</button><p class="apa">' + esc(p.apa) + '</p></div><div><span class="label">BIBTEX</span><button type="button" class="copy" data-copy="bib" data-id="' + p.id + '">Copy</button><pre>' + esc(p.bib) + '</pre></div></div>' : '';
+      return '<article class="paper" id="' + p.id + '"><div class="main"><div class="chips"><span class="chip ' + p.chip + '">' + esc(p.status) + '</span><span class="chip chip-gray">' + esc(p.kind) + '</span></div><h2>' + esc(p.title) + '</h2><p class="muted" style="margin: 0; font-size: 14px">' + esc(p.authors) + '</p><p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-2)">' + esc(p.summary) + '</p></div><div class="side">' + side + '</div>' + cite + '</article>';
+    }).join('');
+    document.getElementById('list').innerHTML = html;
+  }
+  document.getElementById('filters').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-f]'); if (!b) return;
+    filter = b.getAttribute('data-f'); renderFilters(); renderList();
+  });
+  document.getElementById('list').addEventListener('click', function (e) {
+    var c = e.target.closest('[data-cite]');
+    if (c) { var id = c.getAttribute('data-cite'); open = open === id ? '' : id; renderList(); return; }
+    var cp = e.target.closest('[data-copy]');
+    if (cp) {
+      var p = papers.filter(function (x) { return x.id === cp.getAttribute('data-id'); })[0];
+      var text = p[cp.getAttribute('data-copy')];
+      try { navigator.clipboard.writeText(text).then(function () { cp.textContent = 'Copied'; setTimeout(function () { cp.textContent = 'Copy'; }, 1500); }); } catch (err) {}
+    }
+  });
+  renderFilters(); renderList();
+  if (open) { var el = document.getElementById(open); if (el) el.scrollIntoView(); }
+})();
+</script>
+</body>
+</html>

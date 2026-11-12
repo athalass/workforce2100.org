@@ -11,7 +11,7 @@
   var st = { tab: 'occupations', olim: 25, plim: 25, meas: 'wi', sel: 'MD' };
 
   // ---------- Tabs ----------
-  var TABS = ['occupations', 'programs', 'states', 'value'];
+  var TABS = ['occupations', 'stateimpact', 'programs', 'institutions', 'states', 'value'];
   function setTab(t, push) {
     if (TABS.indexOf(t) < 0) t = 'occupations';
     st.tab = t;

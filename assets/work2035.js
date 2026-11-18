@@ -11,8 +11,9 @@
   var st = { tab: 'occupations', olim: 25, plim: 25, meas: 'wi', sel: 'MD' };
 
   // ---------- Tabs ----------
-  var TABS = ['occupations', 'stateimpact', 'programs', 'institutions', 'states', 'value'];
+  var TABS = ['occupations', 'stateimpact', 'programs', 'institutions', 'value'];
   function setTab(t, push) {
+    if (t === 'states') t = 'stateimpact';
     if (TABS.indexOf(t) < 0) t = 'occupations';
     st.tab = t;
     Array.prototype.forEach.call(document.querySelectorAll('#tabs [data-tab]'), function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === t)); });
@@ -94,8 +95,8 @@
       '<p class="muted" style="margin: 14px 0 0; font-size: 13px">Rank ' + rank[s.ab] + ' of 51 on the measure shown.</p>';
     $('top').innerHTML = ranked.slice(0, 10).map(function (x) { return '<li>' + esc(x.nm) + ' <span class="muted">· ' + M.fmt(x) + '</span></li>'; }).join('');
   }
-  $('measures').addEventListener('click', function (e) { var b = e.target.closest('[data-m]'); if (b) { st.meas = b.getAttribute('data-m'); renderStates(); } });
-  $('map').addEventListener('click', function (e) { var b = e.target.closest('[data-ab]'); if (b) { st.sel = b.getAttribute('data-ab'); renderStates(); } });
+  if ($('measures')) $('measures').addEventListener('click', function (e) { var b = e.target.closest('[data-m]'); if (b) { st.meas = b.getAttribute('data-m'); renderStates(); } });
+  if ($('map')) $('map').addEventListener('click', function (e) { var b = e.target.closest('[data-ab]'); if (b) { st.sel = b.getAttribute('data-ab'); renderStates(); } });
 
   // ---------- Value ----------
   function renderValue() {
@@ -130,7 +131,7 @@
     var groups = {}; d.occ.forEach(function (o) { groups[o.g] = 1; });
     $('og').insertAdjacentHTML('beforeend', Object.keys(groups).sort().map(function (g) { return '<option>' + esc(g) + '</option>'; }).join(''));
     $('loading').hidden = true;
-    renderOcc(); renderProg(); renderStates(); renderValue();
+    renderOcc(); renderProg(); if ($('map')) renderStates(); renderValue();
     setTab((location.hash || '').replace('#', ''), false);
   }).catch(function () {
     $('loading').textContent = 'The data could not be loaded. Please refresh the page.';

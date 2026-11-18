@@ -72,8 +72,7 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 <button type="button" class="pill" role="tab" data-tab="occupations">Occupations</button>
 <button type="button" class="pill" role="tab" data-tab="programs">Academic programs</button>
 <button type="button" class="pill" role="tab" data-tab="institutions">Institutions</button>
-<button type="button" class="pill" role="tab" data-tab="states">States</button>
-<button type="button" class="pill" role="tab" data-tab="stateimpact">State impact</button>
+<button type="button" class="pill" role="tab" data-tab="stateimpact">States</button>
 <button type="button" class="pill" role="tab" data-tab="value">Value of AI &amp; who decides</button>
 </div>
 </div>
@@ -117,7 +116,9 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 <option value="ts">Share of workers who may need to change occupation</option>
 <option value="wpw">Wages at stake per worker</option>
 <option value="ns">Net change in jobs</option>
+<option value="wi">Wages AI can profitably take on, per worker-hour (U.S. = 100)</option>
 </select></label></div>
+<p class="sub" id="metricNote" style="margin:-4px 0 12px"></p>
 <div class="tmap" id="tmap"></div><div class="legend" id="leg"></div></div>
 <div class="box" id="stateCard"></div>
 </div>
@@ -167,22 +168,6 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 <div class="more" id="imore"></div>
 <p class="note"><b>Programs</b> are 4-digit fields of study by award level, IPEDS 2023–24. <b>Peers</b> are institutions of the same type in the same state. <b>High-AI programs:</b> AI pays for half or more of graduates' work hours. Tiers describe demand for graduates, not program quality.</p>
 </section>
-
-<section class="wrap" id="tab-states" role="tabpanel" hidden style="padding-top: 40px">
-<div class="pills" role="group" aria-label="Map measure" id="measures"></div>
-<p id="measureNote" style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 820px"></p>
-<div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
-<div style="flex: 999 1 560px; min-width: 0">
-<div class="tile-map" id="map"></div>
-<div class="legend" id="legend"></div>
-</div>
-<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-<div class="panel" id="selPanel" aria-live="polite"></div>
-<div><div style="font-size: 14px; font-weight: 600">Highest on this measure</div><ol id="top" style="margin: 8px 0 0; padding-left: 22px; font-size: 14px; line-height: 1.9"></ol></div>
-</div>
-</div>
-</section>
-
 <!-- Value -->
 <section class="wrap" id="tab-value" role="tabpanel" hidden style="padding-top: 40px">
 <h2 style="font-size: 30px">From headline value to realizable value</h2>
@@ -260,8 +245,8 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 <nav aria-label="Footer"><a href="about.html">About</a><a href="surveys.html">Surveys</a><a href="index.html">Home</a><a href="research.html">Research</a></nav>
 </div>
 </footer>
-<script src="assets/work2035.js?v=20261112"></script>
-<script src="assets/impact.js?v=20261115"></script>
+<script src="assets/work2035.js?v=20261118"></script>
+<script src="assets/impact.js?v=20261118"></script>
 <script src="assets/mobile-tables.js?v=1"></script>
 </body>
 </html>

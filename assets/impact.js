@@ -1,12 +1,12 @@
 (function(){
-fetch("data/impact_data.json?v=20261115").then(function(r){return r.json()}).then(function(D){
+fetch("data/impact_data.json?v=20261118").then(function(r){return r.json()}).then(function(D){
 var POS={AK:[0,0],ME:[11,0],VT:[10,1],NH:[11,1],WA:[1,2],ID:[2,2],MT:[3,2],ND:[4,2],MN:[5,2],IL:[6,2],WI:[7,2],MI:[8,2],NY:[9,2],RI:[10,2],MA:[11,2],OR:[1,3],NV:[2,3],WY:[3,3],SD:[4,3],IA:[5,3],IN:[6,3],OH:[7,3],PA:[8,3],NJ:[9,3],CT:[10,3],CA:[1,4],UT:[2,4],CO:[3,4],NE:[4,4],MO:[5,4],KY:[6,4],WV:[7,4],VA:[8,4],MD:[9,4],DE:[10,4],AZ:[2,5],NM:[3,5],KS:[4,5],AR:[5,5],TN:[6,5],NC:[7,5],SC:[8,5],DC:[9,5],OK:[4,6],LA:[5,6],MS:[6,6],AL:[7,6],GA:[8,6],HI:[0,7],TX:[4,7],FL:[9,7]};
 var S=D.states, sel='MD';
 function f0(n){return Math.round(n).toLocaleString('en-US')}
 function fM(n){return n>=1e6?(n/1e6).toFixed(1)+'M':Math.round(n/1e3).toLocaleString('en-US')+'k'}
 function pc(x,d){return (x*100).toFixed(d==null?1:d)+'%'}
 function sg(x){return (x>0?'+':x<0?'−':'')+Math.abs(x*100).toFixed(1)+'%'}
-var M={es:{t:'Share of jobs in highly exposed occupations',f:function(s){return pc(s.es,0)}},ts:{t:'Workers who may need to change occupation',f:function(s){return pc(s.ts)}},wpw:{t:'Wages at stake per worker, per year',f:function(s){return '$'+f0(s.wpw)}},ns:{t:'Net change in jobs, 2025–2035',f:function(s){return sg(s.ns)}}};
+var M={es:{t:'Share of jobs in highly exposed occupations',f:function(s){return pc(s.es,0)}},ts:{t:'Workers who may need to change occupation',f:function(s){return pc(s.ts)}},wpw:{t:'Wages at stake per worker, per year',f:function(s){return '$'+f0(s.wpw)}},ns:{t:'Net change in jobs, 2025–2035',f:function(s){return sg(s.ns)}},wi:{t:'Wages AI can profitably take on, per worker-hour (U.S. = 100)',f:function(s){return s.wi==null?'—':s.wi.toFixed(0)},n:'From The Price of Judgment: the wages of the work AI can profitably take on, per worker-hour, compared with the U.S. average. According to our model, AI pays first where labor costs most, so high-wage states may feel the change first.'}};
 var RAMP=['#E8EEF4','#C3D3E2','#93B1CB','#5D88AC','#2F5F86','#16395A'];
 var US={jobs:0,gross:0,dec:0,w:0,exp:0}; S.forEach(function(s){US.jobs+=s.jobs;US.gross+=s.gross;US.dec+=s.dec;US.w+=s.wbn;US.exp+=s.exp});
 document.getElementById('usk').innerHTML='<div class="kpi"><b>'+fM(US.exp)+'</b><span>jobs in highly exposed occupations ('+pc(US.exp/US.jobs,0)+' of all jobs)</span></div><div class="kpi"><b>'+fM(US.gross)+'</b><span>jobs of work removed by AI automation by 2035, before growth</span></div><div class="kpi"><b>'+fM(US.dec)+'</b><span>workers in occupations that shrink, who may need to change occupation</span></div><div class="kpi"><b>$'+(US.w/1000).toFixed(2)+'T</b><span>a year in wages tied to the work AI removes</span></div>';
@@ -14,7 +14,7 @@ function draw(){
  var m=document.getElementById('metric').value, vals=S.map(function(s){return s[m]}).sort(function(a,b){return a-b});
  var q=[1,2,3,4,5].map(function(i){return vals[Math.floor(i*vals.length/6)]});
  function band(v){var b=0;q.forEach(function(t){if(v>=t)b++});return b}
- document.getElementById('mapTitle').textContent=M[m].t;
+ document.getElementById('mapTitle').textContent=M[m].t; var mn=document.getElementById('metricNote'); if(mn){mn.textContent=M[m].n||'';mn.hidden=!M[m].n}
  document.getElementById('tmap').innerHTML=S.map(function(s){var p=POS[s.ab],b=band(s[m]);return '<button style="grid-column:'+(p[0]+1)+';grid-row:'+(p[1]+1)+';background:'+RAMP[b]+';color:'+(b>2?'#fff':'#16202A')+'" class="'+(s.ab===sel?'sel':'')+'" data-ab="'+s.ab+'" title="'+s.nm+': '+M[m].f(s)+'">'+s.ab+'</button>'}).join('');
  document.getElementById('leg').innerHTML='Lower '+RAMP.map(function(c){return '<i style="background:'+c+'"></i>'}).join('')+' Higher';
  document.querySelectorAll('#tmap button').forEach(function(b){b.onclick=function(){sel=b.dataset.ab;draw()}});

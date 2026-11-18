@@ -102,7 +102,7 @@ body = f'''<main id="main">
 <ul>
 <li><b>Public data stays public.</b> Profiles and yearly comparisons are built from public data, cover every institution and are published openly under each institution's name.</li>
 <li><b>What participants tell us stays confidential.</b> Survey and interview responses are stored securely. Findings that draw on them are reported in aggregate, and an institution is named only with its written permission.</li>
-<li><b>Used only for this study.</b> Participants' contact details and responses are never shared with any company, including Horizon 2100 LLC, and never used for marketing.</li>
+<li><b>Used only for this study.</b> Participants' contact details and responses are never shared with any company and never used for marketing.</li>
 <li><b>Corrections.</b> Any institution can report an error in its profile or comparison at {E}, and every report gets a reply.</li>
 </ul>
 

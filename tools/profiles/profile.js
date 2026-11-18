@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118l';
+  var V = '20261118m';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');

@@ -13,3 +13,7 @@ Yearly (new state workbooks, Independent_version):
 
 Corrections log:
 Each profile has a "Report an error or request a correction" email link. Log every request in the Corrections log table in make_shell.py (section id="corrections"): date received, institution, what was reported, the response, and the version that fixed it. No sender names. Then rerun make_shell.py.
+
+## Hidden institutions
+
+`hide_institutions.py` removes listed institutions from the published profiles, the search index, the Work 2035 Institutions tab and other colleges' Competition sections, without changing any totals. While an institution is listed in `HIDE`, run it after every rebuild (for example after the quarterly QCEW refresh), then check the institution count on profile.html, work-2035.html and index.html. Currently hidden: Anne Arundel Community College (since November 18, 2026, pending approval).

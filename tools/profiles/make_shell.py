@@ -57,8 +57,8 @@ for f in glob.glob(f'{DATA}/*.json'):
 shutil.copy(f'{HERE}/profile.js', f'{ROOT}/assets/profile.js')
 shutil.copy(f'{HERE}/profile.css', f'{ROOT}/assets/profile.css')
 
-# menu link on every page, and links from home and Work to 2035
-for f in glob.glob(f'{ROOT}/*.html'):
+# menu links disabled: the profiles page is reachable only by its address (Nov 18, 2026)
+for f in []:
     s = open(f).read()
     if 'href="profile.html">College profiles</a>' not in s:
         s = s.replace('<a href="work-2035.html">Work to 2035</a>\n<a href="surveys.html">', '<a href="work-2035.html">Work to 2035</a>\n<a href="profile.html">College profiles</a>\n<a href="surveys.html">', 1)

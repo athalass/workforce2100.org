@@ -17,3 +17,11 @@ Each profile has a "Report an error or request a correction" email link. Log eve
 ## Hidden institutions
 
 `hide_institutions.py` removes listed institutions from the published profiles, the search index, the Work 2035 Institutions tab and other colleges' Competition sections, without changing any totals. While an institution is listed in `HIDE`, run it after every rebuild (for example after the quarterly QCEW refresh), then check the institution count on profile.html, work-2035.html and index.html. Currently hidden: Anne Arundel Community College (since November 18, 2026, pending approval).
+
+## State and county briefs (brief.html)
+
+Data: `data/briefs/<ST>.json` and `data/briefs/index.json`, built by the scripts in `tools/briefs/`.
+1. `python3 build_staffing.py <oesm25in4 dir> staffing.json` (OEWS May 2025 national industry files; yearly).
+2. `python3 build_briefs.py <Independent_version dir> US_Work_2035_Mobility.xlsx QCEW_2025_counties_states.csv.gz staffing.json BLS_EP_occupation.xlsx data/briefs`
+   Run after each quarterly QCEW refresh and each yearly re-run. Bump `V` in assets/brief.js.
+Industry view: QCEW jobs by industry (withheld cells spread over the suppressed 4-digit cells by state, or national, jobs), national OEWS staffing raked to each state's occupations, each occupation's state outlook applied. Slow recovery scales each occupation's new jobs from AI savings so the state total matches the workbook. Check: Maryland reproduces the Maryland industry report (+62,675 net, −39,882 slow, 172,980 jobs lost).

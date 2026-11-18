@@ -37,3 +37,21 @@
 .impx .diff{font-weight:600;font-size:13px;padding:2px 7px;border-radius:999px}
 .impx .diff.up{background:#E3F2EA;color:#1E7B4F}.diff.dn{background:#F8E9E6;color:#8A3328}.diff.eq{background:#EEF2F5;color:var(--ink-3)}
 @media(max-width:900px){.impx .row2{grid-template-columns:minmax(0,1fr)}.impx .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.impx .peer .p{grid-template-columns:minmax(0,1fr) 54px}.impx .peer .p .stack{grid-column:1/-1;grid-row:2}.impx .occ li{grid-template-columns:minmax(0,1fr) 70px 60px}.impx .ctrl select{min-width:0;width:100%}.impx .ctrl label{flex:1 1 100%}}
+
+/* phones: table rows become labeled cards */
+@media (max-width: 640px) {
+  [id^="tab-"] table { min-width: 0 !important; width: 100% !important; border: 0 !important; }
+  [id^="tab-"] table thead { display: none; }
+  [id^="tab-"] table, [id^="tab-"] table tbody, [id^="tab-"] table tr, [id^="tab-"] table td { display: block; width: 100%; box-sizing: border-box; }
+  [id^="tab-"] table tr { background: #fff; border: 1px solid var(--line, #DDE3E9) !important; border-radius: 10px; margin: 0 0 10px; padding: 10px 14px; }
+  [id^="tab-"] table td { display: grid; grid-template-columns: 42% minmax(0, 1fr); align-items: center; column-gap: 14px; row-gap: 4px; justify-items: end; padding: 5px 0 !important; border: 0 !important; text-align: right !important; min-width: 0 !important; white-space: normal !important; }
+  [id^="tab-"] table td::before { content: attr(data-label); grid-column: 1; grid-row: 1 / span 3; justify-self: start; text-align: left; font-size: 12.5px; line-height: 1.35; color: var(--ink-3, #6B7785); font-weight: 500; }
+  [id^="tab-"] table td > * { min-width: 0; grid-column: 2; max-width: 100%; }
+  [id^="tab-"] table td .chip { white-space: normal; text-align: right; }
+  [id^="tab-"] table td .bar { width: 100%; justify-content: flex-end; }
+  [id^="tab-"] table td:first-child { display: block !important; justify-items: start; text-align: left !important; padding: 0 0 8px !important; margin-bottom: 4px; border-bottom: 1px solid var(--line, #DDE3E9) !important; font-size: 15px; }
+  [id^="tab-"] table td:first-child::before, [id^="tab-"] table td[colspan]::before, [id^="tab-"] table td:not([data-label])::before { display: none; }
+  [id^="tab-"] table td:first-child > * { grid-column: auto; justify-self: start; text-align: left !important; width: auto; }
+  [id^="tab-"] table td[colspan] { display: block; text-align: left !important; }
+  [id^="tab-"] .tscroll, [id^="tab-"] [style*="overflow"] { overflow: visible !important; }
+}

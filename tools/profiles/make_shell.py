@@ -9,9 +9,9 @@ head = re.sub(r'<title>.*?</title>', '<title>College profiles — Workforce 2100
 head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free AI and labor-market profiles for 5,668 U.S. colleges and universities: local labor market, programs, a stress test, competition and adult learners to 2035.">', head)
 head = re.sub(r'<style>.*?</style>', '', head, flags=re.S)
 head = re.sub(r'<link rel="canonical" href="[^"]*">', '', head)
-head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261118e">\n</head>', 1)
+head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261118g">\n</head>', 1)
 foot = shell[shell.index('</main>'):]
-foot = foot.replace('</body>', '<script src="assets/profile.js?v=20261118f"></script>\n</body>', 1)
+foot = foot.replace('</body>', '<script src="assets/profile.js?v=20261118g"></script>\n</body>', 1)
 
 main = '''<main id="main">
 <section class="pf-top"><div class="wrap">
@@ -29,6 +29,18 @@ main = '''<main id="main">
 <p class="note">Free and open, from public federal data. Estimates, not predictions or advice. <a href="work-2035.html">Explore the national data</a> · <a href="research.html">Methods</a></p>
 </div></section>
 </div>
+<section class="pf-upd" id="updates"><div class="wrap">
+<p class="num">Updates</p><h2>Updated quarterly</h2>
+<p class="intro">AI is changing faster than the data that measure it. These profiles are updated quarterly as new federal data are released, each update is dated, and the full model is re-run once a year.</p>
+<div class="pf-upd-grid">
+<div><b>Every quarter.</b> New federal data as they are released, such as county jobs by industry (BLS QCEW) for the Local industries section and how fast employers are adopting AI.</div>
+<div><b>Every year.</b> When the BLS employment projections, OEWS wages and IPEDS completions arrive, the full model is re-run: labor markets, programs, the program map, the stress test and competition.</div>
+<div><b>Not included yet.</b> Robots and other physical automation, wages responding to AI, and local plans such as a new plant or a base closing.</div>
+</div>
+<h3 class="h3" style="margin-top:22px">Change log</h3>
+<ul class="pf-log"><li><b>November 18, 2026.</b> College profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line.</li><li><b>November 15, 2026.</b> State and institution data re-run with the November 2026 state workbooks.</li></ul>
+<p class="note">Data as of November 2026. The full history of the national data is in the <a href="work-2035.html#updates">Work to 2035 change log</a>.</p>
+</div></section>
 '''
 page = head + main + foot
 page = page.replace(' aria-current="page"', '')

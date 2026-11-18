@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118f';
+  var V = '20261118g';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -150,7 +150,7 @@
       '<div class="kpis k4">' + kpi(k(Z.pool), 'expected adult retraining pool in the whole commuting zone') + kpi(k(Z.local), 'expected to change occupation in the area') + kpi(k(Z.away), 'expected to move away for work, over ten years') + kpi(k(Z.stay), 'may stay without a matching job') + '</div>' +
       '<p class="note">Commuting-zone figures. Moving rates come from research on displaced workers; low and high versions are in the state workbook.</p></div></section>';
 
-    h += '<section class="pf-sec last"><div class="wrap"><p class="note" style="font-size:14.5px">Data as of November 2026, updated quarterly (<a href="work-2035.html#updates">change log</a>). These are estimates from our Work to 2035 model and public federal data, 2025–2035, with ranges. They are not predictions or advice. Robots and other physical automation are not yet included. <a href="work-2035.html">Explore the data</a> · <a href="research.html">Methods and papers</a> · <a href="license.html">Data sources and credits</a></p>' +
+    h += '<section class="pf-sec last"><div class="wrap"><p class="note" style="font-size:14.5px">Data as of November 2026, updated quarterly (<a href="#updates">change log</a>). These are estimates from our Work to 2035 model and public federal data, 2025–2035, with ranges. They are not predictions or advice. Robots and other physical automation are not yet included. <a href="work-2035.html">Explore the data</a> · <a href="research.html">Methods and papers</a> · <a href="license.html">Data sources and credits</a></p>' +
       '<button class="pf-btn" type="button" onclick="window.print()">Save as PDF</button></div></section>';
     root.innerHTML = h;
     drawMap(mapped);

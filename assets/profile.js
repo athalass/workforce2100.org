@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118';
+  var V = '20261118b';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -75,7 +75,7 @@
       ' commuting zone by 2035 (' + pct(Z.ais) + ' of jobs). About ' + k(Z.lost) + ' people work in occupations expected to shrink and may need to change occupation, while about ' +
       k(Z.new) + ' new jobs are expected to open in growing occupations, ' + k(Z.edu && Z.edu[1][3]) + ' of them at the certificate or associate level. Of ' + esc(name) + '\'s ' + n(I.grads) +
       ' graduates in grouped programs, ' + pct(I.inv) + ' are in programs where the model expects demand to grow by 10% or more.</p>' +
-      '<nav class="pf-toc" aria-label="Sections"><a href="#market">Labor market</a><a href="#local">Local work</a><a href="#programs">Programs</a><a href="#stress">Stress test</a><a href="#competition">Competition</a><a href="#adults">Adult learners</a></nav>' +
+      '<nav class="pf-toc" aria-label="Sections"><a href="#market">Labor market</a><a href="#local">Local industries</a><a href="#programs">Programs</a><a href="#stress">Stress test</a><a href="#competition">Competition</a><a href="#adults">Adult learners</a></nav>' +
       '</div></section>';
 
     // 1 labor market
@@ -90,12 +90,20 @@
       (Z.edu || []).map(function (e, i) { return '<tr' + (i === 1 ? ' class="hl"' : '') + '><td>' + EDU[i] + '</td><td class="r">' + n(e[0]) + '</td><td class="r">' + n(e[1]) + '</td><td class="r">' + n(e[2]) + '</td><td class="r">' + n(e[3]) + '</td><td class="r">' + n(e[4]) + '</td></tr>'; }).join('') +
       '</tbody></table></div><p class="note">The highlighted row is the community college market. Openings show the training demand; new jobs show the direction. Openings are much larger than new jobs because most replace people who retire or leave.</p></div></section>';
 
-    // 2 local work (statewide occupation groups until the industry view)
-    h += '<section class="pf-sec" id="local"><div class="wrap"><p class="num">2 · Local work</p><h2>The work done in ' + esc(S.name) + ' <span class="soon">Industry view coming</span></h2>' +
-      '<p class="intro">The largest occupation groups in the state, how much of their work AI could take over by 2035, and the expected net change in jobs once new demand is counted.</p>' +
-      '<div class="tscroll"><table class="pf-table"><thead><tr><th>Occupation group</th><th class="r">Jobs, 2025</th><th class="r">Work AI could take over by 2035</th><th class="r">Expected net change in jobs, 2025–35</th></tr></thead><tbody>' +
-      S.groups.map(function (g) { return '<tr><td>' + esc(g[0]) + '</td><td class="r">' + n(g[1]) + '</td><td class="r">' + pct(g[2]) + '</td><td class="r ' + cls(g[3]) + '">' + spct(g[3]) + '</td></tr>'; }).join('') +
-      '</tbody></table></div><p class="note">A view of the industries in your commuting zone (health care, government, logistics, manufacturing and others) will be added from the BLS Quarterly Census of Employment and Wages.</p></div></section>';
+    // 2 local industries (QCEW), with statewide occupation groups as a fallback
+    if (Z.ind && Z.ind.length) {
+      h += '<section class="pf-sec" id="local"><div class="wrap"><p class="num">2 · Local industries</p><h2>The industries in the ' + esc(I.zone) + ' commuting zone</h2>' +
+        '<p class="intro">The largest industries in the ' + (Z.indc > 1 ? Z.indc + ' ' + esc(S.name) + ' counties' : esc(S.name) + ' county') + ' of this commuting zone, how much of their work AI could take over by 2035 according to our model, and the growth BLS projects for each industry before AI.</p>' +
+        '<div class="tscroll"><table class="pf-table"><thead><tr><th>Industry</th><th class="r">Jobs, 2025</th><th class="r">Share of local jobs</th><th class="r">Work AI could take over by 2035</th><th class="r">BLS projected growth, 2025–35</th></tr></thead><tbody>' +
+        Z.ind.map(function (g) { return '<tr><td>' + esc(g[0]) + '</td><td class="r">' + n(g[1]) + '</td><td class="r">' + pct(g[2]) + '</td><td class="r">' + pct(g[3]) + '</td><td class="r ' + cls(g[4]) + '">' + spct(g[4], 1) + '</td></tr>'; }).join('') +
+        '</tbody></table></div><p class="note">Jobs: BLS Quarterly Census of Employment and Wages, 2025, all employers including government; cells BLS does not publish are left out. The AI share uses each industry\'s national mix of occupations (BLS National Employment Matrix). Education and health care include public schools and hospitals.</p></div></section>';
+    } else {
+      h += '<section class="pf-sec" id="local"><div class="wrap"><p class="num">2 · Local work</p><h2>The work done in ' + esc(S.name) + '</h2>' +
+        '<p class="intro">The largest occupation groups in the state, how much of their work AI could take over by 2035, and the expected net change in jobs once new demand is counted.</p>' +
+        '<div class="tscroll"><table class="pf-table"><thead><tr><th>Occupation group</th><th class="r">Jobs, 2025</th><th class="r">Work AI could take over by 2035</th><th class="r">Expected net change in jobs, 2025–35</th></tr></thead><tbody>' +
+        S.groups.map(function (g) { return '<tr><td>' + esc(g[0]) + '</td><td class="r">' + n(g[1]) + '</td><td class="r">' + pct(g[2]) + '</td><td class="r ' + cls(g[3]) + '">' + spct(g[3]) + '</td></tr>'; }).join('') +
+        '</tbody></table></div></div></section>';
+    }
 
     // 3 programs
     h += '<section class="pf-sec" id="programs"><div class="wrap"><p class="num">3 · Your programs</p><h2>' + tiered.length + ' programs, grouped by expected demand to 2035</h2>' +

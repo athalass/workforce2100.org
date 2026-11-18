@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118j';
+  var V = '20261118k';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -29,7 +29,9 @@
   function fixLink(name, st, cls) {
     var subj = 'Correction request: ' + name + ' (' + st + ') college profile, data as of November 2026';
     var body = 'Page: ' + location.href + '\n\nWhat looks wrong (section and number):\n\nWhat it should be, and your source if you have one:\n\nMay we list this correction, without your name, in the public corrections log? (yes/no)\n';
-    return '<a class="' + (cls || 'pf-fix') + '" href="mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&amp;body=' + encodeURIComponent(body) + '">Report an error or request a correction</a>';
+    var href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&amp;body=' + encodeURIComponent(body);
+    var attrs = window.W2100Forms ? W2100Forms.correctionLinkAttrs(name, st, href) : 'href="' + href + '"';
+    return '<a class="' + (cls || 'pf-fix') + '" ' + attrs + '>Report an error or request a correction</a>';
   }
   function getJSON(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
 
@@ -159,9 +161,10 @@
       '<p class="note">Commuting-zone figures. Moving rates come from research on displaced workers; low and high versions are in the state workbook.</p></div></section>';
 
     h += '<section class="pf-sec last"><div class="wrap"><p class="note" style="font-size:14.5px">Data as of November 2026, updated quarterly (<a href="#updates">change log</a>). These are estimates from our Work to 2035 model and public federal data, 2025–2035, with ranges. They are not predictions or advice. Robots and other physical automation are not yet included. <a href="work-2035.html">Explore the data</a> · <a href="research.html">Methods and papers</a> · <a href="license.html">Data sources and credits</a></p>' +
-      '<p class="pf-actions"><button class="pf-btn" type="button" onclick="window.print()">Save as PDF</button> ' + fixLink(name, S.st, 'pf-btn pf-fixbtn') + '</p><p class="note">Every request gets a reply, and each correction is listed in the <a href="#corrections">corrections log</a>.</p><aside class="pf-study" aria-label="Work 2035 Tracking Study"><div><p class="pf-study-tag">Coming in 2027</p><p><b>Help check these forecasts.</b> The Work 2035 Tracking Study will compare forecasts like these with what actually happens, year by year, and ask college leaders what they changed and why. It opens to presidents and provosts after ethics review, expected in spring 2027.</p></div><p class="pf-study-links"><a class="pf-btn" href="tracking-study.html">Read about the study</a> <span>Want to hear when it opens? Email <a href="mailto:athalass@gmail.com">athalass@gmail.com</a></span></p></aside></div></section>';
+      '<p class="pf-actions"><button class="pf-btn" type="button" onclick="window.print()">Save as PDF</button> ' + fixLink(name, S.st, 'pf-btn pf-fixbtn') + '</p><p class="note">Every request gets a reply, and each correction is listed in the <a href="#corrections">corrections log</a>.</p><aside class="pf-study" aria-label="Work 2035 Tracking Study"><div><p class="pf-study-tag">Coming in 2027</p><p><b>Help check these forecasts.</b> The Work 2035 Tracking Study will compare forecasts like these with what actually happens, year by year, and ask college leaders what they changed and why. It opens to presidents and provosts after ethics review, expected in spring 2027.</p></div><p class="pf-study-links"><a class="pf-btn" href="tracking-study.html">Read about the study</a> <span>Want to hear when it opens? <a href="tracking-study.html#notify">Sign up</a> or email <a href="mailto:athalass@gmail.com">athalass@gmail.com</a></span></p></aside></div></section>';
     root.innerHTML = h;
     drawMap(mapped);
+    if (window.W2100Forms) { var lastW = root.querySelector('.pf-sec.last .wrap'); W2100Forms.mountCorrection(lastW && lastW.querySelector('.pf-actions') ? lastW : null, { name: name, st: S.st }); var fb = lastW && lastW.querySelector('#fix'); if (fb) lastW.insertBefore(fb, lastW.querySelector('.pf-study')); }
     root.querySelectorAll('.pf-table').forEach(function (t) {
       var names = [].map.call(t.querySelectorAll('thead th'), function (th) { return th.textContent.trim(); });
       t.querySelectorAll('tbody tr').forEach(function (tr) { [].forEach.call(tr.children, function (td, i) { if (names[i]) td.setAttribute('data-label', names[i]); }); });

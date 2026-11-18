@@ -2,7 +2,7 @@
    Both post to one Google Apps Script web app. Until FORMS_URL is set, the forms stay hidden
    and the pages fall back to email links. */
 (function () {
-  var FORMS_URL = '';
+  var FORMS_URL = 'https://script.google.com/macros/s/AKfycbzP8vs7tUEhD-rvPac8ffLboZB62KmFjSqAMJGALViiIkRTs82ciLsXjvd22f2w-FYr5A/exec';
   var EMAIL = 'athalass@gmail.com';
   var t0 = Date.now();
 

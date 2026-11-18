@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118k';
+  var V = '20261118l';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -161,7 +161,7 @@
       '<p class="note">Commuting-zone figures. Moving rates come from research on displaced workers; low and high versions are in the state workbook.</p></div></section>';
 
     h += '<section class="pf-sec last"><div class="wrap"><p class="note" style="font-size:14.5px">Data as of November 2026, updated quarterly (<a href="#updates">change log</a>). These are estimates from our Work to 2035 model and public federal data, 2025–2035, with ranges. They are not predictions or advice. Robots and other physical automation are not yet included. <a href="work-2035.html">Explore the data</a> · <a href="research.html">Methods and papers</a> · <a href="license.html">Data sources and credits</a></p>' +
-      '<p class="pf-actions"><button class="pf-btn" type="button" onclick="window.print()">Save as PDF</button> ' + fixLink(name, S.st, 'pf-btn pf-fixbtn') + '</p><p class="note">Every request gets a reply, and each correction is listed in the <a href="#corrections">corrections log</a>.</p><aside class="pf-study" aria-label="Work 2035 Tracking Study"><div><p class="pf-study-tag">Coming in 2027</p><p><b>Help check these forecasts.</b> The Work 2035 Tracking Study will compare forecasts like these with what actually happens, year by year, and ask college leaders what they changed and why. It opens to presidents and provosts after ethics review, expected in spring 2027.</p></div><p class="pf-study-links"><a class="pf-btn" href="tracking-study.html">Read about the study</a> <span>Want to hear when it opens? <a href="tracking-study.html#notify">Sign up</a> or email <a href="mailto:athalass@gmail.com">athalass@gmail.com</a></span></p></aside></div></section>';
+      '<p class="pf-actions"><button class="pf-btn" type="button" onclick="window.print()">Save as PDF</button> ' + fixLink(name, S.st, 'pf-btn pf-fixbtn') + '</p><p class="note">We reply to every request that includes an email address, and corrections are listed in the <a href="#corrections">corrections log</a> without the sender\x27s name.</p><aside class="pf-study" aria-label="Work 2035 Tracking Study"><div><p class="pf-study-tag">Coming in 2027</p><p><b>Help check these forecasts.</b> The Work 2035 Tracking Study will compare forecasts like these with what actually happens, year by year, and ask college leaders what they changed and why. It opens to presidents and provosts after ethics review, expected in spring 2027.</p></div><p class="pf-study-links"><a class="pf-btn" href="tracking-study.html">Read about the study</a> <span>Want to hear when it opens? <a href="tracking-study.html#notify">Sign up</a> or email <a href="mailto:athalass@gmail.com">athalass@gmail.com</a></span></p></aside></div></section>';
     root.innerHTML = h;
     drawMap(mapped);
     if (window.W2100Forms) { var lastW = root.querySelector('.pf-sec.last .wrap'); W2100Forms.mountCorrection(lastW && lastW.querySelector('.pf-actions') ? lastW : null, { name: name, st: S.st }); var fb = lastW && lastW.querySelector('#fix'); if (fb) lastW.insertBefore(fb, lastW.querySelector('.pf-study')); }

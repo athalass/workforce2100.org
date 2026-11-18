@@ -11,7 +11,7 @@ head = re.sub(r'<style>.*?</style>', '', head, flags=re.S)
 head = re.sub(r'<link rel="canonical" href="[^"]*">', '', head)
 head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261118m">\n</head>', 1)
 foot = shell[shell.index('</main>'):]
-foot = foot.replace('</body>', '<script src="assets/forms.js?v=20261118c"></script>\n<script src="assets/profile.js?v=20261118m"></script>\n</body>', 1)
+foot = foot.replace('</body>', '<script src="assets/forms.js?v=20261118d"></script>\n<script src="assets/profile.js?v=20261118m"></script>\n</body>', 1)
 
 main = '''<main id="main">
 <section class="pf-top"><div class="wrap">

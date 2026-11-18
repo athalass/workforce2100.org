@@ -2,9 +2,9 @@
    All post to one Google Apps Script web app. Until FORMS_URL is set, the forms stay hidden
    and the pages fall back to email links. */
 (function () {
-  var FORMS_URL = 'https://script.google.com/macros/s/AKfycbzP8vs7tUEhD-rvPac8ffLboZB62KmFjSqAMJGALViiIkRTs82ciLsXjvd22f2w-FYr5A/exec';
+  var FORMS_URL = 'https://script.google.com/macros/s/AKfycbzQOue9wxp0z4273EOgb86Np1KE9vHBp7Vn6h77eatljxFU8-Y8DRkyvQxkHdEjJqxN/exec';
   var EMAIL = 'athalass@gmail.com';
-  var CONTACT_ON = false;   // set to true once the Apps Script with the contact form is deployed
+  var CONTACT_ON = true;    // set to true once the Apps Script with the contact form is deployed
   var t0 = Date.now();
   var TOPICS = ['A question about the research', 'Using the data or instruments', 'Collaboration',
     'Media request', 'Speaking invitation', 'A custom analysis for my institution', 'Other'];

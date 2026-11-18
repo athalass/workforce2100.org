@@ -42,7 +42,7 @@ main = '''<main id="main">
 <ul class="pf-log"><li><b>Version 2 · November 18, 2026.</b> State and institution data and the headline figures re-run with the November 2026 state workbooks; college profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line; data updated quarterly from here on.</li><li><b>Version 1 · October 25, 2026.</b> First release. Study, data and code registered on <a href="https://osf.io/ae95y">OSF</a>.</li></ul>
 <p class="note">Data as of November 2026. The full history of the national data is in the <a href="work-2035.html#updates">Work to 2035 change log</a>.</p>
 <h3 class="h3" id="corrections" style="margin-top:26px">Corrections log</h3>
-<p class="intro" style="margin-top:0">Found a number that looks wrong for your institution? Use "Report an error or request a correction" on its profile, or email <a href="mailto:athalass@gmail.com">athalass@gmail.com</a>. Every request gets a reply and is logged here, without the sender's name.</p>
+<p class="intro" style="margin-top:0">Found a number that looks wrong for your institution? Open its profile and use "Report an error or request a correction", or email <a href="mailto:athalass@gmail.com">athalass@gmail.com</a>. We reply to every request that includes an email address. Each correction we make is listed here by date and institution, without the sender's name, unless the sender asked us not to list it.</p>
 <div class="tscroll"><table class="pf-table pf-corr"><thead><tr><th>Date received</th><th>Institution</th><th>What was reported</th><th>Response</th><th>Fixed in</th></tr></thead>
 <tbody><tr><td colspan="5" class="muted">No correction requests yet.</td></tr></tbody></table></div>
 </div></section>

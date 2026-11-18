@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118h';
+  var V = '20261118i';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -25,7 +25,7 @@
   function kpi(b, s) { return '<div class="kpi"><b>' + b + '</b><span>' + s + '</span></div>'; }
   var EDU = ['High school or less', 'Certificate or associate', "Bachelor's or higher"];
 
-  var EMAIL = 'aethalassinidis@aacc.edu';
+  var EMAIL = 'athalass@gmail.com';
   function fixLink(name, st, cls) {
     var subj = 'Correction request: ' + name + ' (' + st + ') college profile, data as of November 2026';
     var body = 'Page: ' + location.href + '\n\nWhat looks wrong (section and number):\n\nWhat it should be, and your source if you have one:\n\nMay we list this correction, without your name, in the public corrections log? (yes/no)\n';

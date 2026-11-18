@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118m';
+  var V = '20261118n';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -242,6 +242,8 @@
   var P = new URLSearchParams(location.search);
   var st = (P.get('st') || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 2), nm = P.get('i');
   if (st && nm) {
+    var top = document.getElementById('pf-top'), form = document.getElementById('pf-form');
+    if (top && form) { top.querySelector('.wrap').appendChild(form); form.classList.remove('pf-find-main'); form.querySelector('label').textContent = 'Find another college or university'; top.hidden = false; }
     root.innerHTML = '<div class="wrap pf-empty"><p class="muted">Loading…</p></div>';
     getJSON('data/profiles/' + st + '.json?v=' + V).then(function (S) { render(S, nm); })
       .catch(function () { root.innerHTML = '<div class="wrap pf-empty"><p>We could not load that profile. Try the search above.</p></div>'; });

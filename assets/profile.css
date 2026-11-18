@@ -118,3 +118,10 @@
 .pf-study-links .pf-btn{text-decoration:none;border-color:#1F5F8B;color:#1F5F8B}
 @media (max-width:640px){.pf-study>div{flex-basis:100%}}
 @media print{.pf-study{display:none!important}}
+/* search inside the landing intro */
+.pf-find-main{max-width:760px;margin:22px 0 18px;padding:20px 22px;background:#F6F8FA;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:12px}
+.pf-find-main label{font-size:16px;color:var(--ink);margin-bottom:10px}
+.pf-find-main .pf-row input{font-size:16px;padding:12px 14px}
+.pf-find-main .pf-row button{background:var(--blue);border-color:var(--blue);color:#fff}
+.pf-find-main .pf-list{left:22px;right:22px;top:calc(100% - 14px)}
+@media (max-width:640px){.pf-find-main{padding:16px}.pf-find-main .pf-list{left:16px;right:16px}}

@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118d';
+  var V = '20261118e';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -114,7 +114,7 @@
       '<div class="tdef"><span class="sw inv"></span><div><h3>Invest</h3><p class="rule">Our model expects demand for graduates to grow 10% or more by 2035.</p><p>Today\'s data point to room to grow. If the program sits above the AI line, growth will likely also need investment in adapting the curriculum to AI.</p></div></div>' +
       '<div class="tdef"><span class="sw rei"></span><div><h3>Reinvent</h3><p class="rule">Expected demand changes between −10% and +10%.</p><p>The program likely stays, but the work it prepares for is changing. Consider investing in curriculum that teaches directing AI, checking its work, and the human skills AI cannot do, most of all above the AI line.</p></div></div>' +
       '<div class="tdef"><span class="sw rev"></span><div><h3>Review</h3><p class="rule">Expected demand falls more than 10%.</p><p>Worth a closer look: re-aiming toward growing occupations, merging or other options, after checking local placement.</p></div></div>' +
-      '<div class="tdef"><span class="sw line"></span><div><h3>The AI line</h3><p class="rule">According to our model, AI can do half or more of graduates\' task time.</p><p>Programs above the dashed line likely need new curriculum whatever their group, including growing ones.</p></div></div>' +
+      '<div class="tdef"><span class="sw line"></span><div><h3>The AI line</h3><p class="rule">According to our model, AI can do half or more of graduates\' task time.</p><p>Programs above the dashed line likely need new curriculum whatever their group, including growing ones.</p><p>Our research suggests that above the line the work shifts from doing tasks to directing AI, checking what it produces and owning the result. Curriculum can teach those skills: when to hand work to AI, how to verify it, and how to judge the consequences of errors.</p><p class="rd">Read more: <a href="research.html#delegation">AI Fluency Under Delegation</a> · <a href="research.html#judgment">The Price of Judgment</a> · <a href="research.html#program">From Framework to Program</a>, an applied AI degree example</p></div></div>' +
       '</div><div class="pm-card"><h3>' + esc(name) + '</h3><p class="muted">' + mapped.length + ' programs, ' + n(mtot) + ' awards a year. ' + (mtot ? pct(mhi / mtot) : '—') + ' of these awards sit above the AI line.</p>' +
       '<div id="pm-svg"></div><p class="pm-tip" id="pm-tip" aria-live="polite">Tap or hover a circle to see the program.</p>' +
       '<p class="note">How to read the map. Left to right: expected demand change for graduates. Bottom to top: share of their task time AI can do. Circle size: awards per year.</p></div></div>' +

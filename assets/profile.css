@@ -108,3 +108,13 @@
 .grp-note{margin:14px 0 0;max-width:840px;font-size:14px;line-height:1.55;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px}
 .pf-corr td[colspan]{text-align:left}
 @media print{.pf-fixline,.pf-actions{display:none!important}}
+/* tracking study invitation */
+.pf-study{margin:26px 0 0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 28px;padding:18px 20px;border:1px solid var(--line);border-left:4px solid #C9821B;border-radius:10px;background:#fff;max-width:1000px}
+.pf-study>div{flex:1 1 420px;min-width:0}
+.pf-study p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2)}
+.pf-study b{color:var(--ink)}
+.pf-study .pf-study-tag{display:inline-block;margin:0 0 6px;font-size:12px;font-weight:600;color:#8A5A12;background:#FBF0DC;border-radius:999px;padding:3px 10px}
+.pf-study-links{display:flex;flex-direction:column;align-items:flex-start;gap:8px;font-size:14px!important}
+.pf-study-links .pf-btn{text-decoration:none;border-color:#1F5F8B;color:#1F5F8B}
+@media (max-width:640px){.pf-study>div{flex-basis:100%}}
+@media print{.pf-study{display:none!important}}

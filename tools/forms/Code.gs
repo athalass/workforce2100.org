@@ -1,9 +1,10 @@
 /**
  * workforce2100.org: study interest list and correction requests.
  *
- * One script, two separate Google Sheets:
+ * One script, three separate Google Sheets:
  *   1. "Work 2035 Tracking Study: interest list" (private; used only for the study)
  *   2. "College profiles: correction requests"     (working list behind the public corrections log)
+ *   3. "workforce2100.org: contact messages"       (messages from the contact form; each one is also emailed to you)
  *
  * SETUP (once, about 5 minutes)
  *   1. Go to https://script.google.com while signed in as athalass@gmail.com and click "New project".
@@ -31,6 +32,11 @@ var SHEETS = {
     columns: ['received_at', 'name', 'title', 'role', 'institution', 'state', 'email', 'note',
               'consent_to_contact', 'source_page', 'status', 'notes_internal']
   },
+  contact: {
+    title: 'workforce2100.org: contact messages',
+    tab: 'messages',
+    columns: ['received_at', 'name', 'email', 'organization', 'topic', 'message', 'page', 'status', 'notes_internal']
+  },
   correction: {
     title: 'College profiles: correction requests',
     tab: 'requests',
@@ -42,6 +48,9 @@ var SHEETS = {
 
 var ROLES = ['President or chancellor', 'Provost or chief academic officer', 'Other senior leader',
              'Institutional research or planning', 'Association or system office', 'Researcher', 'Other'];
+var TOPICS = ['A question about the research', 'Using the data or instruments', 'Collaboration',
+              'Media request', 'Speaking invitation', 'A custom analysis for my institution', 'Other'];
+var MAX_CONTACT_EMAILS_PER_HOUR = 20;  // protects your daily email quota from spam bursts
 var SECTIONS = ['Labor market', 'Local industries', 'Program map', 'Stress test', 'Competition',
                 'Adult learners', 'Institution details', 'Other'];
 
@@ -68,6 +77,7 @@ function doPost(e) {
     try {
       if (p.form === 'interest') return json_(saveInterest_(p));
       if (p.form === 'correction') return json_(saveCorrection_(p));
+      if (p.form === 'contact') return json_(saveContact_(p));
       throw new Error('unknown form');
     } finally { lock.releaseLock(); }
   } catch (err) {
@@ -85,6 +95,29 @@ function saveInterest_(p) {
   notify_('Tracking Study: new interest from ' + inst,
           name + (p.title ? ', ' + p.title : '') + '\n' + inst + (p.state ? ' (' + p.state + ')' : '') + '\n' + email +
           (p.note ? '\n\n' + p.note : ''));
+  return { ok: true };
+}
+
+function saveContact_(p) {
+  var name = clean_(p.name, 120), email = clean_(p.email, 160), msg = clean_(p.message, 5000);
+  if (!name || !msg || !validEmail_(email)) throw new Error('missing name, email or message');
+  var org = clean_(p.org, 200), topic = pick_(p.topic, TOPICS);
+  sheet_('contact').appendRow([new Date(), name, email, org, topic, msg, clean_(p.page, 300), 'new', '']);
+  var cache = CacheService.getScriptCache(), n = Number(cache.get('contact_mails') || 0);
+  if (NOTIFY && n < MAX_CONTACT_EMAILS_PER_HOUR) {
+    cache.put('contact_mails', String(n + 1), 3600);
+    try {
+      MailApp.sendEmail({
+        to: Session.getEffectiveUser().getEmail(),
+        replyTo: email.replace(/^'/, ''),
+        name: 'workforce2100.org contact form',
+        subject: '[workforce2100.org] ' + (topic || 'Message') + ' from ' + name + (org ? ', ' + org : ''),
+        body: msg + '\n\n--\n' + name + (org ? '\n' + org : '') + '\n' + email +
+              '\nTopic: ' + (topic || '(none)') + '\nSent from: ' + (p.page || 'workforce2100.org') +
+              '\n\nReply to this email to answer ' + name + ' directly.'
+      });
+    } catch (e) {}
+  }
   return { ok: true };
 }
 

@@ -1,10 +1,13 @@
-/* workforce2100.org forms: Tracking Study interest list and profile correction requests.
-   Both post to one Google Apps Script web app. Until FORMS_URL is set, the forms stay hidden
+/* workforce2100.org forms: contact form, Tracking Study interest list and profile correction requests.
+   All post to one Google Apps Script web app. Until FORMS_URL is set, the forms stay hidden
    and the pages fall back to email links. */
 (function () {
   var FORMS_URL = 'https://script.google.com/macros/s/AKfycbzP8vs7tUEhD-rvPac8ffLboZB62KmFjSqAMJGALViiIkRTs82ciLsXjvd22f2w-FYr5A/exec';
   var EMAIL = 'athalass@gmail.com';
+  var CONTACT_ON = false;   // set to true once the Apps Script with the contact form is deployed
   var t0 = Date.now();
+  var TOPICS = ['A question about the research', 'Using the data or instruments', 'Collaboration',
+    'Media request', 'Speaking invitation', 'A custom analysis for my institution', 'Other'];
 
   var ROLES = ['President or chancellor', 'Provost or chief academic officer', 'Other senior leader',
     'Institutional research or planning', 'Association or system office', 'Researcher', 'Other'];
@@ -32,6 +35,37 @@
       .then(function (j) { if (j && j.ok) onOk(j); else fail(); }).catch(fail);
   }
   function mailto(subj, body) { return 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body); }
+
+  // ---------- contact form ----------
+  function mountContact(box) {
+    if (!box || !FORMS_URL || !CONTACT_ON) return;
+    box.innerHTML =
+      '<form class="wf-form" novalidate><div class="wf-grid">' +
+      '<label>Name<input name="name" autocomplete="name" required></label>' +
+      '<label>Email<input name="email" type="email" autocomplete="email" required></label>' +
+      '<label>Organization (optional)<input name="org" autocomplete="organization"></label>' +
+      '<label>Topic<select name="topic">' + opts(TOPICS, 'Choose one') + '</select></label>' +
+      '<label class="full">Message<textarea name="message" rows="5" required></textarea></label>' +
+      '</div>' + TRAP +
+      '<p class="wf-actions"><button type="submit" class="btn btn-primary">Send message</button> <span class="wf-note" role="status" aria-live="polite"></span></p>' +
+      '<p class="wf-small">Your message goes to Dr. Thalassinidis by email, and a copy is kept to reply to you. It is not added to any mailing list. See the <a href="privacy.html">Privacy notice</a>.</p>' +
+      '</form>';
+    var f = box.querySelector('form');
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var note = f.querySelector('.wf-note');
+      var miss = ['name', 'email', 'message'].filter(function (n) { return !val(f, n); })[0];
+      if (miss) { f.elements[miss].focus(); note.textContent = 'Please add your name, email and message.'; return; }
+      if (!okEmail(val(f, 'email'))) { f.elements.email.focus(); note.textContent = 'Please check your email address.'; return; }
+      send(f, 'contact', ['name', 'email', 'org', 'topic', 'message'], function () {
+        box.innerHTML = '<div class="wf-done" role="status"><b>Thank you, your message is on its way.</b> You will get a reply at ' + esc(val(f, 'email')) + '.</div>';
+      }, function () {
+        return mailto(val(f, 'topic') || 'Message from workforce2100.org', val(f, 'message') + '\n\n' + val(f, 'name') + (val(f, 'org') ? '\n' + val(f, 'org') : ''));
+      });
+    });
+    [].forEach.call(document.querySelectorAll('[data-wf-contact-alt]'), function (el) { el.hidden = false; });
+    box.hidden = false;
+  }
 
   // ---------- Tracking Study interest list ----------
   function mountInterest(box) {
@@ -114,7 +148,7 @@
     });
   }
 
-  window.W2100Forms = { enabled: !!FORMS_URL, mountInterest: mountInterest, mountCorrection: mountCorrection, correctionLinkAttrs: correctionLinkAttrs };
-  var go = function () { mountInterest(document.getElementById('notify-form')); };
+  window.W2100Forms = { enabled: !!FORMS_URL, mountContact: mountContact, mountInterest: mountInterest, mountCorrection: mountCorrection, correctionLinkAttrs: correctionLinkAttrs };
+  var go = function () { mountInterest(document.getElementById('notify-form')); mountContact(document.getElementById('contact-form')); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();

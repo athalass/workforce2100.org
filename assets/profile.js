@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261118g';
+  var V = '20261118h';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -25,6 +25,12 @@
   function kpi(b, s) { return '<div class="kpi"><b>' + b + '</b><span>' + s + '</span></div>'; }
   var EDU = ['High school or less', 'Certificate or associate', "Bachelor's or higher"];
 
+  var EMAIL = 'aethalassinidis@aacc.edu';
+  function fixLink(name, st, cls) {
+    var subj = 'Correction request: ' + name + ' (' + st + ') college profile, data as of November 2026';
+    var body = 'Page: ' + location.href + '\n\nWhat looks wrong (section and number):\n\nWhat it should be, and your source if you have one:\n\nMay we list this correction, without your name, in the public corrections log? (yes/no)\n';
+    return '<a class="' + (cls || 'pf-fix') + '" href="mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&amp;body=' + encodeURIComponent(body) + '">Report an error or request a correction</a>';
+  }
   function getJSON(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
 
   // ---------- search ----------
@@ -71,6 +77,7 @@
     h += '<section class="pf-hero"><div class="wrap">' +
       '<p class="eyebrow-s">Free institution profile</p><h1>' + esc(name) + '</h1>' +
       '<p class="pf-meta">' + esc(I.sector) + ' · ' + esc(place) + ' · ' + esc(I.zone) + ' commuting zone</p>' +
+      '<p class="pf-fixline">' + fixLink(name, S.st) + '</p>' +
       '<p class="pf-lead">According to our model and today\'s data, AI could take over about ' + k(Z.ai) + ' jobs\' worth of work in the ' + esc(I.zone) +
       ' commuting zone by 2035 (' + pct(Z.ais) + ' of jobs). About ' + k(Z.lost) + ' people work in occupations expected to shrink and may need to change occupation, while about ' +
       k(Z.new) + ' new jobs are expected to open in growing occupations, ' + k(Z.edu && Z.edu[1][3]) + ' of them at the certificate or associate level. Of ' + esc(name) + '\'s ' + n(I.grads) +
@@ -120,6 +127,7 @@
       '<p class="note">How to read the map. Left to right: expected demand change for graduates. Bottom to top: share of their task time AI can do. Circle size: awards per year.</p></div></div>' +
       '<div class="mix" style="margin-top:26px" role="img" aria-label="Graduates by group: Invest ' + pct(I.inv) + ', Reinvent ' + pct(I.rei) + ', Review ' + pct(I.rev) + '"><i class="inv" style="width:' + (I.inv * 100).toFixed(1) + '%"></i><i class="rei" style="width:' + (I.rei * 100).toFixed(1) + '%"></i><i class="rev" style="width:' + (I.rev * 100).toFixed(1) + '%"></i></div>' +
       '<div class="legend"><span><i style="background:#3E8F5E"></i>Invest ' + pct(I.inv) + ' of graduates</span><span><i style="background:#5D88AC"></i>Reinvent ' + pct(I.rei) + '</span><span><i style="background:#C2654F"></i>Review ' + pct(I.rev) + '</span></div>' +
+      '<p class="grp-note"><b>What the groups mean.</b> Invest, Reinvent and Review are signals from our model about expected demand for graduates, based on today\'s data. They do not judge a program\'s quality, outcomes or faculty, and they are not recommendations to grow, change or close it.</p>' +
       '<h3 class="h3" style="margin-top:22px">Largest programs</h3><div class="tscroll"><table class="pf-table"><thead><tr><th>Program</th><th>Level</th><th class="r">Graduates, 2023–24</th><th class="r">Expected demand change, 2025–35</th><th class="r">AI can do</th><th>Group</th></tr></thead><tbody>' +
       tiered.slice(0, 15).map(function (p) { return '<tr><td>' + esc(p[0]) + (p[8] >= 0.5 ? ' <span class="ail" title="Above the AI line">Above AI line</span>' : '') + '</td><td>' + esc(p[1]) + '</td><td class="r">' + n(p[2]) + '</td><td class="r ' + cls(p[4]) + '">' + spct(p[4]) + '</td><td class="r">' + (p[8] ? pct(p[8]) : '—') + '</td><td>' + chip(p[3]) + '</td></tr>'; }).join('') +
       '</tbody></table></div><p class="note">Showing the ' + Math.min(15, tiered.length) + ' largest of ' + tiered.length + ' programs. "AI can do" is the national share of graduates\' task time AI can do for each program family and level. Transfer-oriented arts and sciences programs are not grouped.</p></div></section>';
@@ -151,7 +159,7 @@
       '<p class="note">Commuting-zone figures. Moving rates come from research on displaced workers; low and high versions are in the state workbook.</p></div></section>';
 
     h += '<section class="pf-sec last"><div class="wrap"><p class="note" style="font-size:14.5px">Data as of November 2026, updated quarterly (<a href="#updates">change log</a>). These are estimates from our Work to 2035 model and public federal data, 2025–2035, with ranges. They are not predictions or advice. Robots and other physical automation are not yet included. <a href="work-2035.html">Explore the data</a> · <a href="research.html">Methods and papers</a> · <a href="license.html">Data sources and credits</a></p>' +
-      '<button class="pf-btn" type="button" onclick="window.print()">Save as PDF</button></div></section>';
+      '<p class="pf-actions"><button class="pf-btn" type="button" onclick="window.print()">Save as PDF</button> ' + fixLink(name, S.st, 'pf-btn pf-fixbtn') + '</p><p class="note">Every request gets a reply, and each correction is listed in the <a href="#corrections">corrections log</a>.</p></div></section>';
     root.innerHTML = h;
     drawMap(mapped);
     root.querySelectorAll('.pf-table').forEach(function (t) {

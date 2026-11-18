@@ -100,3 +100,11 @@
 .pf-log{margin:0;padding-left:20px;font-size:15px;line-height:1.7;color:var(--ink-2)}
 @media (max-width:860px){.pf-upd-grid{grid-template-columns:1fr}}
 @media print{.pf-upd{display:none}}
+/* corrections and group note */
+.pf-fixline{margin:10px 0 0;font-size:14px}
+.pf-fix{font-weight:600}
+.pf-actions{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0}
+.pf-fixbtn{text-decoration:none;display:inline-block}
+.grp-note{margin:14px 0 0;max-width:840px;font-size:14px;line-height:1.55;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.pf-corr td[colspan]{text-align:left}
+@media print{.pf-fixline,.pf-actions{display:none!important}}

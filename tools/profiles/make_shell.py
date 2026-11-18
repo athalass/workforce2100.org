@@ -9,9 +9,9 @@ head = re.sub(r'<title>.*?</title>', '<title>College profiles — Workforce 2100
 head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free AI and labor-market profiles for 5,668 U.S. colleges and universities: local labor market, programs, a stress test, competition and adult learners to 2035.">', head)
 head = re.sub(r'<style>.*?</style>', '', head, flags=re.S)
 head = re.sub(r'<link rel="canonical" href="[^"]*">', '', head)
-head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261118g">\n</head>', 1)
+head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261118h">\n</head>', 1)
 foot = shell[shell.index('</main>'):]
-foot = foot.replace('</body>', '<script src="assets/profile.js?v=20261118g"></script>\n</body>', 1)
+foot = foot.replace('</body>', '<script src="assets/profile.js?v=20261118h"></script>\n</body>', 1)
 
 main = '''<main id="main">
 <section class="pf-top"><div class="wrap">
@@ -40,6 +40,10 @@ main = '''<main id="main">
 <h3 class="h3" style="margin-top:22px">Change log</h3>
 <ul class="pf-log"><li><b>Version 2 · November 18, 2026.</b> State and institution data and the headline figures re-run with the November 2026 state workbooks; college profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line; data updated quarterly from here on.</li><li><b>Version 1 · October 25, 2026.</b> First release. Study, data and code registered on <a href="https://osf.io/ae95y">OSF</a>.</li></ul>
 <p class="note">Data as of November 2026. The full history of the national data is in the <a href="work-2035.html#updates">Work to 2035 change log</a>.</p>
+<h3 class="h3" id="corrections" style="margin-top:26px">Corrections log</h3>
+<p class="intro" style="margin-top:0">Found a number that looks wrong for your institution? Use "Report an error or request a correction" on its profile, or email <a href="mailto:aethalassinidis@aacc.edu">aethalassinidis@aacc.edu</a>. Every request gets a reply and is logged here, without the sender's name.</p>
+<div class="tscroll"><table class="pf-table pf-corr"><thead><tr><th>Date received</th><th>Institution</th><th>What was reported</th><th>Response</th><th>Fixed in</th></tr></thead>
+<tbody><tr><td colspan="5" class="muted">No correction requests yet.</td></tr></tbody></table></div>
 </div></section>
 '''
 page = head + main + foot

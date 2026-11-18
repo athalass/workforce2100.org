@@ -38,7 +38,7 @@ main = '''<main id="main">
 <div><b>Not included yet.</b> Robots and other physical automation, wages responding to AI, and local plans such as a new plant or a base closing.</div>
 </div>
 <h3 class="h3" style="margin-top:22px">Change log</h3>
-<ul class="pf-log"><li><b>November 18, 2026.</b> College profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line.</li><li><b>November 15, 2026.</b> State and institution data re-run with the November 2026 state workbooks.</li></ul>
+<ul class="pf-log"><li><b>Version 2 · November 18, 2026.</b> State and institution data and the headline figures re-run with the November 2026 state workbooks; college profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line; data updated quarterly from here on.</li><li><b>Version 1 · October 25, 2026.</b> First release. Study, data and code registered on <a href="https://osf.io/ae95y">OSF</a>.</li></ul>
 <p class="note">Data as of November 2026. The full history of the national data is in the <a href="work-2035.html#updates">Work to 2035 change log</a>.</p>
 </div></section>
 '''

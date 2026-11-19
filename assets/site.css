@@ -246,3 +246,4 @@ td { border-top: 1px solid var(--line); padding: 12px 16px; vertical-align: top;
 
 a.pf-inst{color:var(--blue);text-decoration:none}
 a.pf-inst:hover b,a.pf-inst:focus b{text-decoration:underline}
+.nav .btn[aria-current="page"]{color:#fff;text-decoration:none;box-shadow:0 0 0 3px rgba(31,95,139,.25)}

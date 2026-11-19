@@ -13,7 +13,6 @@ import json, sys, glob, os
 
 HIDE = {
     # name: state
-    'Anne Arundel Community College': 'MD',   # hidden 2026-11-18, pending approval
 }
 
 R = sys.argv[1] if len(sys.argv) > 1 else '.'

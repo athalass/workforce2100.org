@@ -16,7 +16,7 @@ Each profile has a "Report an error or request a correction" email link. Log eve
 
 ## Hidden institutions
 
-`hide_institutions.py` removes listed institutions from the published profiles, the search index, the Work 2035 Institutions tab and other colleges' Competition sections, without changing any totals. While an institution is listed in `HIDE`, run it after every rebuild (for example after the quarterly QCEW refresh), then check the institution count on profile.html, work-2035.html and index.html. Currently hidden: Anne Arundel Community College (since November 18, 2026, pending approval).
+`hide_institutions.py` removes listed institutions from the published profiles, the search index, the Work 2035 Institutions tab and other colleges' Competition sections, without changing any totals. While an institution is listed in `HIDE`, run it after every rebuild (for example after the quarterly QCEW refresh), then check the institution count on profile.html, work-2035.html and index.html. Currently hidden: none. (Anne Arundel Community College was hidden November 18–19, 2026, and restored.)
 
 ## State and county briefs (brief.html)
 

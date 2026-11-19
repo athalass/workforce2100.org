@@ -41,6 +41,7 @@ ist.onchange=function(){sel=ist.value;iN=15;draw()};
 var iN=15;document.getElementById('igr').onchange=function(){iN=15;inst()}; document.getElementById('isort').onchange=function(){iN=15;inst()}; document.getElementById('iq').oninput=function(){iN=15;inst()};
 var GR=['Certificate schools (under 2-year)','2-year colleges','4-year colleges and universities'];
 function stack(c){var t=c[0]+c[1]+c[2]+c[3]||1;return '<div class="stack"><span style="width:'+c[0]/t*100+'%;background:#1E7B4F"></span><span style="width:'+c[1]/t*100+'%;background:#3E6A8E"></span><span style="width:'+c[2]/t*100+'%;background:#B5483B"></span><span style="width:'+c[3]/t*100+'%;background:#C3CCD5"></span></div>'}
+var PF={};fetch('data/profiles/index.json?v=20261119').then(function(r){return r.json()}).then(function(ix){ix.forEach(function(x){PF[x[1]+'|'+x[0]]=1});if(document.getElementById('ibody'))inst()}).catch(function(){});
 function inst(){
  var ab=ist.value, L=D.insts[ab]||[], s=S.find(function(x){return x.ab===ab});
  document.getElementById('pst').textContent=s.nm;
@@ -54,8 +55,8 @@ function inst(){
  var peerInv={}; GR.forEach(function(x){var c=P[x],t=c[0]+c[1]+c[2];peerInv[x]=t?c[0]/t:0});
  var iq=document.getElementById('iq').value.trim().toLowerCase(); var rows=L.filter(function(r){return (g==='all'||r[1]===g)&&(!iq||r[0].toLowerCase().indexOf(iq)>=0)});
  rows.sort(function(a,b){if(so==='name')return a[0]<b[0]?-1:1;if(so==='inv')return sh(b,0)-sh(a,0);if(so==='rev')return sh(b,2)-sh(a,2);return (b[4][0]+b[4][1]+b[4][2]+b[4][3])-(a[4][0]+a[4][1]+a[4][2]+a[4][3])});
- document.getElementById('icnt').textContent=rows.length+' of '+L.length+' institutions in '+s.nm+' · showing '+Math.min(iN,rows.length);
- document.getElementById('ibody').innerHTML=rows.slice(0,iN).map(function(r){var tot=r[4][0]+r[4][1]+r[4][2]+r[4][3];var d=(sh(r,0)-peerInv[r[1]])*100;var cls=d>2?'up':d<-2?'dn':'eq';return '<tr><td><b>'+r[0]+'</b></td><td style="font-size:13px;color:var(--ink-3)">'+r[2]+'</td><td class="r">'+r[3][0]+' · '+r[3][1]+' · '+r[3][2]+'</td><td>'+stack(r[4])+'</td><td class="r">'+f0(tot)+'</td><td class="r">'+pc(sh(r,0),0)+' <span class="diff '+cls+'">'+(d>=0?'+':'−')+Math.abs(d).toFixed(0)+' pts</span></td><td class="r">'+pc(r[5],0)+'</td></tr>'}).join('')||'<tr><td colspan="7">No institutions match.</td></tr>';
+ document.getElementById('icnt').textContent=rows.length+' of '+L.length+' institutions in '+s.nm+' · showing '+Math.min(iN,rows.length)+' · click a name to open its profile';
+ document.getElementById('ibody').innerHTML=rows.slice(0,iN).map(function(r){var tot=r[4][0]+r[4][1]+r[4][2]+r[4][3];var d=(sh(r,0)-peerInv[r[1]])*100;var cls=d>2?'up':d<-2?'dn':'eq';return '<tr><td>'+(PF[ab+'|'+r[0]]?'<a class="pf-inst" href="profile.html?st='+ab+'&amp;i='+encodeURIComponent(r[0])+'"><b>'+r[0]+'</b></a>':'<b>'+r[0]+'</b>')+'</td><td style="font-size:13px;color:var(--ink-3)">'+r[2]+'</td><td class="r">'+r[3][0]+' · '+r[3][1]+' · '+r[3][2]+'</td><td>'+stack(r[4])+'</td><td class="r">'+f0(tot)+'</td><td class="r">'+pc(sh(r,0),0)+' <span class="diff '+cls+'">'+(d>=0?'+':'−')+Math.abs(d).toFixed(0)+' pts</span></td><td class="r">'+pc(r[5],0)+'</td></tr>'}).join('')||'<tr><td colspan="7">No institutions match.</td></tr>';
  var left=rows.length-iN;
  document.getElementById('imore').innerHTML=left>0?'<button type="button" class="pri" id="im1">Show '+Math.min(25,left)+' more</button><button type="button" id="im2">Show all '+rows.length+'</button>':'';
  if(left>0){document.getElementById('im1').onclick=function(){iN+=25;inst()};document.getElementById('im2').onclick=function(){iN=9999;inst()}}

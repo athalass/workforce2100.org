@@ -243,3 +243,6 @@ td { border-top: 1px solid var(--line); padding: 12px 16px; vertical-align: top;
 @media (max-width:640px){.wf-grid{grid-template-columns:1fr}.wf-box,.wf-fixbox{padding:16px}}
 @media print{.wf-fixbox,.wf-box{display:none!important}}
 .wf-fixbox>.wf-small{margin-bottom:16px}
+
+a.pf-inst{color:var(--blue);text-decoration:none}
+a.pf-inst:hover b,a.pf-inst:focus b{text-decoration:underline}

@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261119r';
+  var V = '20261120e';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -61,6 +61,55 @@
   });
 
   // ---------- render ----------
+
+  // curriculum change: levels and High-program types (draft, Nov 2026)
+  var CTYPE = {};
+  [['B', '11 14 15 27 40 26 04 10 41 47 46 49 29'], ['A', '52 45 09 30 44 03 01 25'], ['H', '51 42 43 13 22 19'], ['O', '50 23 24 54 16 38 05 39 31 12']]
+    .forEach(function (g) { g[1].split(' ').forEach(function (c) { CTYPE[c] = g[0]; }); });
+  var TYPES = [
+    ['B', 'Builders', 'Computing, engineering, math and the sciences.', 'The work shifts toward specifying, testing and owning AI-built systems.', 'Curriculum can add writing precise specifications, testing and reviewing AI-generated work, and taking responsibility for systems once they run.'],
+    ['A', 'Analysts and managers', 'Business, accounting, social sciences, communication and public administration.', 'The human core becomes observing the work on site, putting new systems in place with staff, and training people.', 'Curriculum can add field observation, leading change with staff, and teaching others to work with AI.'],
+    ['H', 'High-consequence professions', 'Nursing and other health fields, counseling, criminal justice, education and law.', 'AI supports the work, but a person stays in charge of decisions with real consequences.', 'Curriculum can add checking AI recommendations against the case in front of you, documenting decisions, and knowing when to override.'],
+    ['O', 'Other High programs', 'Arts, design, humanities and similar fields.', 'AI can do much of the routine task time, but no single plan fits these fields.', 'The common thread still applies: directing AI, checking what it produces and owning the result.']
+  ];
+  function lvl(x) { return x >= 0.5 ? 'High' : x >= 0.3 ? 'Medium' : 'Lower'; }
+  function curriculum(I, name) {
+    var progs = I.p.filter(function (p) { return p[8] != null && p[8] > 0; });
+    if (!progs.length) return '';
+    var tot = 0, L = { High: 0, Medium: 0, Lower: 0 }, rei = 0, reiHi = 0, T = {};
+    progs.forEach(function (p) {
+      var l = lvl(p[8]); tot += p[2]; L[l] += p[2];
+      if (p[3] === 'Reinvent') { rei += p[2]; if (l === 'High') reiHi += p[2]; }
+      if (l === 'High') { var t = CTYPE[String(p[7]).slice(0, 2)] || 'O'; (T[t] = T[t] || { g: 0, ps: [] }).g += p[2]; T[t].ps.push(p); }
+    });
+    var badge = function (l) { return '<span class="cl cl-' + l.toLowerCase() + '">' + l + '</span>'; };
+    var h = '<section class="pf-sec" id="curriculum"><div class="wrap"><p class="num">5 · Curriculum change</p><h2>' + (tot ? pct(L.High / tot) : '—') + ' of graduates are in programs where AI can do half or more of the work</h2>' +
+      '<p class="intro">The groups on the program map ask whether demand for graduates grows or shrinks. The curriculum level asks how much the work graduates do will change, even if demand stays the same.</p>' +
+      '<div class="kpis k4">' + kpi(pct(tot ? L.High / tot : 0), 'of graduates in High programs: AI pays for 50% or more of graduates\' task-hours') +
+      kpi(pct(tot ? L.Medium / tot : 0), 'in Medium programs (30–50%)') + kpi(pct(tot ? L.Lower / tot : 0), 'in Lower programs (under 30%)') +
+      (rei ? kpi(pct(reiHi / rei), 'of graduates in Reinvent programs are in High programs') : kpi('—', 'no Reinvent programs')) + '</div>' +
+      '<div class="mix" role="img" aria-label="Graduates by curriculum level"><i style="width:' + (tot ? L.High / tot * 100 : 0).toFixed(1) + '%;background:#1F5F8B"></i><i style="width:' + (tot ? L.Medium / tot * 100 : 0).toFixed(1) + '%;background:#5D88AC"></i><i style="width:' + (tot ? L.Lower / tot * 100 : 0).toFixed(1) + '%;background:#9DB3C6"></i></div>' +
+      '<div class="legend"><span><i style="background:#1F5F8B"></i>High</span><span><i style="background:#5D88AC"></i>Medium</span><span><i style="background:#9DB3C6"></i>Lower</span></div>' +
+      (rei && reiHi / rei >= 0.5 ? '<p class="callout" style="margin-top:18px"><b>What this suggests.</b> Most of ' + esc(name) + '\'s Reinvent programs need curriculum change more than enrollment change: demand for their graduates holds within 10%, yet ' + pct(reiHi / rei) + ' of their graduates are in programs where AI can do half or more of the task-hours.</p>' : '') +
+      '<h3 class="h3" style="margin-top:26px">High programs, by type</h3><div class="ct-grid">';
+    TYPES.forEach(function (t) {
+      var d = T[t[0]]; if (!d) return;
+      d.ps.sort(function (a, b) { return b[2] - a[2]; });
+      h += '<div class="ct-card ct-' + t[0] + '"><h4>' + t[1] + '</h4><p class="ct-n"><b>' + n(d.g) + '</b> graduates in ' + d.ps.length + ' program' + (d.ps.length > 1 ? 's' : '') + '</p>' +
+        '<p class="ct-what">' + t[3] + '</p><p class="ct-cur">' + t[4] + '</p><ul>' +
+        d.ps.slice(0, 5).map(function (p) { return '<li>' + esc(p[0]) + ' <span class="muted">· ' + esc(p[1]) + ' · ' + n(p[2]) + ' · AI ' + pct(p[8]) + '</span></li>'; }).join('') +
+        (d.ps.length > 5 ? '<li class="muted">and ' + (d.ps.length - 5) + ' more</li>' : '') + '</ul></div>';
+    });
+    h += '</div>' +
+      '<details class="ct-how"><summary>How the curriculum level is worked out</summary>' +
+      '<ol><li>Each program is linked to the jobs its graduates go into, using the CIP-SOC crosswalk.</li>' +
+      '<li>For each of those jobs, we work out what share of graduates\' task-hours AI can do more cheaply than a worker. The cost counts AI errors, the time spent checking AI output, and how high the stakes are.</li>' +
+      '<li>The program is then sorted into three levels.</li></ol>' +
+      '<table class="pf-table" style="max-width:520px"><thead><tr><th>Level</th><th>Share of graduates\' task-hours where AI pays</th></tr></thead><tbody><tr><td>' + badge('High') + '</td><td>50% or more</td></tr><tr><td>' + badge('Medium') + '</td><td>30–50%</td></tr><tr><td>' + badge('Lower') + '</td><td>under 30%</td></tr></tbody></table>' +
+      '<p class="note">High programs are grouped into types by program family. The shares use national task data for each program family and level, so local programs may differ. Transfer-oriented programs are included here even though they get no demand group.</p></details>' +
+      '</div></section>';
+    return h;
+  }
   function render(S, name) {
     var I = S.insts[name];
     if (!I) { root.innerHTML = '<div class="wrap pf-empty"><p>We could not find that institution in the ' + esc(S.name) + ' data. Try the search above.</p></div>'; return; }
@@ -84,7 +133,7 @@
       ' commuting zone by 2035 (' + pct(Z.ais) + ' of jobs). About ' + k(Z.lost) + ' people work in occupations expected to shrink and may need to change occupation, while about ' +
       k(Z.new) + ' new jobs are expected to open in growing occupations, ' + k(Z.edu && Z.edu[1][3]) + ' of them at the certificate or associate level. Of ' + esc(name) + '\'s ' + n(I.grads) +
       ' graduates in grouped programs, ' + pct(I.inv) + ' are in programs where the model expects demand to grow by 10% or more.</p>' +
-      '<nav class="pf-toc" aria-label="Sections"><a href="#market">Labor market</a><a href="#local">Local industries</a><a href="#programs">Programs</a><a href="#stress">Stress test</a><a href="#competition">Competition</a><a href="#adults">Adult learners</a></nav>' +
+      '<nav class="pf-toc" aria-label="Sections"><a href="#market">Labor market</a><a href="#local">Local industries</a><a href="#programs">Programs</a><a href="#stress">Stress test</a><a href="#curriculum">Curriculum</a><a href="#competition">Competition</a><a href="#adults">Adult learners</a></nav>' +
       '</div></section>';
 
     // 1 labor market
@@ -144,8 +193,10 @@
         '</tbody></table></div>' : '') +
       (small ? '<p class="note">Plus ' + small + ' program' + (small > 1 ? 's' : '') + ' with fewer than five graduates, not listed.</p>' : '') + '</div></section>';
 
-    // 5 competition
-    h += '<section class="pf-sec" id="competition"><div class="wrap"><p class="num">5 · Competition</p><h2>Who else trains for the same jobs</h2>' +
+    h += curriculum(I, name);
+
+    // 6 competition
+    h += '<section class="pf-sec" id="competition"><div class="wrap"><p class="num">6 · Competition</p><h2>Who else trains for the same jobs</h2>' +
       '<p class="intro">Other institutions in the ' + esc(I.zone) + ' commuting zone with graduates in the same program families at the same level (certificate or associate, or bachelor\'s and above).</p>' +
       (I.r.length ? '<h3 class="h3">Largest overlaps</h3><div class="tscroll" style="max-width:760px"><table class="pf-table"><thead><tr><th>Institution</th><th>Type</th><th class="r">Graduates in your fields</th></tr></thead><tbody>' +
         I.r.map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[2]) + '</td><td class="r">' + n(r[1]) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '<p class="muted">No other institution in the zone offers the same program families at the same level.</p>') +
@@ -155,7 +206,7 @@
 
     // 6 adult learners
     var poolHead = cty && cty.pool ? 'About ' + k(cty.pool) + ' ' + esc(I.county) + ' residents may join the retraining pool' : 'About ' + k(Z.pool) + ' people may join the retraining pool in this commuting zone';
-    h += '<section class="pf-sec" id="adults"><div class="wrap"><p class="num">6 · Adult learners</p><h2>' + poolHead + '</h2>' +
+    h += '<section class="pf-sec" id="adults"><div class="wrap"><p class="num">7 · Adult learners</p><h2>' + poolHead + '</h2>' +
       '<p class="intro">People expected to lose jobs in shrinking occupations who stay in the area. For a college they are a likely market for short credentials and evening programs; for a program they also compete with its graduates for openings.</p>' +
       '<div class="kpis k4">' + kpi(k(Z.pool), 'expected adult retraining pool in the whole commuting zone') + kpi(k(Z.local), 'expected to change occupation in the area') + kpi(k(Z.away), 'expected to move away for work, over ten years') + kpi(k(Z.stay), 'may stay without a matching job') + '</div>' +
       '<p class="note">Commuting-zone figures. Moving rates come from research on displaced workers; low and high versions are in the state workbook.</p></div></section>';

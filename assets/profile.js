@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261120d';
+  var V = '20261120e';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -83,7 +83,7 @@
       if (l === 'High') { var t = CTYPE[String(p[7]).slice(0, 2)] || 'O'; (T[t] = T[t] || { g: 0, ps: [] }).g += p[2]; T[t].ps.push(p); }
     });
     var badge = function (l) { return '<span class="cl cl-' + l.toLowerCase() + '">' + l + '</span>'; };
-    var h = '<section class="pf-sec" id="curriculum"><div class="wrap"><p class="num">4 · Curriculum change</p><h2>' + (tot ? pct(L.High / tot) : '—') + ' of graduates are in programs where AI can do half or more of the work</h2>' +
+    var h = '<section class="pf-sec" id="curriculum"><div class="wrap"><p class="num">5 · Curriculum change</p><h2>' + (tot ? pct(L.High / tot) : '—') + ' of graduates are in programs where AI can do half or more of the work</h2>' +
       '<p class="intro">The groups on the program map ask whether demand for graduates grows or shrinks. The curriculum level asks how much the work graduates do will change, even if demand stays the same.</p>' +
       '<div class="kpis k4">' + kpi(pct(tot ? L.High / tot : 0), 'of graduates in High programs: AI pays for 50% or more of graduates\' task-hours') +
       kpi(pct(tot ? L.Medium / tot : 0), 'in Medium programs (30–50%)') + kpi(pct(tot ? L.Lower / tot : 0), 'in Lower programs (under 30%)') +
@@ -133,7 +133,7 @@
       ' commuting zone by 2035 (' + pct(Z.ais) + ' of jobs). About ' + k(Z.lost) + ' people work in occupations expected to shrink and may need to change occupation, while about ' +
       k(Z.new) + ' new jobs are expected to open in growing occupations, ' + k(Z.edu && Z.edu[1][3]) + ' of them at the certificate or associate level. Of ' + esc(name) + '\'s ' + n(I.grads) +
       ' graduates in grouped programs, ' + pct(I.inv) + ' are in programs where the model expects demand to grow by 10% or more.</p>' +
-      '<nav class="pf-toc" aria-label="Sections"><a href="#market">Labor market</a><a href="#local">Local industries</a><a href="#programs">Programs</a><a href="#curriculum">Curriculum</a><a href="#stress">Stress test</a><a href="#competition">Competition</a><a href="#adults">Adult learners</a></nav>' +
+      '<nav class="pf-toc" aria-label="Sections"><a href="#market">Labor market</a><a href="#local">Local industries</a><a href="#programs">Programs</a><a href="#stress">Stress test</a><a href="#curriculum">Curriculum</a><a href="#competition">Competition</a><a href="#adults">Adult learners</a></nav>' +
       '</div></section>';
 
     // 1 labor market
@@ -183,10 +183,8 @@
       tiered.slice(0, 15).map(function (p) { return '<tr><td>' + esc(p[0]) + (p[8] >= 0.5 ? ' <span class="ail" title="Above the AI line">Above AI line</span>' : '') + '</td><td>' + esc(p[1]) + '</td><td class="r">' + n(p[2]) + '</td><td class="r ' + cls(p[4]) + '">' + spct(p[4]) + '</td><td class="r">' + (p[8] ? pct(p[8]) : '—') + '</td><td>' + chip(p[3]) + '</td></tr>'; }).join('') +
       '</tbody></table></div><p class="note">Showing the ' + Math.min(15, tiered.length) + ' largest of ' + tiered.length + ' programs. "AI can do" is the national share of graduates\' task time AI can do for each program family and level. Transfer-oriented arts and sciences programs are not grouped.</p></div></section>';
 
-    h += curriculum(I, name);
-
-    // 5 stress test
-    h += '<section class="pf-sec" id="stress"><div class="wrap"><p class="num">5 · Stress test</p><h2>' + (changed.length ? changed.length + ' programs could change group in a slow recovery' : 'No program changes group in a slow recovery') + '</h2>' +
+    // 4 stress test
+    h += '<section class="pf-sec" id="stress"><div class="wrap"><p class="num">4 · Stress test</p><h2>' + (changed.length ? changed.length + ' programs could change group in a slow recovery' : 'No program changes group in a slow recovery') + '</h2>' +
       '<div class="two"><p class="intro" style="margin-top:10px">Our main case assumes, as BLS does, that the work AI takes over is replaced by new demand elsewhere in the economy by 2035. The stress test asks what happens if only 75% is replaced. In this commuting zone that would mean about ' + k(Z.slost) + ' people in shrinking occupations instead of ' + k(Z.lost) +
       ', and an expected net change in jobs of ' + spct(Z.snet / Z.jobs, 1) + ' instead of ' + spct(Z.net / Z.jobs, 1) + '.</p>' +
       '<div class="callout"><b>How to read it.</b> A program that changes group in the stress test sits close to a cut-off, so its outlook is less certain. It is worth looking at under both cases, alongside what you know about your region and your students.' + (changed.length ? ' These programs had ' + n(cg) + ' graduates in 2023–24.' : '') + '</div></div>' +
@@ -195,7 +193,9 @@
         '</tbody></table></div>' : '') +
       (small ? '<p class="note">Plus ' + small + ' program' + (small > 1 ? 's' : '') + ' with fewer than five graduates, not listed.</p>' : '') + '</div></section>';
 
-    // 5 competition
+    h += curriculum(I, name);
+
+    // 6 competition
     h += '<section class="pf-sec" id="competition"><div class="wrap"><p class="num">6 · Competition</p><h2>Who else trains for the same jobs</h2>' +
       '<p class="intro">Other institutions in the ' + esc(I.zone) + ' commuting zone with graduates in the same program families at the same level (certificate or associate, or bachelor\'s and above).</p>' +
       (I.r.length ? '<h3 class="h3">Largest overlaps</h3><div class="tscroll" style="max-width:760px"><table class="pf-table"><thead><tr><th>Institution</th><th>Type</th><th class="r">Graduates in your fields</th></tr></thead><tbody>' +

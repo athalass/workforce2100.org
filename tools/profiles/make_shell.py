@@ -9,9 +9,9 @@ head = re.sub(r'<title>.*?</title>', '<title>College profiles — Workforce 2100
 head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free AI and labor-market profiles for 5,668 U.S. colleges and universities: local labor market, programs, a stress test, competition and adult learners to 2035.">', head)
 head = re.sub(r'<style>.*?</style>', '', head, flags=re.S)
 head = re.sub(r'<link rel="canonical" href="[^"]*">', '', head)
-head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261119p">\n</head>', 1)
+head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261120e">\n</head>', 1)
 foot = shell[shell.index('</main>'):]
-foot = foot.replace('</body>', '<script src="assets/forms.js?v=20261118d"></script>\n<script src="assets/profile.js?v=20261119r"></script>\n</body>', 1)
+foot = foot.replace('</body>', '<script src="assets/forms.js?v=20261118d"></script>\n<script src="assets/profile.js?v=20261120e"></script>\n</body>', 1)
 
 main = '''<main id="main">
 <section class="pf-top" id="pf-top" hidden><div class="wrap"></div></section>
@@ -37,7 +37,7 @@ main = '''<main id="main">
 <div><b>Not included yet.</b> Robots and other physical automation; agentic AI, which carries out multi-step work on its own; wages responding to AI; and local plans such as a new plant or a base closing.</div>
 </div>
 <h3 class="h3" style="margin-top:22px">Change log</h3>
-<ul class="pf-log"><li><b>Version 2 · November 18, 2026.</b> State and institution data and the headline figures re-run with the November 2026 state workbooks; college profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line; data updated quarterly from here on.</li><li><b>Version 1 · October 25, 2026.</b> First release. Study, data and code registered on <a href="https://osf.io/ae95y">OSF</a>.</li></ul>
+<ul class="pf-log"><li><b>Update · November 20, 2026.</b> New Curriculum change section on every profile: the share of graduates in programs where AI pays for half or more of the task-hours, and High programs grouped into Builders, Analysts and managers, High-consequence professions and other fields.</li><li><b>Version 2 · November 18, 2026.</b> State and institution data and the headline figures re-run with the November 2026 state workbooks; college profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line; data updated quarterly from here on.</li><li><b>Version 1 · October 25, 2026.</b> First release. Study, data and code registered on <a href="https://osf.io/ae95y">OSF</a>.</li></ul>
 <p class="note">Data as of November 2026. The full history of the national data is in the <a href="work-2035.html#updates">Work to 2035 change log</a>.</p>
 <h3 class="h3" id="corrections" style="margin-top:26px">Corrections log</h3>
 <p class="intro" style="margin-top:0">Found a number that looks wrong for your institution? Open its profile and use "Report an error or request a correction", or email <a href="mailto:athalass@gmail.com">athalass@gmail.com</a>. We reply to every request that includes an email address. Each correction we make is listed here by date and institution, without the sender's name, unless the sender asked us not to list it.</p>

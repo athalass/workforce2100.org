@@ -109,3 +109,25 @@
  .br-table td.cn{white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis}
  a{color:inherit}
 }
+
+/* the work people do (Nov 2026) */
+.br-h3{font-size:19px;margin:28px 0 10px}
+.br-kpis.br-k3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.br-lvbar{display:flex;height:16px;border-radius:8px;overflow:hidden;max-width:760px;margin:6px 0 8px;background:var(--line)}
+.br-lvbar i{display:block}
+.br-wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.br-wcard{border:1px solid var(--line);border-top:4px solid #1F5F8B;border-radius:12px;padding:18px;background:#fff;min-width:0}
+.br-wcard h3{font-size:19px;margin:0 0 2px}
+.br-wcard .who{margin:0 0 10px;font-size:13.5px;color:var(--ink-3)}
+.br-wcard .big{margin:0 0 4px;color:var(--ink-2)}.br-wcard .big b{font-family:var(--serif);font-size:24px;color:var(--ink)}
+.br-wcard .chg{margin:0 0 10px;font-size:14px}
+.br-wcard .what{margin:0 0 10px;font-size:14.5px;line-height:1.5}
+.br-wcard .lab{margin:0 0 4px;font-size:13px;font-weight:600;color:var(--ink-3)}
+.br-wcard ul{margin:0 0 10px;padding-left:18px;font-size:13.5px;line-height:1.55}
+.br-wcard .grads{margin:0;font-size:13.5px;color:var(--ink-2)}
+@media (max-width:640px){.br-kpis.br-k3{grid-template-columns:1fr}}
+@media print{.br-noprint{display:none!important}.br-wgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.br-wcard{padding:10px;break-inside:avoid}.br-wcard .big b{font-size:18px}}
+@media (max-width:640px){.br-top select{min-width:0;width:100%}.br-top label{min-width:0;max-width:100%}.br-table th,.br-table td{padding-left:6px;padding-right:6px}}
+@media (max-width:640px){.br-table th{white-space:normal;overflow-wrap:anywhere}}
+@media print{.br-wcard h3{font-size:12pt}.br-wcard p,.br-wcard ul{font-size:8.5pt!important;line-height:1.35!important;margin-bottom:5px!important}.br-wcard .big b{font-size:14pt!important}.br-wtypes .intro,.br-wtypes .note{font-size:8.5pt}}
+@media print{.br-wtypes{break-before:page}}

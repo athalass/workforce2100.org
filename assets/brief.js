@@ -1,6 +1,6 @@
 (function () {
 'use strict';
-var V = '20261118';
+var V = '20261120';
 var $ = function (id) { return document.getElementById(id); };
 var root = $('br-root');
 var Q = new URLSearchParams(location.search);
@@ -57,7 +57,7 @@ function landing(states) {
   $('br-c').innerHTML = '<option value="">Choose a state first</option>'; $('br-c').disabled = true; $('br-print').hidden = true;
   document.title = 'State and county briefs — Workforce 2100';
   root.innerHTML = '<section class="wrap br-land"><p class="br-eyebrow">Work to 2035</p><h1>State and county briefs</h1>' +
-    '<p class="br-lead">A two-page summary for every state and every county: the industries it has, how much of their work AI may take on by 2035, a slow-recovery stress test, and how the picture differs county by county. According to our model and today\'s data; estimates, not predictions.</p>' +
+    '<p class="br-lead">A short summary for every state and every county: the industries it has, how much of their work AI may take on by 2035, a slow-recovery stress test, and how the picture differs county by county. According to our model and today\'s data; estimates, not predictions.</p>' +
     '<div class="grid">' + states.map(function (s) { return '<a href="brief.html?st=' + s[0] + '">' + esc(s[1]) + '</a>'; }).join('') + '</div></section>';
 }
 
@@ -142,6 +142,57 @@ function industryTable(rows, opts) {
     show.map(function (r) { return tr(r); }).join('') + (other || '') + tr(all, 'tot', 'All industries') + '</tbody></table></div>';
 }
 
+
+/* ---------- the work people do: occupation groups, work-change levels, four types (Nov 2026) ---------- */
+var WTYPES = [
+  ['B', 'Builders', 'Computer, engineering and science occupations.', 'The work shifts toward specifying, testing and owning AI-built systems.', '#1F5F8B'],
+  ['A', 'Analysts and managers', 'Management, business and finance occupations.', 'The human core becomes observing the work on site, putting new systems in place with staff, and training people.', '#3E8F5E'],
+  ['H', 'High-consequence professions', 'Health care practitioners, counselors, lawyers, teachers and protective service.', 'AI supports the work, but a person stays in charge of decisions with real consequences.', '#B5483B'],
+  ['O', 'Other High occupations', 'Mostly office and administrative support and sales.', 'Here AI is more likely to take over tasks outright than to change them.', '#8FA6BA']
+];
+function workSections(W, nm, occs, cty) {
+  if (!W) return '<section class="br-sec br-page2"><div class="wrap"><h2>Occupations: what shrinks and what grows</h2>' + occs + '</div></section>';
+  var tot = W.grp.reduce(function (a, r) { return a + r[1]; }, 0);
+  var show = W.grp.slice(0, 12), rest = W.grp.slice(12);
+  var max = Math.max.apply(0, W.grp.map(function (r) { return Math.abs(r[4] / r[1]); }));
+  function tr(r, cls, label) {
+    return '<tr class="' + (cls || '') + '"><td>' + (label || esc(r[0])) + '</td><td class="r">' + N(r[1]) + '</td><td class="r">' + P(r[2], 0) + '</td><td class="r">' + P(r[3], 0) + '</td><td>' + bar(r[4] / r[1], max) + '</td><td class="r ' + (r[4] < 0 ? 'neg' : 'pos') + '">' + S(r[4]) + '</td><td class="r ' + (r[5] < 0 ? 'neg' : 'pos') + '">' + S(r[5]) + '</td></tr>';
+  }
+  function sum(rows, label, cls) {
+    var a = rows.reduce(function (a, r) { a[1] += r[1]; a[2] += r[1] * r[2]; a[3] += r[1] * r[3]; a[4] += r[4]; a[5] += r[5]; return a; }, ['', 0, 0, 0, 0, 0]);
+    a[2] /= a[1]; a[3] /= a[1]; return tr(a, cls, label);
+  }
+  var tbl = '<div class="tscroll"><table class="br-table br-wtable"><thead><tr><th>Occupation group</th><th class="r">Jobs 2025</th><th class="r">Work AI<br>takes over</th><th class="r">Work changes<br>most</th><th>Net change to 2035</th><th class="r">Net jobs</th><th class="r">Slow<br>recovery</th></tr></thead><tbody>' +
+    show.map(function (r, i) { return tr(r, i >= 10 ? 'br-noprint' : ''); }).join('') + (rest.length ? sum(rest, 'Other groups (' + rest.length + ')', 'br-noprint') : '') + sum(W.grp, 'All occupations', 'tot') + '</tbody></table></div>';
+  var L = W.lvl, Lt = L[0] + L[1] + L[2];
+  var s1 = '<section class="br-sec br-page2"><div class="wrap"><h2>The work people do' + (cty ? ' in ' + esc(nm) : '') + '</h2>' +
+    '<p class="intro">The same jobs as above, grouped by occupation instead of industry: what people do, wherever they work. <i>Work changes most</i> is the share of jobs in occupations where AI can do half or more of the task-hours more cheaply than a worker, counting AI errors, the time spent checking its work and how high the stakes are.</p>' + tbl +
+    '<h3 class="br-h3">Occupations: what shrinks and what grows</h3>' + occs + '</div></section>';
+  var s2 = '<section class="br-sec"><div class="wrap"><h2>How much the work itself changes</h2>' +
+    '<p class="intro">Net change asks whether jobs grow or shrink. The work-change level asks how much the job itself changes, even where the number of jobs stays the same.</p>' +
+    '<div class="br-kpis br-k3">' + kpi(N(L[0]), 'jobs (' + P(L[0] / Lt, 0) + ') in <b>High</b> occupations: AI pays for 50% or more of the task-hours') +
+    kpi(N(L[1]), 'jobs (' + P(L[1] / Lt, 0) + ') in <b>Medium</b> occupations: 30–50%') + kpi(N(L[2]), 'jobs (' + P(L[2] / Lt, 0) + ') in <b>Lower</b> occupations: under 30%') + '</div>' +
+    '<div class="br-lvbar" role="img" aria-label="Jobs by work-change level"><i style="width:' + (L[0] / Lt * 100).toFixed(1) + '%;background:#1F5F8B"></i><i style="width:' + (L[1] / Lt * 100).toFixed(1) + '%;background:#5D88AC"></i><i style="width:' + (L[2] / Lt * 100).toFixed(1) + '%;background:#9DB3C6"></i></div>' +
+    '<p class="note">Most High jobs are not expected to disappear. In most of them AI takes over part of the work, and what people do changes.</p></div></section>';
+  var cards = WTYPES.map(function (t) {
+    var d = W.typ[t[0]]; if (!d || !d[0]) return '';
+    var g = W.grads ? W.grads[t[0]] : null;
+    var gl = g && g[0] ? N(g[0]) + ' (' + g[1].map(function (x) { return esc(x[0].replace(/^United States /, 'U.S. ')) + ' ' + N(x[1]); }).join(', ') + (g[1].length < 3 ? '' : ' and others') + ')' : null;
+    return '<div class="br-wcard" style="border-top-color:' + t[4] + '"><h3>' + t[1] + '</h3><p class="who">' + t[2] + '</p>' +
+      '<p class="big"><b>' + N(d[0]) + '</b> jobs, ' + P(d[0] / Lt, 0) + ' of all jobs</p>' +
+      '<p class="chg">Net change to 2035: <b class="' + (d[1] < 0 ? 'neg' : 'pos') + '">' + S(d[1]) + '</b> (' + SP(d[1] / d[0]) + ') · slow recovery <b class="' + (d[2] < 0 ? 'neg' : 'pos') + '">' + S(d[2]) + '</b></p>' +
+      '<p class="what">' + t[3] + '</p>' +
+      '<p class="lab">Largest occupations · jobs · net change</p><ul>' + d[3].map(function (o, i) { return '<li' + (i >= 3 ? ' class="br-noprint"' : '') + '>' + esc(cap(lc(o[0]))) + ' <span class="muted">· ' + N(o[1]) + ' · <span class="' + (o[2] < 0 ? 'neg' : 'pos') + '">' + S(o[2]) + '</span></span></li>'; }).join('') + '</ul>' +
+      (W.grads ? '<p class="grads"><b>Graduates a year from ' + (cty ? 'colleges in the county' : 'the state\'s colleges') + ' in these fields:</b> ' + (gl || 'none') + '</p>' : '') + '</div>';
+  }).join('');
+  var s3 = '<section class="br-sec br-wtypes"><div class="wrap"><h2>Four kinds of change in High occupations</h2>' +
+    '<p class="intro">The ' + N(L[0]) + ' jobs in High occupations, grouped by how the work is likely to change. The same four groups appear in each <a href="profile.html">college profile</a>, so the jobs here can be set next to the graduates colleges produce.</p>' +
+    '<div class="br-wgrid">' + cards + '</div>' +
+    '<p class="note">' + (cty ? 'Occupations by county are estimates: county jobs by industry (BLS QCEW 2025) times each industry\'s mix of occupations, adjusted to the state\'s occupation totals, so totals match the industry table above. ' : 'Jobs by occupation: the state\'s occupation totals, so totals match the industry table above. ') +
+    'Graduates: IPEDS completions 2023–24 in programs where AI pays for half or more of graduates\' task-hours.</p></div></section>';
+  return s1 + s2 + s3;
+}
+
 function notes(extra) {
   return '<div class="br-notes"><div><b>How to read.</b> <i>Work AI takes over</i> is the work AI is expected to do instead of people by 2035, in full-time jobs and the wages paid for it today; it is the number for employers. <i>Jobs lost in shrinking occupations</i> counts people who may need to change occupation; it is the number for workforce boards and colleges. Most of the work AI takes over is absorbed inside occupations that keep growing. ' + (extra || '') + '</div>' +
     '<div><b>Method.</b> Our independent model asks, occupation by occupation, which tasks AI can already do at lower cost than a local worker, then applies how fast employers adopt AI and BLS growth to 2035, and places the new jobs created when the money AI saves is spent. Industries: BLS QCEW 2025 jobs (withheld cells estimated) and OEWS May 2025 staffing patterns, adjusted to each state\'s occupations; counties use their state\'s pattern. Full method: <a href="https://papers.ssrn.com/abstract=7679758">Where Work Is Moving</a> · <a href="https://osf.io/ae95y">data and scripts</a>.</div>' +
@@ -205,7 +256,7 @@ function state(IX, D) {
   var html = '<section class="br-hero"><div class="wrap"><p class="br-eyebrow">Work to 2035 · State brief</p><h1>' + esc(nm) + ': AI and work to 2035</h1><p class="br-meta">Executive summary · ' + Nx(s.jobs) + ' jobs at ' + nm + ' workplaces (BLS QCEW 2025) · 2026 edition, data as of November 2026</p><p class="br-lead">' + lead + '</p><div class="br-kpis">' + k + '</div></div></section>' +
     '<section class="br-sec"><div class="wrap"><div class="br-two">' + ch1 + '<div><h2>What stands out</h2><ul class="br-points">' + pts2.map(function (x, i) { return '<li' + (i >= 3 ? ' class="br-hide-print"' : '') + '>' + x + '</li>'; }).join('') + '</ul></div></div></div></section>' +
     '<section class="br-sec"><div class="wrap"><h2>Industries: where AI lands</h2><p class="intro">In almost every industry, office and administrative jobs shrink while hands-on, care and field jobs grow. What differs is the balance. Industries where new jobs per job lost is below 1 cannot absorb their own displaced workers, who will need to change industry as well as occupation.</p>' + '<div class="br-scr">' + industryTable(ind, { max: 14 }) + '</div><div class="br-prt">' + industryTable(ind, { max: 8 }) + '</div>' + '</div></section>' +
-    '<section class="br-sec br-page2"><div class="wrap"><h2>Occupations: what shrinks and what grows</h2>' + occs + '</div></section>' +
+    workSections(s.work, s.nm, occs, false) +
     '<section class="br-sec"><div class="wrap"><h2>Stress test: slow recovery</h2><p class="intro">The same model, if new demand replaces only three quarters of the work AI takes over by 2035.</p>' + stress + '</div></section>' +
     (C.length > 1 ? countySection(IX, D) : '') +
     '<section class="br-sec"><div class="wrap">' + notes('Moving rates come from research, not local data.') + '</div></section>';
@@ -300,10 +351,10 @@ function county(IX, D) {
 
   var ch = '<div class="br-chart">' + countyChart(D, CTY) + '</div>';
   var cmp = function (lab, x, y, u, f) { return '<tr><td>' + lab + '</td><td class="r"><b>' + f(x) + '</b></td><td class="r">' + f(y) + '</td><td class="r">' + f(u) + '</td></tr>'; };
-  var compare = '<table class="br-table"><thead><tr><th>Measure</th><th class="r">' + esc(nm) + '</th><th class="r">' + esc(s.nm) + '</th><th class="r">US</th></tr></thead><tbody>' +
+  var compare = '<div class="tscroll"><table class="br-table"><thead><tr><th>Measure</th><th class="r">' + esc(nm) + '</th><th class="r">' + esc(s.nm) + '</th><th class="r">US</th></tr></thead><tbody>' +
     cmp('Work AI takes over', c.ais, s.ais, us.ais, P) + cmp('Jobs lost in shrinking occupations', c.lostS, s.lostS, us.lostS, P) + cmp('New jobs in growing occupations', c.newS, s.newS, us.newS, P) +
     cmp('Net change in jobs', c.net / c.jobs, s.net / s.jobs, us.net / us.jobs, SP) + cmp('Net change, slow recovery', c.snet / c.jobs, s.snet / s.jobs, us.snet / us.jobs, SP) +
-    cmp('Displaced who move away', c.lost ? c.away / c.lost : 0, s.away / s.lost, us.away / us.lost, P) + '</tbody></table>';
+    cmp('Displaced who move away', c.lost ? c.away / c.lost : 0, s.away / s.lost, us.away / us.lost, P) + '</tbody></table></div>';
   var zone = z ? '<p class="br-note">' + esc(nm) + ' is in the <b>' + esc(zoneName(c.zone)) + '</b> commuting zone' + (z.states && z.states.indexOf(',') > 0 ? ' (' + esc(z.states) + ')' : '') + ': ' + N(z.jobs) + ' jobs, ' + P(z.ais) + ' of work taken over by AI, ' + P(z.lostS) + ' of jobs lost and ' + P(z.newS) + ' new jobs. Of the zone\'s displaced workers, ' + P(z.lost ? z.away / z.lost : 0, 0) + ' are expected to move away and ' + P(z.lost ? z.stay / z.lost : 0, 0) + ' to stay without a matching job.</p>' : '';
 
   var stress = '<div class="br-stress"><div><table class="br-table"><thead><tr><th>Measure</th><th class="r">Main case</th><th class="r">Slow recovery</th></tr></thead><tbody>' +
@@ -318,7 +369,7 @@ function county(IX, D) {
   root.innerHTML = '<section class="br-hero"><div class="wrap"><p class="br-eyebrow">Work to 2035 · County brief · <a href="brief.html?st=' + s.ab + '">' + esc(s.nm) + ' brief</a></p><h1>' + esc(full) + ': AI and work to 2035</h1><p class="br-meta">Executive summary · ' + Nx(c.jobs) + ' jobs located in the county (BLS QCEW 2025) · 2026 edition, data as of November 2026</p><p class="br-lead">' + lead + '</p><div class="br-kpis">' + k + '</div></div></section>' +
     '<section class="br-sec"><div class="wrap"><div class="br-two">' + ch + '<div><h2>What stands out</h2><ul class="br-points">' + pts2.map(function (x, i) { return '<li' + (i >= 3 ? ' class="br-hide-print"' : '') + '>' + x + '</li>'; }).join('') + '</ul></div></div></div></section>' +
     '<section class="br-sec"><div class="wrap"><h2>' + esc(nm) + ' industries</h2><p class="intro">Each industry uses ' + esc(s.nm) + '\'s mix of occupations for that industry, so the jobs inside an industry mirror the state; what differs is the county\'s mix of industries. Industries where new jobs per job lost is below 1 cannot absorb their own displaced workers.</p>' + '<div class="br-scr">' + industryTable(ind, { max: 12 }) + '</div><div class="br-prt">' + industryTable(ind, { max: 8 }) + '</div>' + '</div></section>' +
-    '<section class="br-sec br-page2"><div class="wrap"><h2>Occupations: what shrinks and what grows</h2>' + occs + '</div></section>' +
+    workSections(c.work, nm, occs, true) +
     '<section class="br-sec"><div class="wrap"><h2>Stress test: slow recovery</h2><p class="intro">The same model, if new demand replaces only three quarters of the work AI takes over by 2035.</p>' + stress + '</div></section>' +
     '<section class="br-sec"><div class="wrap"><h2>How ' + esc(nm) + ' compares</h2><div style="max-width:760px">' + compare + zone + '</div></div></section>' +
     '<section class="br-sec"><div class="wrap">' + notes('County rows count jobs located in the county; resident figures count where workers live (LODES commuting).') + '</div></section>';

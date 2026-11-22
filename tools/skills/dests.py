@@ -9,7 +9,8 @@ Program measures (weighted over destinations): demand change 2025-35 (primary MG
   share of work hours adopted or augmented by AI (curriculum change), entry-level share, uncertainty share.
 """
 import sys, re, numpy as np, pandas as pd
-DL = '/home/claude/build/skills/dl/'; OUT = '/home/claude/build/skills/'; UP = '/mnt/user-data/uploads/Occupational analysis/'
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))); import w2100_paths as P
+DL = P.IPEDS + _os.sep; OUT = P.BUILD + _os.sep; UP = P.OA + _os.sep
 DS = sys.argv[1]
 O = pd.read_pickle(OUT + 'occ_nat.pkl').set_index('soc6')
 EMP = O.emp_2025

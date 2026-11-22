@@ -3,6 +3,7 @@ Usage: prep_all.py <Independent_version dir> <out dir>"""
 import json, sys, glob, os
 from collections import defaultdict
 import openpyxl
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))); import w2100_paths as P
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 os.makedirs(OUT, exist_ok=True)
@@ -18,7 +19,7 @@ def tier(d):
 def band(lv): return 's' if lv in ('Certificate', 'Associate') else 'b'
 
 index = []
-NAT = {(x['c'], x['l']): x['h'] for x in json.load(open('/home/claude/workforce2100.org/data/work2035_data.json'))['prog'] if x.get('h') is not None}
+NAT = {(x['c'], x['l']): x['h'] for x in json.load(open(P.p(P.SITE, 'data', 'work2035_data.json')))['prog'] if x.get('h') is not None}
 for path in sorted(glob.glob(f'{SRC}/*/*_Work_2035_Data.xlsx')):
     st = os.path.basename(os.path.dirname(path))
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)

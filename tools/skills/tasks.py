@@ -1,9 +1,12 @@
-"""National task classes (base AI path, national wages), same cost test as the model's occ_freed()."""
-import sys, numpy as np, pandas as pd
-DS='/mnt/user-data/uploads/AI Fluency Economics/Derived/Price_of_Judgment_Dataset_v2.xlsx'
-AEI='/mnt/user-data/uploads/AI Fluency Economics/Derived/AEI_2026-01_Task_Success_and_Time_by_Task_and_Occupation.xlsx'
-sys.argv=['x',DS,AEI,'/home/claude/build/skills/']
-src=open('/home/claude/build/oos/model/occ_model.py').read().split("def occ_freed")[0]
+"""National task classes (base AI path, national wages), same cost test as the model's occ_freed().
+Usage: tasks.py   (paths: tools/w2100_paths.py; writes tasks_nat.pkl and occ_nat.pkl to W2100_BUILD)"""
+import sys, os, numpy as np, pandas as pd
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))); import w2100_paths as P
+DS=P.p(P.AIFE,'Price_of_Judgment_Dataset_v2.xlsx')
+AEI=P.p(P.AIFE,'AEI_2026-01_Task_Success_and_Time_by_Task_and_Occupation.xlsx')
+os.makedirs(P.BUILD, exist_ok=True)
+sys.argv=['x',DS,AEI,P.BUILD+os.sep]
+src=open(P.p(P.MODEL,'occ_model.py')).read().split("def occ_freed")[0]
 exec(src)
 a=AI_PATH['base']
 e=TK.gpt4_exposure.map({'E0':0.0,'E1':1.0,'E2':a['e2']})
@@ -17,7 +20,7 @@ T['tshare']=T.s/T.groupby('soc6').s.transform('sum')
 T['w_ai']=T.tshare*T.e*T.pay          # AI can take on (direct and check)
 T['w_assist']=T.tshare*T.e*(~T.pay)    # exposed, person leads with AI as a tool
 T['w_core']=T.tshare*(1-T.e)           # human core
-T.to_pickle('tasks_nat.pkl')
+T.to_pickle(P.p(P.BUILD,'tasks_nat.pkl'))
 occ=T.groupby('soc6')[['w_ai','w_assist','w_core']].sum()
 print(len(T),'tasks',T.soc6.nunique(),'occupations'); print(occ.describe().round(3))
-N[['soc6','occ_title','emp_2025']].to_pickle('occ_nat.pkl')
+N[['soc6','occ_title','emp_2025']].to_pickle(P.p(P.BUILD,'occ_nat.pkl'))

@@ -11,7 +11,8 @@ Skill AI share = time-weighted AI share of the work activities O*NET links the s
 Importance = destination-weighted O*NET importance (1-5).
 """
 import sys, json, glob, collections, os, numpy as np, pandas as pd
-B = '/home/claude/build/skills/'; ON = '/mnt/user-data/outputs/onet31/'; UP = '/mnt/user-data/uploads/Occupational analysis/'
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))); import w2100_paths as P
+B = P.BUILD + os.sep; ON = P.ONET + os.sep; UP = P.OA + os.sep
 OUT = sys.argv[1]; os.makedirs(OUT, exist_ok=True)
 T = pd.read_pickle(B + 'tasks_nat.pkl'); D = pd.read_pickle(B + 'program_destinations.pkl')
 OCC = pd.read_pickle(B + 'occ_nat.pkl').set_index('soc6').occ_title
@@ -49,7 +50,7 @@ TXT = TS.drop_duplicates(['soc6', 'task_id']).set_index(['soc6', 'task_id']).Tas
 
 # titles from the site's profile data
 TITLE = {}
-for f in glob.glob('/home/claude/workforce2100.org/data/profiles/[A-Z][A-Z].json'):
+for f in glob.glob(P.p(P.SITE, 'data', 'profiles', '[A-Z][A-Z].json')):
     for I in json.load(open(f))['insts'].values():
         for p in I['p']: TITLE.setdefault(str(p[7]), p[0])
 CT = {}

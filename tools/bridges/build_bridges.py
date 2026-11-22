@@ -21,38 +21,36 @@ for r in openpyxl.load_workbook(NEM, read_only=True)['Matrix'].iter_rows(min_row
     if r[0] == 'Line item' and r[4] == 'TE1000' and r[6]: BG[r[2]] = r[9] / r[6] - 1
 
 SK = None
-if ONET:   # importance ratings: {soc6: {element: importance 1-5}}
-    acc = collections.defaultdict(lambda: collections.defaultdict(list)); kinds = {}
+if ONET:   # O*NET importance ratings (scale IM, 1-5) for skills and knowledge: {soc6: {element: importance}}
+    acc = collections.defaultdict(lambda: collections.defaultdict(list))
     with open(ONET, newline='', encoding='utf-8-sig') as f:
-        rd = csv.DictReader(f)
-        cols = rd.fieldnames
-        def col(*names):
-            for n in names:
-                for c in cols:
-                    if c.lower().replace(' ', '_') == n: return c
-            return None
-        c_soc = col('o*net-soc_code', 'onetsoc_code', 'soc', 'soc_code', 'onet_soc_code')
-        c_el = col('element_name', 'element')
-        c_sc = col('scale_id', 'scale')
-        c_v = col('data_value', 'value', 'im')
-        c_dom = col('domain', 'source', 'file', 'category')
-        for r in rd:
-            if c_sc and r[c_sc] not in ('IM',): continue
-            try: v = float(r[c_v])
-            except (TypeError, ValueError): continue
-            soc = r[c_soc][:7]
-            acc[soc][r[c_el]].append(v)
-            if c_dom: kinds[r[c_el]] = r[c_dom]
+        for r in csv.DictReader(f):
+            if r['scale'] != 'IM' or r.get('recommend_suppress') == 'Y': continue
+            if r['domain'] not in ('essential_skills', 'transferable_skills', 'knowledge'): continue
+            acc[r['onet_soc'][:7]][r['element_name']].append(float(r['value']))
     SK = {s: {e: sum(v) / len(v) for e, v in d.items()} for s, d in acc.items()}
-    KINDS = kinds
+    MEAN = collections.defaultdict(list)
+    for d in SK.values():
+        for e, v in d.items(): MEAN[e].append(v)
+    MEAN = {e: sum(v) / len(v) for e, v in MEAN.items()}
 
 def skills(a, b):
-    """Skills both occupations rely on, and the biggest gaps to close for the destination."""
+    """Skills both jobs rely on (beyond what most jobs need), and the largest gaps to close for the destination."""
     A, B = SK.get(a), SK.get(b)
     if not A or not B: return None, None
-    have = sorted((e for e in B if B[e] >= 3.5 and A.get(e, 0) >= 3.5), key=lambda e: -(B[e] + A.get(e, 0)))[:5]
-    add = sorted((e for e in B if B[e] >= 3.25 and B[e] - A.get(e, 0) >= 0.5), key=lambda e: -(B[e] - A.get(e, 0)))[:4]
-    return have, add
+    have = sorted((e for e in B if B[e] >= 3.25 and A.get(e, 0) >= 3.25), key=lambda e: -(min(A[e], B[e]) - MEAN[e]))[:4]
+    add = sorted((e for e in B if B[e] >= 3.0 and B[e] - A.get(e, 0) >= 0.5 and e not in have), key=lambda e: -(B[e] - A.get(e, 0)))[:4]
+    return [LABEL.get(e, e) for e in have], [LABEL.get(e, e) for e in add]
+
+# plainer names for some O*NET elements
+LABEL = {'Administrative': 'Office procedures', 'English Language': 'Written English', 'Customer and Personal Service': 'Customer service',
+         'Computers and Electronics': 'Computers', 'Economics and Accounting': 'Accounting', 'Medicine and Dentistry': 'Medical knowledge',
+         'Law and Government': 'Laws and regulations', 'Public Safety and Security': 'Safety and security', 'Sales and Marketing': 'Sales',
+         'Production and Processing': 'Production processes', 'Management of Personnel Resources': 'Managing people',
+         'Management of Financial Resources': 'Managing budgets', 'Management of Material Resources': 'Managing materials',
+         'Education and Training': 'Teaching and training', 'Communications and Media': 'Communications', 'Therapy and Counseling': 'Therapy and counseling',
+         'Sociology and Anthropology': 'Social science', 'Engineering and Technology': 'Engineering', 'Building and Construction': 'Construction',
+         'Food Production': 'Food production', 'Transportation': 'Transportation', 'Personnel and Human Resources': 'Human resources'}
 
 def r3(x): return None if x is None else round(float(x), 3)
 def i0(x): return None if x is None else int(round(float(x)))

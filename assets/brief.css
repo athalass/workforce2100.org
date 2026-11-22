@@ -131,3 +131,16 @@
 @media (max-width:640px){.br-table th{white-space:normal;overflow-wrap:anywhere}}
 @media print{.br-wcard h3{font-size:12pt}.br-wcard p,.br-wcard ul{font-size:8.5pt!important;line-height:1.35!important;margin-bottom:5px!important}.br-wcard .big b{font-size:14pt!important}.br-wtypes .intro,.br-wtypes .note{font-size:8.5pt}}
 @media print{.br-wtypes{break-before:page}}
+
+/* links to the Career Bridge Finder */
+a.br-oc{color:inherit;text-decoration:underline;text-decoration-color:#9DB3C6;text-underline-offset:3px}
+a.br-oc:hover{color:var(--blue);text-decoration-color:var(--blue)}
+.br-bsearch{margin-top:6px}
+.br-bs-intro{margin:0 0 10px;color:var(--ink-2);font-size:15px;max-width:760px}
+.br-bs{position:relative;max-width:620px}
+.br-bs input{font:inherit;font-size:16px;padding:11px 12px;border:1px solid var(--line-2);border-radius:8px;width:100%;box-sizing:border-box;background:#fff}
+.br-bs ul{position:absolute;z-index:20;left:0;right:0;top:100%;margin:6px 0 0;padding:6px;list-style:none;background:#fff;border:1px solid var(--line-2);border-radius:10px;box-shadow:0 12px 28px rgba(15,27,45,.14);max-height:380px;overflow:auto}
+.br-bs a{display:block;padding:8px 10px;border-radius:6px;text-decoration:none;color:var(--ink)}
+.br-bs a:hover{background:#EEF4F9}.br-bs b{display:block;font-size:14.5px}.br-bs span{font-size:12.5px;color:var(--ink-3)}
+.br-bs li.muted{padding:8px 10px;color:var(--ink-3)}
+@media print{.br-bsearch{display:none!important}a.br-oc{text-decoration:none}}

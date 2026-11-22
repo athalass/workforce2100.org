@@ -1,6 +1,6 @@
 (function () {
 'use strict';
-var V = '20261120';
+var V = '20261122';
 var $ = function (id) { return document.getElementById(id); };
 var root = $('br-root');
 var Q = new URLSearchParams(location.search);
@@ -27,6 +27,7 @@ function occ(t) { // shorter occupation titles
     .replace(/First-Line Supervisors of /, 'Supervisors of ').replace(/ and Administrative Assistants/, ' and admin assistants').replace(/, Except Postsecondary/, ' (K-12)')
     .replace(/Laborers and Freight, Stock, and Material Movers, Hand/, 'Laborers and material movers').replace(/, Except [^,]*$/, '').replace(/ and Personal Care Aides/, ' and personal care aides');
 }
+function ocs(t) { return '<span class="br-oc" data-t="' + esc(t) + '">' + esc(cap(lc(t))) + '</span>'; }
 function lc(t) { return occ(t).toLowerCase().replace(/\bk-12\b/, 'K-12').replace(/\b(hvac|it|ai)\b/g, function (m) { return m.toUpperCase(); }); }
 function list(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
 function rankOf(arr, v) { var r = 1; arr.forEach(function (x) { if (x > v + 1e-12) r++; }); return r; }
@@ -42,6 +43,7 @@ get('data/briefs/index.json').then(function (IX) {
     $('br-c').innerHTML = '<option value="">Whole state</option>' + Object.keys(D.counties).sort().map(function (c) { return '<option' + (c === CTY ? ' selected' : '') + ' value="' + esc(c) + '">' + esc(cname(c, ST)) + '</option>'; }).join('');
     $('br-c').disabled = Object.keys(D.counties).length < 2;
     if (CTY) county(IX, D); else state(IX, D);
+    linkOcc(ST, D.state.nm, CTY);
     window.scrollTo(0, 0);
   });
 }).catch(function () { root.innerHTML = '<div class="wrap br-land"><p>Sorry, the data could not be loaded. Please try again later.</p></div>'; });
@@ -167,7 +169,7 @@ function workSections(W, nm, occs, cty) {
   var L = W.lvl, Lt = L[0] + L[1] + L[2];
   var s1 = '<section class="br-sec br-page2"><div class="wrap"><h2>The work people do' + (cty ? ' in ' + esc(nm) : '') + '</h2>' +
     '<p class="intro">The same jobs as above, grouped by occupation instead of industry: what people do, wherever they work. <i>Work changes most</i> is the share of jobs in occupations where AI can do half or more of the task-hours more cheaply than a worker, counting AI errors, the time spent checking its work and how high the stakes are.</p>' + tbl +
-    '<h3 class="br-h3">Occupations: what shrinks and what grows</h3>' + occs + '</div></section>';
+    '<h3 class="br-h3">Occupations: what shrinks and what grows</h3>' + occs + '<div class="br-bsearch" id="br-bsearch"></div></div></section>';
   var s2 = '<section class="br-sec"><div class="wrap"><h2>How much the work itself changes</h2>' +
     '<p class="intro">Net change asks whether jobs grow or shrink. The work-change level asks how much the job itself changes, even where the number of jobs stays the same.</p>' +
     '<div class="br-kpis br-k3">' + kpi(N(L[0]), 'jobs (' + P(L[0] / Lt, 0) + ') in <b>High</b> occupations: AI pays for 50% or more of the task-hours') +
@@ -182,7 +184,7 @@ function workSections(W, nm, occs, cty) {
       '<p class="big"><b>' + N(d[0]) + '</b> jobs, ' + P(d[0] / Lt, 0) + ' of all jobs</p>' +
       '<p class="chg">Net change to 2035: <b class="' + (d[1] < 0 ? 'neg' : 'pos') + '">' + S(d[1]) + '</b> (' + SP(d[1] / d[0]) + ') · slow recovery <b class="' + (d[2] < 0 ? 'neg' : 'pos') + '">' + S(d[2]) + '</b></p>' +
       '<p class="what">' + t[3] + '</p>' +
-      '<p class="lab">Largest occupations · jobs · net change</p><ul>' + d[3].map(function (o, i) { return '<li' + (i >= 3 ? ' class="br-noprint"' : '') + '>' + esc(cap(lc(o[0]))) + ' <span class="muted">· ' + N(o[1]) + ' · <span class="' + (o[2] < 0 ? 'neg' : 'pos') + '">' + S(o[2]) + '</span></span></li>'; }).join('') + '</ul>' +
+      '<p class="lab">Largest occupations · jobs · net change</p><ul>' + d[3].map(function (o, i) { return '<li' + (i >= 3 ? ' class="br-noprint"' : '') + '>' + ocs(o[0]) + ' <span class="muted">· ' + N(o[1]) + ' · <span class="' + (o[2] < 0 ? 'neg' : 'pos') + '">' + S(o[2]) + '</span></span></li>'; }).join('') + '</ul>' +
       (W.grads ? '<p class="grads"><b>Graduates a year from ' + (cty ? 'colleges in the county' : 'the state\'s colleges') + ' in these fields:</b> ' + (gl || 'none') + '</p>' : '') + '</div>';
   }).join('');
   var s3 = '<section class="br-sec br-wtypes"><div class="wrap"><h2>Four kinds of change in High occupations</h2>' +
@@ -243,7 +245,7 @@ function state(IX, D) {
   pts2.push('Of the displaced, about ' + P(s.local / s.lost, 0) + ' are expected to change occupation locally, ' + P(awayS, 0) + ' to move to another labor market and ' + P(s.stay / s.lost, 0) + ' to stay without a matching job.');
   if (C.length > 1) { var cs = C.slice().sort(function (a, b) { return b.lostS - a.lostS; }); pts2.push('Across ' + C.length + ' counties, the share of jobs lost ranges from ' + P(cs[cs.length - 1].lostS) + ' (' + esc(cname(cs[cs.length - 1].nm, s.ab)) + ') to ' + P(cs[0].lostS) + ' (' + esc(cname(cs[0].nm, s.ab)) + '). ' + (cLose ? cLose + ' lose jobs on net' : 'None loses jobs on net') + ' in the main case; ' + cLoseS + ' under a slow recovery.'); }
 
-  var occs = '<div class="br-occ"><div><h3>Largest losses by 2035</h3><ol>' + s.top[0].map(function (o) { return '<li>' + esc(cap(lc(o[0]))) + ' <span class="neg">' + S(o[2]) + '</span> <span class="muted">(' + SP(o[2] / o[1], 0) + ')</span></li>'; }).join('') + '</ol></div><div><h3>Largest gains by 2035</h3><ol>' + s.top[1].map(function (o) { return '<li>' + esc(cap(lc(o[0]))) + ' <span class="pos">' + S(o[2]) + '</span> <span class="muted">(' + SP(o[2] / o[1], 0) + ')</span></li>'; }).join('') + '</ol></div></div>';
+  var occs = '<div class="br-occ"><div><h3>Largest losses by 2035</h3><ol>' + s.top[0].map(function (o) { return '<li>' + ocs(o[0]) + ' <span class="neg">' + S(o[2]) + '</span> <span class="muted">(' + SP(o[2] / o[1], 0) + ')</span></li>'; }).join('') + '</ol></div><div><h3>Largest gains by 2035</h3><ol>' + s.top[1].map(function (o) { return '<li>' + ocs(o[0]) + ' <span class="pos">' + S(o[2]) + '</span> <span class="muted">(' + SP(o[2] / o[1], 0) + ')</span></li>'; }).join('') + '</ol></div></div>';
 
   var stress = '<div class="br-stress"><div><table class="br-table"><thead><tr><th>Measure</th><th class="r">Main case</th><th class="r">Slow recovery</th></tr></thead><tbody>' +
     '<tr><td>Net change in jobs</td><td class="r ' + (s.net < 0 ? 'neg' : 'pos') + '">' + S(s.net) + '</td><td class="r ' + (s.snet < 0 ? 'neg' : 'pos') + '">' + S(s.snet) + '</td></tr>' +
@@ -364,7 +366,7 @@ function county(IX, D) {
     '<tr><td>Industries with fewer jobs than in 2025</td><td class="r">' + ind.filter(function (r) { return r[4] < 0; }).length + ' of ' + ind.length + '</td><td class="r">' + ind.filter(function (r) { return r[7] < 0; }).length + ' of ' + ind.length + '</td></tr>' +
     '</tbody></table></div><div class="callout"><b>What the stress test asks.</b> What if only 75% of the work AI takes over is replaced by new demand by 2035? It is a stress test, not a forecast. ' + stressLine(ind) + '</div></div>';
 
-  var occs = '<div class="br-occ"><div><h3>Largest losses in the county by 2035</h3><ol>' + c.top[0].map(function (o) { return '<li>' + esc(cap(lc(o[0]))) + ' <span class="neg">' + S(o[2]) + '</span></li>'; }).join('') + '</ol></div><div><h3>Largest gains in the county by 2035</h3><ol>' + c.top[1].map(function (o) { return '<li>' + esc(cap(lc(o[0]))) + ' <span class="pos">' + S(o[2]) + '</span></li>'; }).join('') + '</ol></div></div>';
+  var occs = '<div class="br-occ"><div><h3>Largest losses in the county by 2035</h3><ol>' + c.top[0].map(function (o) { return '<li>' + ocs(o[0]) + ' <span class="neg">' + S(o[2]) + '</span></li>'; }).join('') + '</ol></div><div><h3>Largest gains in the county by 2035</h3><ol>' + c.top[1].map(function (o) { return '<li>' + ocs(o[0]) + ' <span class="pos">' + S(o[2]) + '</span></li>'; }).join('') + '</ol></div></div>';
 
   root.innerHTML = '<section class="br-hero"><div class="wrap"><p class="br-eyebrow">Work to 2035 · County brief · <a href="brief.html?st=' + s.ab + '">' + esc(s.nm) + ' brief</a></p><h1>' + esc(full) + ': AI and work to 2035</h1><p class="br-meta">Executive summary · ' + Nx(c.jobs) + ' jobs located in the county (BLS QCEW 2025) · 2026 edition, data as of November 2026</p><p class="br-lead">' + lead + '</p><div class="br-kpis">' + k + '</div></div></section>' +
     '<section class="br-sec"><div class="wrap"><div class="br-two">' + ch + '<div><h2>What stands out</h2><ul class="br-points">' + pts2.map(function (x, i) { return '<li' + (i >= 3 ? ' class="br-hide-print"' : '') + '>' + x + '</li>'; }).join('') + '</ul></div></div></div></section>' +
@@ -373,5 +375,31 @@ function county(IX, D) {
     '<section class="br-sec"><div class="wrap"><h2>Stress test: slow recovery</h2><p class="intro">The same model, if new demand replaces only three quarters of the work AI takes over by 2035.</p>' + stress + '</div></section>' +
     '<section class="br-sec"><div class="wrap"><h2>How ' + esc(nm) + ' compares</h2><div style="max-width:760px">' + compare + zone + '</div></div></section>' +
     '<section class="br-sec"><div class="wrap">' + notes('County rows count jobs located in the county; resident figures count where workers live (LODES commuting).') + '</div></section>';
+}
+/* ---------- links to the Career Bridge Finder ---------- */
+function linkOcc(st, snm, cty) {
+  get('data/bridges/' + st + '.json').then(function (B) {
+    var bytitle = {}, all = [];
+    Object.keys(B.occ).forEach(function (soc) { var o = B.occ[soc]; bytitle[o[0]] = soc; all.push([soc, o[0], o[2], o[5], o[9].length]); });
+    all.sort(function (a, b) { return b[2] - a[2]; });
+    function href(soc) { return 'bridges.html?st=' + st + '&o=' + soc; }
+    [].forEach.call(document.querySelectorAll('.br-oc[data-t]'), function (el) {
+      var soc = bytitle[el.getAttribute('data-t')]; if (!soc) return;
+      var a = document.createElement('a'); a.className = 'br-oc'; a.href = href(soc); a.innerHTML = el.innerHTML; a.title = 'Career bridges for this occupation';
+      el.parentNode.replaceChild(a, el);
+    });
+    var box = document.getElementById('br-bsearch'); if (!box) return;
+    box.innerHTML = '<h3 class="br-h3">Career Bridge Finder</h3><p class="br-bs-intro">Click an occupation above, or search any occupation in ' + esc(snm) + ', to see where its workers\' skills can take them' + (cty ? ' (bridges use state data)' : '') + '.</p>' +
+      '<div class="br-bs"><input type="search" id="br-bq" placeholder="Type a job title, such as bookkeeping or cashier" autocomplete="off" aria-controls="br-bl"><ul id="br-bl" hidden></ul></div>';
+    var q = document.getElementById('br-bq'), ul = document.getElementById('br-bl');
+    q.addEventListener('input', function () {
+      var w = q.value.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+      if (!w.length) { ul.hidden = true; return; }
+      var hits = all.filter(function (r) { var t = r[1].toLowerCase(); return w.every(function (x) { return t.indexOf(x) >= 0; }); }).slice(0, 10);
+      ul.innerHTML = hits.length ? hits.map(function (r) { return '<li><a href="' + href(r[0]) + '"><b>' + esc(r[1]) + '</b><span>' + N(r[2]) + ' jobs · ' + SP(r[3]) + ' to 2035' + (r[4] ? ' · bridges' : '') + '</span></a></li>'; }).join('') : '<li class="muted">No occupation matches.</li>';
+      ul.hidden = false;
+    });
+    q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var a = ul.querySelector('a'); if (a) location.href = a.href; } });
+  }).catch(function () {});
 }
 })();

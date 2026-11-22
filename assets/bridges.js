@@ -1,7 +1,7 @@
 /* Career Bridge Finder: workforce2100.org
    Data: data/bridges/{ST}.json (tools/bridges/build_bridges.py), county split from data/briefs/{ST}.json */
 (function () {
-  var V = '20261122';
+  var V = '20261122b';
   var $ = function (id) { return document.getElementById(id); };
   var st = $('bf-st'), q = $('bf-q'), list = $('bf-list'), role = $('bf-role'), root = $('bf-root'), tryp = $('bf-try');
   var IX = [], D = null, BR = null, CUR = null, LIST = [];
@@ -15,7 +15,7 @@
   function short(t) { return t.replace(/, Except .*$/, '').replace(/, All Other$/, ' (other)'); }
   function cls(x) { return x == null ? '' : x < 0 ? 'neg' : 'pos'; }
   function get(u) { return fetch(u + '?v=' + V).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
-  function O(s) { var o = D.occ[s]; return o && { soc: s, t: o[0], grp: o[1], jobs: o[2], wage: o[3], ai: o[4], chg: o[5], slow: o[6], pays: o[7], out: o[8], br: o[9] }; }
+  function O(s) { var o = D.occ[s]; return o && { soc: s, t: o[0], grp: o[1], jobs: o[2], wage: o[3], ai: o[4], chg: o[5], slow: o[6], pays: o[7], out: o[8], br: o[9], weak: o[10] || 0 }; }
 
   // ---------- state and search ----------
   get('data/bridges/index.json').then(function (ix) {
@@ -90,14 +90,14 @@
       '<p class="bf-tip">' + TIP[role.value] + '</p></div></section>';
 
     if (o.br.length) {
-      h += '<section class="bf-sec bf-tint"><div class="wrap"><h2>Your three closest bridges</h2>' +
+      h += '<section class="bf-sec bf-tint"><div class="wrap"><h2>Your ' + (o.br.length === 3 ? 'three ' : o.br.length === 2 ? 'two ' : '') + 'closest bridge' + (o.br.length > 1 ? 's' : '') + '</h2>' +
         '<p class="intro">Growing occupations in ' + esc(D.nm) + ' that use the most of the same skills, ranked by our model. Compare pay, training time and outlook.</p><div class="bf-cards">' +
         o.br.map(function (b, i) { return card(b, i, o); }).join('') + '</div></div></section>';
     } else {
       var into = LIST.filter(function (s) { return s.br.some(function (b) { return b.soc === o.soc; }); });
-      h += '<section class="bf-sec bf-tint"><div class="wrap"><h2>' + (o.chg >= 0 ? 'This occupation is expected to grow or hold' : 'No bridge listed for this occupation') + '</h2>' +
+      h += '<section class="bf-sec bf-tint"><div class="wrap"><h2>' + (o.chg >= 0 ? 'This occupation is expected to grow or hold' : o.weak ? 'No strong bridge for this occupation' : 'No bridge listed for this occupation') + '</h2>' +
         '<p class="intro">' + (o.chg >= 0 ? 'According to our model and today\'s data, jobs in this occupation are not expected to shrink in ' + esc(D.nm) + ' by 2035, so we do not list bridges away from it. The work itself may still change: AI can take on ' + P(o.ai) + ' of it.'
-          : 'Our model lists bridges for the occupations expected to shrink the most in each state. This one is not among them.') + '</p>' +
+          : o.weak ? 'The closest growing occupations in ' + esc(D.nm) + ' share less than 40% of the skills this job uses, so we do not show them. A move from here usually means starting new training; a career counselor can help find the best fit.' : 'Our model lists bridges for the occupations expected to shrink the most in each state. This one is not among them.') + '</p>' +
         (into.length ? '<h3 class="bf-h3">Workers from these shrinking occupations may move into it</h3><ul class="bf-into">' + into.slice(0, 8).map(function (s) { return '<li><a href="#" data-soc="' + s.soc + '">' + esc(s.t) + '</a> <span class="muted">· ' + K(s.jobs) + ' jobs · <span class="neg">' + SP(s.chg) + '</span></span></li>'; }).join('') + '</ul>' : '') +
         '</div></section>';
     }

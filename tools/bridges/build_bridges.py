@@ -13,6 +13,7 @@ import sys, os, glob, json, csv, collections
 import openpyxl
 
 SRC, NEM, BRIEFS, OUT = sys.argv[1:5]
+MIN_COV = 0.4   # bridges with less than 40% of skills in common are not shown
 ONET = sys.argv[5] if len(sys.argv) > 5 else None
 os.makedirs(OUT, exist_ok=True)
 
@@ -86,9 +87,11 @@ for st_dir in sorted(glob.glob(f'{SRC}/*/')):
             np=i0(r['state_programs_at_fit_level']), nc=i0(r['state_completions_at_fit_level']), progs=r['top_state_programs'],
             ctys=r['counties_with_program'], ne=i0(r['etpl_programs']), nep=i0(r['etpl_providers']), weeks=r3(r['etpl_median_weeks']),
             tuition=i0(r['etpl_median_tuition']), etpl=r['top_etpl'], appr=r['apprenticeships'], have=have, need=add))
-    for v in occ.values(): v[9].sort(key=lambda b: b['soc'] and 0)
+    for v in occ.values():   # hide weak bridges: fewer than MIN_COV of skills in common
+        had = len(v[9]); v[9] = [b for b in v[9] if (b['cov'] or 0) >= MIN_COV]
+        v.append(had - len(v[9]))
     out = dict(st=st, nm=B['nm'], lost=B['lost'], local=B['local'], away=B['away'], stay=B['stay'],
-               cols=['title', 'group', 'jobs', 'wage', 'ai', 'chg', 'slow', 'pays', 'outlook', 'bridges'], occ=occ)
+               cols=['title', 'group', 'jobs', 'wage', 'ai', 'chg', 'slow', 'pays', 'outlook', 'bridges', 'weak_hidden'], occ=occ)
     json.dump(out, open(f'{OUT}/{st}.json', 'w'), separators=(',', ':'), ensure_ascii=False)
     nb = sum(1 for v in occ.values() if v[9])
     idx.append([st, B['nm'], len(occ), nb])

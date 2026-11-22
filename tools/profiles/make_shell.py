@@ -9,9 +9,9 @@ head = re.sub(r'<title>.*?</title>', '<title>College profiles — Workforce 2100
 head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Free AI and labor-market profiles for 5,668 U.S. colleges and universities: local labor market, programs, a stress test, competition and adult learners to 2035.">', head)
 head = re.sub(r'<style>.*?</style>', '', head, flags=re.S)
 head = re.sub(r'<link rel="canonical" href="[^"]*">', '', head)
-head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261120e">\n</head>', 1)
+head = head.replace('</head>', '<link rel="canonical" href="https://workforce2100.org/profile.html">\n<link rel="stylesheet" href="assets/profile.css?v=20261122s">\n</head>', 1)
 foot = shell[shell.index('</main>'):]
-foot = foot.replace('</body>', '<script src="assets/forms.js?v=20261118d"></script>\n<script src="assets/profile.js?v=20261120e"></script>\n</body>', 1)
+foot = foot.replace('</body>', '<script src="assets/forms.js?v=20261118d"></script>\n<script src="assets/profile.js?v=20261122s"></script>\n</body>', 1)
 
 main = '''<main id="main">
 <section class="pf-top" id="pf-top" hidden><div class="wrap"></div></section>

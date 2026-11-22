@@ -1,6 +1,6 @@
 /* Free institution profile: renders one college from data/profiles/<ST>.json */
 (function () {
-  var V = '20261120e';
+  var V = '20261122s';
   var root = document.getElementById('pf-root');
   var q = document.getElementById('pf-q');
   var list = document.getElementById('pf-list');
@@ -110,6 +110,25 @@
       '</div></section>';
     return h;
   }
+
+  // search box under Largest programs: links to the program skills view
+  var SKIX = null;
+  function skSearch(I) {
+    var q = document.getElementById('pf-skq'), ul = document.getElementById('pf-skl'); if (!q) return;
+    var mine = {}; I.p.forEach(function (p) { mine[p[7] + '|' + p[1]] = 1; });
+    function load() { return SKIX ? Promise.resolve(SKIX) : fetch('data/skills/index.json?v=' + V).then(function (r) { return r.json(); }).then(function (d) { SKIX = d.index; return SKIX; }); }
+    q.addEventListener('input', function () {
+      var w = q.value.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+      if (!w.length) { ul.hidden = true; return; }
+      load().then(function (ix) {
+        var hits = ix.filter(function (r) { var t = (r[1] + ' ' + r[2]).toLowerCase(); return w.every(function (x) { return t.indexOf(x) >= 0; }); });
+        hits.sort(function (a, b) { return (mine[b[0]] ? 1 : 0) - (mine[a[0]] ? 1 : 0); });
+        ul.innerHTML = hits.slice(0, 12).map(function (r) { return '<li><a href="skills.html?p=' + encodeURIComponent(r[0]) + '"><b>' + esc(r[1]) + '</b><span>' + esc(r[2]) + (mine[r[0]] ? ' · offered here' : '') + ' · AI can do ' + pct(r[4]) + '</span></a></li>'; }).join('') || '<li class="muted">No program matches.</li>';
+        ul.hidden = false;
+      });
+    });
+    q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var a = ul.querySelector('a'); if (a) location.href = a.href; } });
+  }
   function render(S, name) {
     var I = S.insts[name];
     if (!I) { root.innerHTML = '<div class="wrap pf-empty"><p>We could not find that institution in the ' + esc(S.name) + ' data. Try the search above.</p></div>'; return; }
@@ -180,8 +199,9 @@
       '<div class="legend"><span><i style="background:#3E8F5E"></i>Invest ' + pct(I.inv) + ' of graduates</span><span><i style="background:#5D88AC"></i>Reinvent ' + pct(I.rei) + '</span><span><i style="background:#C2654F"></i>Review ' + pct(I.rev) + '</span></div>' +
       '<p class="grp-note"><b>What the groups mean.</b> Invest, Reinvent and Review are signals from our model about expected demand for graduates, based on today\'s data. They do not judge a program\'s quality, outcomes or faculty, and they are not recommendations to grow, change or close it.</p>' +
       '<h3 class="h3" style="margin-top:22px">Largest programs</h3><div class="tscroll"><table class="pf-table"><thead><tr><th>Program</th><th>Level</th><th class="r">Graduates, 2023–24</th><th class="r">Expected demand change, 2025–35</th><th class="r">AI can do</th><th>Group</th></tr></thead><tbody>' +
-      tiered.slice(0, 15).map(function (p) { return '<tr><td>' + esc(p[0]) + (p[8] >= 0.5 ? ' <span class="ail" title="Above the AI line">Above AI line</span>' : '') + '</td><td>' + esc(p[1]) + '</td><td class="r">' + n(p[2]) + '</td><td class="r ' + cls(p[4]) + '">' + spct(p[4]) + '</td><td class="r">' + (p[8] ? pct(p[8]) : '—') + '</td><td>' + chip(p[3]) + '</td></tr>'; }).join('') +
-      '</tbody></table></div><p class="note">Showing the ' + Math.min(15, tiered.length) + ' largest of ' + tiered.length + ' programs. "AI can do" is the national share of graduates\' task time AI can do for each program family and level. Transfer-oriented arts and sciences programs are not grouped.</p></div></section>';
+      tiered.slice(0, 15).map(function (p) { return '<tr><td><a class="pf-sk" href="skills.html?p=' + encodeURIComponent(p[7] + '|' + p[1]) + '" title="Skills view for this program">' + esc(p[0]) + '</a>' + (p[8] >= 0.5 ? ' <span class="ail" title="Above the AI line">Above AI line</span>' : '') + '</td><td>' + esc(p[1]) + '</td><td class="r">' + n(p[2]) + '</td><td class="r ' + cls(p[4]) + '">' + spct(p[4]) + '</td><td class="r">' + (p[8] ? pct(p[8]) : '—') + '</td><td>' + chip(p[3]) + '</td></tr>'; }).join('') +
+      '</tbody></table></div><p class="note">Showing the ' + Math.min(15, tiered.length) + ' largest of ' + tiered.length + ' programs. "AI can do" is the national share of graduates\' task time AI can do for each program family and level. Transfer-oriented arts and sciences programs are not grouped. Click a program for its skills view.</p>' +
+      '<div class="pf-sksearch"><h3 class="h3">Skills view for any program</h3><p class="muted" style="margin:0 0 10px;font-size:14.5px">Which skills behind a program AI is likely to take on, which stay with people, and what to change in the curriculum. ' + esc(name) + '\'s programs are listed first.</p><div class="pf-skbox"><input type="search" id="pf-skq" placeholder="Type a program, such as nursing or accounting" autocomplete="off"><ul id="pf-skl" hidden></ul></div></div></div></section>';
 
     // 4 stress test
     h += '<section class="pf-sec" id="stress"><div class="wrap"><p class="num">4 · Stress test</p><h2>' + (changed.length ? changed.length + ' programs could change group in a slow recovery' : 'No program changes group in a slow recovery') + '</h2>' +
@@ -215,6 +235,7 @@
       '<p class="pf-actions"><button class="pf-btn" type="button" onclick="window.print()">Save as PDF</button> ' + fixLink(name, S.st, 'pf-btn pf-fixbtn') + '</p><p class="note">We reply to every request that includes an email address, and corrections are listed in the <a href="#corrections">corrections log</a> without the sender\x27s name.</p><aside class="pf-study" aria-label="Work 2035 Tracking Study"><div><p class="pf-study-tag">Coming in 2027</p><p><b>Help check these forecasts.</b> The Work 2035 Tracking Study will compare forecasts like these with what actually happens, year by year, and ask college leaders what they changed and why. It opens to presidents and provosts after ethics review, expected in spring 2027.</p></div><p class="pf-study-links"><a class="pf-btn" href="tracking-study.html">Read about the study</a> <span>Want to hear when it opens? <a href="tracking-study.html#notify">Sign up</a> or email <a href="mailto:athalass@gmail.com">athalass@gmail.com</a></span></p></aside></div></section>';
     root.innerHTML = h;
     drawMap(mapped);
+    skSearch(I);
     if (window.W2100Forms) { var lastW = root.querySelector('.pf-sec.last .wrap'); W2100Forms.mountCorrection(lastW && lastW.querySelector('.pf-actions') ? lastW : null, { name: name, st: S.st }); var fb = lastW && lastW.querySelector('#fix'); if (fb) lastW.insertBefore(fb, lastW.querySelector('.pf-study')); }
     root.querySelectorAll('.pf-table').forEach(function (t) {
       var names = [].map.call(t.querySelectorAll('thead th'), function (th) { return th.textContent.trim(); });

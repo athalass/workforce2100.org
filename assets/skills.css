@@ -1,0 +1,30 @@
+/* Program skills view (uses bridges.css for shared pieces) */
+.sk-form{margin-top:24px;max-width:760px}
+.sk-form label{display:grid;gap:6px;font-size:14px;font-weight:600;position:relative}
+.sk-form input{font:inherit;font-size:16px;font-weight:400;padding:11px 12px;border:1px solid var(--line-2);border-radius:8px;background:#fff;width:100%;box-sizing:border-box}
+.sk-top{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+.bf-kpis.sk-k3{grid-template-columns:repeat(2,minmax(0,1fr));margin:0}
+.sk-occ{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}
+.sk-occ h3{font-size:17px;margin:0 0 8px}
+.sk-occ ul{list-style:none;margin:0;padding:0;font-size:14px}
+.sk-occ li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line)}
+.sk-occ li:last-child{border-bottom:0}
+.cl{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;color:#fff;vertical-align:1px}
+.cl-high{background:#1F5F8B}.cl-medium{background:#5D88AC}.cl-lower{background:#9DB3C6;color:#16202A}
+.sk-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 20px;margin:0 0 16px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.sk-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
+.sk-legend b{color:var(--ink)}
+.sk-table td{vertical-align:middle}
+.sk-num{white-space:nowrap;font-variant-numeric:tabular-nums}
+.sk-bar{display:inline-block;width:110px;height:8px;background:#E6EBF0;border-radius:4px;margin-right:8px;vertical-align:middle;overflow:hidden}
+.sk-bar i{display:block;height:100%;border-radius:4px}
+.sk-tag{display:inline-block;font-size:12.5px;font-weight:600;padding:2px 9px;border:1px solid;border-radius:999px;background:#fff;white-space:nowrap}
+.sk-tasks{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:26px}
+.sk-tasks h3{font-size:17px;margin:0 0 8px}
+.sk-tasks ul{margin:0;padding-left:18px;font-size:14px;line-height:1.55}
+.sk-tasks li{margin-bottom:6px}
+.sk-steps{margin:10px 0 0;padding-left:22px;max-width:860px;font-size:15px;line-height:1.6}
+.sk-steps li{margin-bottom:8px}
+@media (max-width:860px){.sk-top,.sk-tasks{grid-template-columns:1fr}.sk-legend{grid-template-columns:1fr}.sk-bar{width:60px}}
+@media (max-width:520px){.bf-kpis.sk-k3{grid-template-columns:1fr}}
+.bf-kpi span.cl{display:inline-block;margin:4px 0 0;font-size:12px;color:#fff;padding:2px 9px}.bf-kpi span.cl.cl-lower{color:#16202A}

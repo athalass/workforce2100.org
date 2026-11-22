@@ -140,3 +140,14 @@
 .ct-how summary{cursor:pointer;font-weight:600}
 .ct-how ol{margin:12px 0;padding-left:20px;font-size:14.5px;line-height:1.6}
 p.callout{max-width:900px}
+/* links to the program skills view */
+a.pf-sk{color:inherit;text-decoration:underline;text-decoration-color:#9DB3C6;text-underline-offset:3px}
+a.pf-sk:hover{color:var(--blue);text-decoration-color:var(--blue)}
+.pf-sksearch{margin-top:22px}
+.pf-skbox{position:relative;max-width:620px}
+.pf-skbox input{font:inherit;font-size:16px;padding:11px 12px;border:1px solid var(--line-2);border-radius:8px;width:100%;box-sizing:border-box;background:#fff}
+.pf-skbox ul{position:absolute;z-index:20;left:0;right:0;top:100%;margin:6px 0 0;padding:6px;list-style:none;background:#fff;border:1px solid var(--line-2);border-radius:10px;box-shadow:0 12px 28px rgba(15,27,45,.14);max-height:380px;overflow:auto}
+.pf-skbox a{display:block;padding:8px 10px;border-radius:6px;text-decoration:none;color:var(--ink)}
+.pf-skbox a:hover{background:#EEF4F9}.pf-skbox b{display:block;font-size:14.5px}.pf-skbox span{font-size:12.5px;color:var(--ink-3)}
+.pf-skbox li.muted{padding:8px 10px}
+@media print{.pf-sksearch{display:none!important}a.pf-sk{text-decoration:none}}

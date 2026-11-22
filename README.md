@@ -9,6 +9,7 @@ Static website for workforce2100.org. No build step: GitHub Pages serves these f
 - `work-2035.html` and `assets/work2035.js`: searchable occupations, programs, state map and value model
 - `assets/site.css`: shared styles
 - `data/work2035_data.json`: data for the Work to 2035 page (own-model results)
+- `tools/PIPELINE.md`: what every data file depends on and how to update it; `tools/sources.csv` tracks outside data releases
 - `CNAME`: tells GitHub Pages the site's domain (workforce2100.org)
 - `.nojekyll`: tells GitHub Pages to serve the files without processing
 

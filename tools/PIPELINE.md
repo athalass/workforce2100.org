@@ -56,7 +56,7 @@ Layer 3  Pages and scripts (HTML + assets/*.js, with ?v= cache versions)
 | `data/impact_data.json` | `profiles/extract_states.py` -> `profiles/to_site.py` -> `profiles/merge_wi.py` | 51 state workbooks; work2035_data.json (wi) | work-2035.html: Institutions, States/Counties, Value of AI | `impact.js?v=` |
 | `data/profiles/<ST>.json`, `index.json` | `profiles/prep_all.py` -> `profiles/add_industries.py` -> `profiles/hide_institutions.py` -> `profiles/make_shell.py` | state workbooks; work2035_data.json (program AI shares); QCEW county file; BLS matrix.xlsx | profile.html (curriculum change is computed in profile.js) | `profile.js?v=`, `profile.css?v=` |
 | `data/briefs/<ST>.json`, `index.json` | `briefs/build_staffing.py` -> `briefs/build_briefs.py` | state workbooks; US_Work_2035_Mobility.xlsx; QCEW county file; OEWS national industry files (oesm25in4.zip); BLS matrix.xlsx; data/profiles | brief.html | `V` in assets/brief.js and `brief.js?v=` |
-| `data/bridges/<ST>.json`, `index.json` | `bridges/build_bridges.py` | state workbooks (Pathways tab); BLS matrix.xlsx; data/briefs; ONET31_ratings_IM_LV.csv | bridges.html; links from briefs and work-2035 | `bridges.js?v=` |
+| `data/bridges/<ST>.json`, `index.json` | `bridges/build_bridges.py` | state workbooks (Pathways tab); BLS matrix.xlsx; data/briefs; ONET31_ratings_IM_LV.csv; US_ETPL_programs_TPR.csv; census.xlsx (CIP-SOC) | bridges.html; links from briefs and work-2035 | `bridges.js?v=` |
 | `data/skills/<CIP2>.json`, `index.json` | `skills/tasks.py` -> `skills/dests.py` -> `skills/build_skills.py` | Price_of_Judgment_Dataset_v2.xlsx; AEI_2026-01 file; occ_model.py; O*NET 31 task, DWA, skills and ratings files; ACS FOD x SOCP; crosswalks; IPEDS completions and HD | skills.html; links from college profiles | `skills.js?v=` |
 | QCEW county file | `qcew/build_qcew.py` | BLS QCEW single files | (input to the rows above) | none |
 | Forms (no data file) | `forms/Code.gs` (Apps Script) | Google Sheets in Drive State folder | tracking-study.html, profiles, contact | `forms.js?v=` |
@@ -101,7 +101,8 @@ September and December) reads this file and tools/sources.csv, checks every sour
 4. `python3 tools/profiles/make_shell.py <site root> <work dir>`.
 5. Briefs: `python3 tools/briefs/build_briefs.py <Independent_version> US_Work_2035_Mobility.xlsx <qcew.csv.gz> staffing.json <State/matrix.xlsx> data/briefs data/profiles`
    (staffing.json comes from `build_staffing.py`, yearly; rebuild it with step 7 of the yearly run if missing.)
-6. Bridges (they read data/briefs): `python3 tools/bridges/build_bridges.py <Independent_version> <State/matrix.xlsx> data/briefs data/bridges <ONET31_ratings_IM_LV.csv>`
+6. Bridges (they read data/briefs): `python3 tools/bridges/build_bridges.py <Independent_version> <State/matrix.xlsx> data/briefs data/bridges <ONET31_ratings_IM_LV.csv> <State/US_ETPL_programs_TPR.csv> <census.xlsx>`
+   (the last two re-match short-term training by the providers' own occupation codes; see the script's header)
 7. Labels and log: "Data as of" (work-2035.html, assets/profile.js, assets/brief.js); the QCEW labels in assets/brief.js
    and work-2035.html#sources (e.g. "QCEW 2025Q3-2026Q2"); one dated line in work-2035.html#updates and in make_shell.py.
 8. Bump `?v=` on every changed script on every page that loads it, and `V` in assets/brief.js.
@@ -151,10 +152,13 @@ September and December) reads this file and tools/sources.csv, checks every sour
    tools/inputs_manifest.csv, so a changed or replaced zip is caught by check_inputs.py, but there is no line-by-line
    history. Open decision: put them in a private repository, or in this public one (the national model code is
    already public on OSF).
-2. The briefs' county headline net (county model, from the state workbooks) and the industry-table total (QCEW) differ
+2. The state workbooks' Pathways tab still matches ETPL programs by CIP code OR occupation code, which pulls in unrelated
+   programs through broad CIP codes. The Bridge Finder corrects this (build_bridges.py); fix st_pathways.py the same way at
+   the next yearly run (match by the provider's SOC codes; CIP only when none are listed).
+3. The briefs' county headline net (county model, from the state workbooks) and the industry-table total (QCEW) differ
    by design; documented on the page. After a quarterly run the gap can grow a little, because only the industry
    tables move.
-3. Drive housekeeping (not done, for Angelo): `State/Pipeline/State_pipeline_scripts.zip` is superseded;
+4. Drive housekeeping (not done, for Angelo): `State/Pipeline/State_pipeline_scripts.zip` is superseded;
    `Derived/Price_of_Judgment_Dataset_v2 (duplicate copy - safe to delete).xlsx`; five .tmp files in Downloads.
 
 Closed on Nov 22, 2026:

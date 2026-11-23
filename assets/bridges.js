@@ -1,7 +1,7 @@
 /* Career Bridge Finder: workforce2100.org
    Data: data/bridges/{ST}.json (tools/bridges/build_bridges.py), county split from data/briefs/{ST}.json */
 (function () {
-  var V = '20261122b';
+  var V = '20261123';
   var $ = function (id) { return document.getElementById(id); };
   var st = $('bf-st'), q = $('bf-q'), list = $('bf-list'), role = $('bf-role'), root = $('bf-root'), tryp = $('bf-try');
   var IX = [], D = null, BR = null, CUR = null, LIST = [];

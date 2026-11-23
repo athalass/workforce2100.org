@@ -1,11 +1,18 @@
 """Career Bridge Finder data: one JSON per state.
 
 Usage: build_bridges.py <Independent_version dir> <BLS National Employment Matrix xlsx> <site data/briefs dir> <out dir> [ONET ratings csv]
+                        [ETPL csv (US_ETPL_programs_TPR.csv) CIP-SOC crosswalk xlsx (census.xlsx)]
 
 For every occupation in the state: jobs, wage, work AI takes over, net change to 2035 (main and slow recovery),
 the share of task-hours where AI pays, and outlook. For each shrinking occupation: its three closest bridges from the
 model (Pathways tab), with skill coverage, extra training, wage, outlook, college programs, ETPL programs and
 apprenticeships. Optionally, from O*NET importance ratings: skills both jobs rely on, and skills to add.
+Short-term training (ETPL): with the ETPL file and the crosswalk, the programs are matched again here, because the
+workbooks' Pathways tab matched a program to a job if EITHER its CIP code maps to the job in the CIP-SOC crosswalk OR
+the provider lists the job's SOC code. Broad CIP codes then pull in unrelated programs (CIP 11.0103 Information
+Technology maps to Data Scientists, so CCNA and CompTIA A+ courses showed up as data-science training). Here a program
+that lists its own SOC codes (96% do) matches only those jobs; the crosswalk is used only for programs that list none.
+Programs that list the job's code come first.
 State-wide split of displaced workers (change occupation locally / move away / stay without a matching job) comes
 from the state brief data, so it matches the briefs.
 """
@@ -15,6 +22,7 @@ import openpyxl
 SRC, NEM, BRIEFS, OUT = sys.argv[1:5]
 MIN_COV = 0.4   # bridges with less than 40% of skills in common are not shown
 ONET = sys.argv[5] if len(sys.argv) > 5 else None
+ETPL, XWALK = (sys.argv[6], sys.argv[7]) if len(sys.argv) > 7 else (None, None)
 os.makedirs(OUT, exist_ok=True)
 
 BG = {}
@@ -53,6 +61,26 @@ LABEL = {'Administrative': 'Office procedures', 'English Language': 'Written Eng
          'Sociology and Anthropology': 'Social science', 'Engineering and Technology': 'Engineering', 'Building and Construction': 'Construction',
          'Food Production': 'Food production', 'Transportation': 'Transportation', 'Personnel and Human Resources': 'Human resources'}
 
+ETP = None
+if ETPL:
+    import pandas as pd, numpy as np
+    CS = pd.read_excel(XWALK, sheet_name='CIP-SOC', dtype=str); CS.columns = ['cip6', 'cip_title', 'soc6', 'soc_title']
+    SOC2CIP = CS.groupby('soc6').cip6.apply(set).to_dict()
+    ETP = pd.read_csv(ETPL, dtype=str)
+    ETP['socs'] = ETP[['field_program_soc_occ_1', 'field_program_soc_occ_2', 'field_program_soc_occ_3']].apply(
+        lambda r: {x[:7] for x in r if isinstance(x, str) and len(x) >= 7}, axis=1)
+    ETP['cip6'] = ETP.field_cip_code.map(lambda c: f'{float(c):07.4f}' if isinstance(c, str) and c.replace('.', '').isdigit() else '')
+    ETP['label'] = ETP.field_program_name.str.slice(0, 50) + ' (' + ETP.field_etp.str.slice(0, 40) + ')'
+
+def etpl_for(E, dsoc):
+    own = E[E.socs.map(lambda s: dsoc in s)]
+    cip = E[E.socs.map(len).eq(0) & E.cip6.isin(SOC2CIP.get(dsoc, set()))]
+    e = pd.concat([own, cip])
+    med = lambda col: pd.to_numeric(e[col], errors='coerce').where(lambda x: x > 0).median()
+    return dict(ne=len(e), nep=e.field_etp.nunique(), weeks=None if pd.isna(med('field_program_length_weeks')) else round(float(med('field_program_length_weeks')), 3),
+                tuition=None if pd.isna(med('field_non_wioa_tuition_cost')) else int(round(float(med('field_non_wioa_tuition_cost')))),
+                etpl='; '.join(e.label.head(3)) or None)
+
 def r3(x): return None if x is None else round(float(x), 3)
 def i0(x): return None if x is None else int(round(float(x)))
 
@@ -64,6 +92,7 @@ for st_dir in sorted(glob.glob(f'{SRC}/*/')):
     if not f or not os.path.exists(bf): continue
     B = json.load(open(bf))['state']; k = B['k']
     wb = openpyxl.load_workbook(f[0], read_only=True, data_only=True)
+    E_st = ETP[ETP.field_state.eq(st)] if ETP is not None else None; ecache = {}
     it = wb['Occupations_state'].iter_rows(values_only=True); h = next(it)
     occ = {}
     for row in it:
@@ -87,6 +116,13 @@ for st_dir in sorted(glob.glob(f'{SRC}/*/')):
             np=i0(r['state_programs_at_fit_level']), nc=i0(r['state_completions_at_fit_level']), progs=r['top_state_programs'],
             ctys=r['counties_with_program'], ne=i0(r['etpl_programs']), nep=i0(r['etpl_providers']), weeks=r3(r['etpl_median_weeks']),
             tuition=i0(r['etpl_median_tuition']), etpl=r['top_etpl'], appr=r['apprenticeships'], have=have, need=add))
+        if E_st is not None:
+            b = src[9][-1]
+            if r['dest_soc6'] not in ecache: ecache[r['dest_soc6']] = etpl_for(E_st, r['dest_soc6'])
+            b.update(ecache[r['dest_soc6']])
+            via = [v.strip() for v in (b['via'] or '').split(';') if v.strip() and v.strip() != 'ETPL']
+            if b['ne']: via.insert(1 if via and via[0] == 'College program' else 0, 'ETPL')
+            b['via'] = '; '.join(via) or None
     for v in occ.values():   # hide weak bridges: fewer than MIN_COV of skills in common
         had = len(v[9]); v[9] = [b for b in v[9] if (b['cov'] or 0) >= MIN_COV]
         v.append(had - len(v[9]))

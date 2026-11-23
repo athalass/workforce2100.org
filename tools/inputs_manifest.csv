@@ -23,3 +23,4 @@ Occupational analysis/census.xlsx,428901,ba3d59a191b9d977a5c457a66b9348c4f2f7963
 Occupational analysis/IPEDS_C2024_A.zip,4680679,03234cc27fe4e7eb835a66d4f37aaec11bdac8dfa278f971584e1b20d03e1159,IPEDS completions 2023-24,dests.py; state pipeline
 Occupational analysis/IPEDS_C2023_A.zip,9294160,651d95b6405bb86c6c14884ed54225a27492199d21d8acd63cda2581aa60838a,IPEDS completions 2022-23,dests.py
 Occupational analysis/IPEDS_HD2024.zip,1088372,d98425c123d7c0e872aec6e83960dfb501884818bf17385c340790f3d1f28345,IPEDS institutional characteristics 2024,dests.py; state pipeline
+Occupational analysis/State/US_ETPL_programs_TPR.csv,22747058,43f55c56bc5f4d89385c5afe8020f51c99ed23d4067b7762addcf28b08d2c1d0,"ETPL programs, all states (TrainingProviderResults.gov, downloaded Nov 11 2026)",build_bridges; state pipeline

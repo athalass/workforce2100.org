@@ -1,7 +1,7 @@
 /* Career Bridge Finder: workforce2100.org
    Data: data/bridges/{ST}.json (tools/bridges/build_bridges.py), county split from data/briefs/{ST}.json */
 (function () {
-  var V = '20261123';
+  var V = '20261123b';
   var $ = function (id) { return document.getElementById(id); };
   var st = $('bf-st'), q = $('bf-q'), list = $('bf-list'), role = $('bf-role'), root = $('bf-root'), tryp = $('bf-try');
   var IX = [], D = null, BR = null, CUR = null, LIST = [];
@@ -111,7 +111,7 @@
     var pay = b.ratio == null ? '' : b.ratio >= 1.05 ? 'higher than now' : b.ratio >= 0.95 ? 'about the same as now' : 'lower than now';
     var train = [];
     if (b.np) train.push('<div><b>College programs</b> <span class="muted">' + N(b.np) + ' in ' + esc(D.nm) + ', ' + N(b.nc) + ' graduates a year</span>' + lines(b.progs, 3) + (b.ctys ? '<p class="muted sm">Offered in: ' + esc(b.ctys) + '</p>' : '') + '</div>');
-    if (b.ne) train.push('<div><b>Short-term training</b> <span class="muted">' + N(b.ne) + ' program' + (b.ne > 1 ? 's' : '') + ' from ' + N(b.nep) + ' provider' + (b.nep > 1 ? 's' : '') + (b.weeks ? ', typically ' + N(b.weeks) + ' weeks' : '') + (b.tuition ? ', about ' + $$(b.tuition) : '') + '</span>' + lines(b.etpl, 3) + '</div>');
+    if (b.ne) train.push('<div><b>Short-term training</b> <span class="muted">' + N(b.ne) + ' program' + (b.ne > 1 ? 's' : '') + ' from ' + N(b.nep) + ' provider' + (b.nep > 1 ? 's' : '') + (b.weeks ? ', typically ' + N(b.weeks) + (Math.round(b.weeks) === 1 ? ' week' : ' weeks') : '') + (b.tuition ? ', about ' + $$(b.tuition) : '') + '</span>' + lines(b.etpl, 3) + '</div>');
     if (b.appr) train.push('<div><b>Apprenticeship</b>' + lines(b.appr, 3) + '</div>');
     if (!train.length) train.push('<div class="muted">No program at this level is listed in ' + esc(D.nm) + '. Check with a local college or American Job Center.</div>');
     return '<article class="bf-card bf-' + (b.type || '').toLowerCase() + '">' +

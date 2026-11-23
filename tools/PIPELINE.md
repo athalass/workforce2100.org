@@ -59,6 +59,7 @@ Layer 3  Pages and scripts (HTML + assets/*.js, with ?v= cache versions)
 | `data/bridges/<ST>.json`, `index.json` | `bridges/build_bridges.py` | state workbooks (Pathways tab); BLS matrix.xlsx; data/briefs; ONET31_ratings_IM_LV.csv; US_ETPL_programs_TPR.csv; census.xlsx (CIP-SOC) | bridges.html; links from briefs and work-2035 | `bridges.js?v=` |
 | `data/skills/<CIP2>.json`, `index.json` | `skills/tasks.py` -> `skills/dests.py` -> `skills/build_skills.py` | Price_of_Judgment_Dataset_v2.xlsx; AEI_2026-01 file; occ_model.py; O*NET 31 task, DWA, skills and ratings files; ACS FOD x SOCP; crosswalks; IPEDS completions and HD | skills.html; links from college profiles | `skills.js?v=` |
 | QCEW county file | `qcew/build_qcew.py` | BLS QCEW single files | (input to the rows above) | none |
+| Home page "Find your answer" (no data file) | `assets/finder.js` | data/briefs, profiles, bridges and skills index.json | index.html | `finder.js?v=`, `finder.css?v=` |
 | Forms (no data file) | `forms/Code.gs` (Apps Script) | Google Sheets in Drive State folder | tracking-study.html, profiles, contact | `forms.js?v=` |
 
 Text that carries dates or source versions and is edited by hand:

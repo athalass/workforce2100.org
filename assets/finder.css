@@ -1,0 +1,28 @@
+.finder { margin-top: 32px; max-width: 720px; background: #FFFFFF; border: 1px solid #DDE3E9; border-radius: 12px; padding: 22px 24px 18px; box-shadow: 0 1px 2px rgba(22,32,42,.04); }
+.finder h2 { font-family: var(--sans); font-size: 18px; font-weight: 700; margin: 0 0 12px; letter-spacing: 0; }
+.fd-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.fd-tabs button { font: inherit; font-size: 15px; font-weight: 600; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: #FFFFFF; color: var(--ink); cursor: pointer; min-height: 40px; }
+.fd-tabs button[aria-selected="true"] { background: var(--ink); color: #FFFFFF; border-color: var(--ink); }
+.fd-tabs button:focus-visible, .fd-row input:focus-visible, .fd-row select:focus-visible { outline: 3px solid rgba(31,95,139,.35); outline-offset: 2px; }
+.fd-row { display: flex; gap: 10px; position: relative; }
+.fd-row select { font: inherit; font-size: 16px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 8px; background: #FFFFFF; min-height: 50px; max-width: 220px; }
+.fd-box { position: relative; flex: 1; min-width: 0; }
+.fd-box input { width: 100%; box-sizing: border-box; font: inherit; font-size: 17px; padding: 0 16px; min-height: 50px; border: 1px solid var(--line-2); border-radius: 8px; }
+.fd-box input:disabled { background: var(--tint); }
+.fd-list { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none; background: #FFFFFF; border: 1px solid var(--line-2); border-radius: 10px; box-shadow: 0 12px 28px rgba(22,32,42,.14); max-height: 380px; overflow: auto; }
+.fd-list a { display: flex; justify-content: space-between; gap: 16px; padding: 10px 12px; border-radius: 6px; color: var(--ink); text-decoration: none; }
+.fd-list a span { color: var(--ink-3); font-size: 14px; text-align: right; flex-shrink: 0; max-width: 45%; }
+.fd-list li.on a, .fd-list a:hover { background: var(--tint); }
+.fd-none { padding: 10px 12px; color: var(--ink-3); }
+.fd-hint { margin: 10px 0 0; font-size: 14px; color: var(--ink-3); }
+@media (max-width: 640px) {
+  .finder { padding: 18px 16px 14px; }
+  .fd-row { flex-direction: column; }
+  .fd-row select { max-width: none; }
+  .fd-list a { flex-direction: column; gap: 2px; }
+  .fd-list a span { text-align: left; max-width: none; }
+}
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.fd-more { margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 24px; font-weight: 600; }
+.fd-more a { color: var(--blue); text-decoration: none; }
+.fd-more a:hover { text-decoration: underline; }

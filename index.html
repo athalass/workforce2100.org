@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css?v=20261122">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='3' y='19' width='22' height='3' rx='1.5' fill='%239DB3C6'/%3E%3Crect x='3' y='12.5' width='22' height='3' rx='1.5' fill='%235D88AC'/%3E%3Crect x='3' y='6' width='22' height='3' rx='1.5' fill='%231F5F8B'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/finder.css?v=20261123">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -37,10 +38,25 @@
 <p class="eyebrow">Open research on AI, work and education</p>
 <h1>How AI is changing work, and how people and colleges can keep up.</h1>
 <p class="lede">Workforce 2100 studies how AI is changing work, from today's jobs to the long horizon of this century. We forecast which occupations, academic programs and places change most as AI spreads. We measure what AI is really worth once human checking and errors are counted. And we build frameworks and instruments to teach and assess AI fluency. Papers, models and data, all in the open.</p>
-<div class="actions">
-<a class="btn btn-dark" href="#what-we-study">What we study</a>
-<a class="btn btn-light" href="work-2035.html">Explore the 2035 data</a>
+<div class="finder" id="finder">
+<h2>Find your answer</h2>
+<div class="fd-tabs" role="tablist" aria-label="What are you looking for?">
+<button type="button" role="tab" data-k="place" aria-selected="true">State or county</button>
+<button type="button" role="tab" data-k="college" aria-selected="false">College</button>
+<button type="button" role="tab" data-k="job" aria-selected="false">Your job</button>
+<button type="button" role="tab" data-k="program" aria-selected="false">Program</button>
 </div>
+<label class="visually-hidden" for="fd-q" id="fd-label">State or county</label>
+<div class="fd-row">
+<select id="fd-st" aria-label="Your state" hidden><option value="">Your state</option></select>
+<div class="fd-box">
+<input id="fd-q" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="fd-list" aria-expanded="false">
+<ul class="fd-list" id="fd-list" role="listbox" hidden></ul>
+</div>
+</div>
+<p class="fd-hint" id="fd-hint"></p>
+</div>
+<p class="fd-more"><a href="work-2035.html">Explore all the 2035 data →</a><a href="#what-we-study">What we study ↓</a></p>
 </div>
 <div class="glance" aria-label="The program at a glance">
 <div><b>830</b><span>occupations modeled to 2035</span></div>
@@ -201,5 +217,6 @@
 </div>
 </footer>
 <script src="assets/forms.js?v=20261118d"></script>
+<script src="assets/finder.js?v=20261123"></script>
 </body>
 </html>

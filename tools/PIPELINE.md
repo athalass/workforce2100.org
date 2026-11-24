@@ -38,10 +38,12 @@ Layer 1  Two offline models (code and outputs in Drive; versions pinned in tools
    |                        -> Occupation_Outlook_2035_v2.xlsx, Program_Roadmap_2035_v1.xlsx
    |                       AI Fluency Economics/Code/Price_of_Judgment_scripts_v5.zip
    |                        -> Derived/Price_of_Judgment_Results_Tables.xlsx, outputs/governance_quadrants.csv (in the zip)
-   |   b. State pipeline   Occupational analysis/State/State_pipeline_scripts.zip (Nov 15, 2026; README_State_pipeline.md)
-   |                        -> State/All_51_state_workbooks.zip: Independent_version/<ST>/<State>_Work_2035_Data.xlsx
-   |                           (51) and US_Work_2035_Mobility.xlsx
-   |                        (State/Pipeline/State_pipeline_scripts.zip is an older Nov 12 copy: superseded)
+   |   b. State pipeline   Occupational analysis/State/State_pipeline_scripts_v2.1.zip (README_State_pipeline.md)
+   |                        -> State/All_51_state_workbooks_v2.1.zip: Independent_version/<ST>/<State>_Work_2035_Data.xlsx
+   |                           (51), McKinsey_version/ (51) and US_Work_2035_Mobility.xlsx
+   |                        v2.1 (Nov 24, 2026) = the Nov 15 run with the ETPL matching corrected in place by
+   |                        tools/state_patches/etpl_match_v2_1.py (every other cell verified unchanged). The v2.0 zips
+   |                        (State_pipeline_scripts.zip, All_51_state_workbooks.zip) and State/Pipeline/ are superseded.
    |
 Layer 2  Site builders (tools/ in this repo) -> data/*.json
    |
@@ -153,9 +155,9 @@ September and December) reads this file and tools/sources.csv, checks every sour
    tools/inputs_manifest.csv, so a changed or replaced zip is caught by check_inputs.py, but there is no line-by-line
    history. Open decision: put them in a private repository, or in this public one (the national model code is
    already public on OSF).
-2. The state workbooks' Pathways tab still matches ETPL programs by CIP code OR occupation code, which pulls in unrelated
-   programs through broad CIP codes. The Bridge Finder corrects this (build_bridges.py); fix st_pathways.py the same way at
-   the next yearly run (match by the provider's SOC codes; CIP only when none are listed).
+2. `State/US_Work_2035_50_State_Ranking_own.xlsx` (independent version, Nov 14) predates the Nov 15 workbooks: its numbers
+   do not match them (e.g. Maryland transition share 4.6% vs 6.3%). It is not in the published zip. Rebuild it with
+   nat_ranking.py (ANCHOR=OWN) at the next yearly run. The McKinsey-version ranking matches its workbooks (v2.1 file).
 3. The briefs' county headline net (county model, from the state workbooks) and the industry-table total (QCEW) differ
    by design; documented on the page. After a quarterly run the gap can grow a little, because only the industry
    tables move.
@@ -169,6 +171,8 @@ Closed on Nov 22, 2026:
   rebuilt identically after the change.
 - QCEW county file builder (`tools/qcew/build_qcew.py`).
 - Input versions pinned (`tools/inputs_manifest.csv`, `tools/check_inputs.py`).
+- State workbooks v2.1 (Nov 24, 2026): ETPL programs matched by the providers' own SOC codes in the workbooks and in
+  st_pathways.py, as in the Bridge Finder.
 - PSEO (V4.14.1, 2026Q2, downloaded Nov 11, 2026: the current release) and ETPL (downloaded Nov 11, 2026) dates recorded.
 - Corrections now described as coming through the form (tools/profiles/README.md).
 - The quarterly scheduled task now runs a full release check against this file.

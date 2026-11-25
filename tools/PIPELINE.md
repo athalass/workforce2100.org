@@ -60,6 +60,7 @@ Layer 3  Pages and scripts (HTML + assets/*.js, with ?v= cache versions)
 | `data/briefs/<ST>.json`, `index.json` | `briefs/build_staffing.py` -> `briefs/build_briefs.py` | state workbooks; US_Work_2035_Mobility.xlsx; QCEW county file; OEWS national industry files (oesm25in4.zip); BLS matrix.xlsx; data/profiles | brief.html | `V` in assets/brief.js and `brief.js?v=` |
 | `data/bridges/<ST>.json`, `index.json` | `bridges/build_bridges.py` | state workbooks (Pathways tab); BLS matrix.xlsx; data/briefs; ONET31_ratings_IM_LV.csv; US_ETPL_programs_TPR.csv; census.xlsx (CIP-SOC) | bridges.html; links from briefs and work-2035 | `bridges.js?v=` |
 | `data/skills/<CIP2>.json`, `index.json` | `skills/tasks.py` -> `skills/dests.py` -> `skills/build_skills.py` | Price_of_Judgment_Dataset_v2.xlsx; AEI_2026-01 file; occ_model.py; O*NET 31 task, DWA, skills and ratings files; ACS FOD x SOCP; crosswalks; IPEDS completions and HD | skills.html; links from college profiles | `skills.js?v=` |
+| `data/links.json` | `work2035/build_links.py` (after build_skills.py) | data/skills, data/work2035_data.json | work-2035.html Jobs & programs (rows that open) | `?v=` in the fetch in work2035.js |
 | QCEW county file | `qcew/build_qcew.py` | BLS QCEW single files | (input to the rows above) | none |
 | Home page "Find your answer" (no data file) | `assets/finder.js` | data/briefs, profiles, bridges and skills index.json | index.html | `finder.js?v=`, `finder.css?v=` |
 | Forms (no data file) | `forms/Code.gs` (Apps Script) | Google Sheets in Drive State folder | tracking-study.html, profiles, contact | `forms.js?v=` |
@@ -131,6 +132,7 @@ September and December) reads this file and tools/sources.csv, checks every sour
 9. Skills: `python3 tools/skills/tasks.py`, `python3 tools/skills/dests.py <Price_of_Judgment_Dataset_v2.xlsx>`,
    `python3 tools/skills/build_skills.py data/skills` (file names inside the scripts carry the data versions, e.g.
    ONET31_*, IPEDS_C2024_A, AEI_2026-01: change them with the new files). See tools/skills/README.md.
+   Then `python3 tools/work2035/build_links.py .` (links between occupations and programs).
 10. Text: every version in work-2035.html#sources and the page notes (O*NET, OEWS, EP decade, IPEDS year, AEI
     release), "Data as of", a version line in both change logs, OSF upload of the new workbooks and code.
 11. Bump every `?v=`; CHECKS; commit; push; add the new inputs to tools/inputs_manifest.csv and run

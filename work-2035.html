@@ -11,6 +11,33 @@
 <link rel="stylesheet" href="assets/site.css?v=20261122">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='3' y='19' width='22' height='3' rx='1.5' fill='%239DB3C6'/%3E%3Crect x='3' y='12.5' width='22' height='3' rx='1.5' fill='%235D88AC'/%3E%3Crect x='3' y='6' width='22' height='3' rx='1.5' fill='%231F5F8B'/%3E%3C/svg%3E">
 <style>
+.viewsw { display: inline-flex; align-items: center; gap: 4px; background: var(--tint); border-radius: 999px; padding: 4px; margin-bottom: 10px; }
+.viewsw span { font-size: 14px; color: var(--ink-3); padding: 0 10px 0 12px; }
+.viewsw button { font: inherit; font-size: 15px; font-weight: 600; border: 0; border-radius: 999px; padding: 8px 16px; background: transparent; color: var(--ink-2); cursor: pointer; min-height: 38px; }
+.viewsw button[aria-pressed="true"] { background: #FFFFFF; color: var(--ink); box-shadow: 0 1px 3px rgba(22,32,42,.15); }
+.viewhint { margin: 0 0 22px; color: var(--ink-3); font-size: 15px; }
+.xbtn { font: inherit; font-weight: 600; text-align: left; background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; display: flex; gap: 8px; align-items: baseline; }
+.xbtn .car { color: var(--blue); font-size: 12px; transition: transform .15s; display: inline-block; width: 10px; }
+.xbtn[aria-expanded="true"] .car { transform: rotate(90deg); }
+.xbtn:hover .nm { text-decoration: underline; }
+tr.xopen > td { background: #F7FAFC; }
+tr.xrow > td { background: #F7FAFC; padding: 4px 18px 22px 36px !important; border-top: 0; }
+.xgrid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 28px; }
+.xgrid h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); margin: 10px 0 8px; font-weight: 700; }
+.xlist { list-style: none; margin: 0; padding: 0; }
+.xlist li { display: flex; justify-content: space-between; gap: 14px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.xlist li:last-child { border-bottom: 0; }
+.xlist a { color: var(--blue); font-weight: 600; text-decoration: none; }
+.xlist a:hover { text-decoration: underline; }
+.xlist .r { color: var(--ink-3); white-space: nowrap; font-size: 14px; }
+.xact { background: #FFFFFF; border: 1px solid var(--line-2); border-radius: 10px; padding: 14px 16px; }
+.xact p { margin: 0 0 10px; font-size: 14px; color: var(--ink-2); }
+.xact .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.xact select { font: inherit; font-size: 15px; padding: 0 10px; min-height: 40px; border: 1px solid var(--line-2); border-radius: 8px; background: #FFFFFF; }
+.xact a.btn { min-height: 40px; display: inline-flex; align-items: center; }
+@media (max-width: 560px) { .viewsw { display: flex; } .viewsw span { display: none; } .viewsw button { flex: 1; padding: 8px 10px; } }
+@media (max-width: 760px) { .xgrid { grid-template-columns: 1fr; gap: 6px; } tr.xrow > td { padding-left: 14px !important; } }
+@media (max-width: 640px) { [id^="tab-"] table tr.xrow > td { display: block !important; text-align: left !important; justify-items: stretch; padding: 4px 12px 16px !important; } [id^="tab-"] table tr.xrow > td * { text-align: left; } .xlist li { flex-wrap: wrap; gap: 2px 10px; } .xlist .r { white-space: normal; } }
 .tile-map { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; max-width: 720px; }
 .tile { aspect-ratio: 1; min-width: 0; padding: 0; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 4px; border: 1px solid rgba(22,32,42,0.12); }
 .tile[aria-pressed="true"] { border: 3px solid var(--ink); }
@@ -68,12 +95,11 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 <p class="muted" style="margin: 14px 0 0; font-size: 13px">Our own model, 2025–2035. Robots and other physical automation are not yet included, and we do not yet track agentic AI, which carries out multi-step work on its own. Jobs are full-time equivalents of labor demand, not layoffs.</p>
 <p style="margin: 10px 0 0; font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center"><span class="chip chip-blue">2026 edition</span><span class="muted">Released November 2026 · Updated quarterly · Data as of November 2026 · <a href="#updates">What the next edition adds →</a></span></p>
 <div class="pills" role="tablist" aria-label="Data view" id="tabs" style="margin-top: 32px">
-<button type="button" class="pill" role="tab" data-tab="occupations">Occupations</button>
-<button type="button" class="pill" role="tab" data-tab="programs">Academic programs</button>
+<button type="button" class="pill" role="tab" data-tab="occupations">Jobs &amp; programs</button>
 <button type="button" class="pill" role="tab" data-tab="institutions">Institutions</button>
-<a class="pill pill-link" href="bridges.html">Career Bridge Finder <span aria-hidden="true">→</span></a>
 <button type="button" class="pill" role="tab" data-tab="stateimpact">States/Counties</button>
 <button type="button" class="pill" role="tab" data-tab="value">Value of AI &amp; who decides</button>
+<a class="pill pill-link" href="bridges.html">Career Bridge Finder <span aria-hidden="true">→</span></a>
 <a class="pill pill-link" href="profile.html">College profiles <span aria-hidden="true">→</span></a>
 </div>
 </div>
@@ -83,6 +109,8 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 
 <!-- Occupations -->
 <section class="wrap" id="tab-occupations" role="tabpanel" hidden style="padding-top: 40px">
+<div class="viewsw" role="group" aria-label="View by"><span>View by</span><button type="button" data-view="occupations" aria-pressed="true">Occupation</button><button type="button" data-view="programs" aria-pressed="false">Academic program</button></div>
+<p class="viewhint">Each occupation: jobs, AI reduction and outlook to 2035. Open a row to see the programs that lead to it and where its workers can move.</p>
 <div class="filters">
 <div class="field wide"><label for="oq">Search occupations</label><input id="oq" type="search" placeholder="Job title or SOC code, e.g. accountant or 13-2011"></div>
 <div class="field"><label for="og">Occupation group</label><select id="og"><option value="all">All groups</option></select></div>
@@ -134,6 +162,8 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 </section>
 
 <section class="wrap" id="tab-programs" role="tabpanel" hidden style="padding-top: 40px">
+<div class="viewsw" role="group" aria-label="View by"><span>View by</span><button type="button" data-view="occupations" aria-pressed="false">Occupation</button><button type="button" data-view="programs" aria-pressed="true">Academic program</button></div>
+<p class="viewhint">Each program family: graduates, demand for them to 2035 and tier. Open a row to see where graduates work and the skills view.</p>
 <div class="filters">
 <div class="field wide"><label for="pq">Search programs</label><input id="pq" type="search" placeholder="Program name or CIP code, e.g. nursing or 51.38"></div>
 <div class="field"><label for="pl">Award level</label><select id="pl"><option value="all">All levels</option><option value="Certificate">Certificate</option><option value="Associate">Associate</option><option value="Bachelor">Bachelor's</option><option value="Graduate">Graduate</option></select></div>
@@ -214,7 +244,7 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 </tbody>
 </table>
 </div>
-<div style="margin-top: 28px"><h3 style="font-size: 20px; margin: 0 0 8px">Change log</h3><ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.7; color: var(--ink-2)"><li><b>November 24, 2026.</b> State workbooks v2.1 (OSF): the same training-provider matching correction as in the Career Bridge Finder. It changes the training columns of the Pathways tab, the share of job losses with a bridge in 16 states (the largest change: Maine, 78.7% to 74.5% in the independent version), and training counts by county. Every other number is unchanged.</li><li><b>November 23, 2026.</b> Career Bridge Finder: short-term training programs are now matched by the occupations each provider lists for its program. Before, a broad field-of-study code could list unrelated courses (for example, networking certifications under Data Scientists).</li><li><b>November 22, 2026.</b> New Program skills view: for 1,430 program families, the work activities and skills behind each program, the share AI can take on in each (the model's task-level cost test, linked to work activities and skills through O*NET 31), the tasks AI can take on and the human-core tasks, and a four-step curriculum review. Linked from every college profile's Largest programs table.</li><li><b>November 22, 2026.</b> New Career Bridge Finder: for any occupation in any state, the closest growing occupations by skills in common, the skills that carry over and the skills to add (O*NET 31), and the college programs, short-term training and apprenticeships that lead there. Linked from the state and county briefs.</li><li><b>November 20, 2026.</b> State and county briefs: new sections on the work people do (jobs by occupation group), how much the work itself changes (High, Medium and Lower), and four kinds of change in High occupations, with graduates from local colleges in the same fields. College profiles: new Curriculum change section. Existing figures unchanged.</li><li><b>November 18, 2026.</b> State and county briefs added: a two-page executive summary for every state and county, with industries (BLS QCEW 2025 and OEWS May 2025 staffing patterns), a slow-recovery stress test and county comparisons.</li><li><b>Version 2 · November 18, 2026.</b> State and institution data and the headline figures re-run with the November 2026 state workbooks; college profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line; data updated quarterly from here on.</li><li><b>Version 1 · October 25, 2026.</b> First release. Study, data and code registered on <a href="https://osf.io/ae95y">OSF</a>.</li></ul></div>
+<div style="margin-top: 28px"><h3 style="font-size: 20px; margin: 0 0 8px">Change log</h3><ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.7; color: var(--ink-2)"><li><b>November 25, 2026.</b> Occupations and Academic programs are now one tab, Jobs &amp; programs, with a switch between the two views. Open any row to see the programs that lead to an occupation and where its workers can move (Career Bridge Finder), or where a program's graduates work and its skills view.</li><li><b>November 24, 2026.</b> State workbooks v2.1 (OSF): the same training-provider matching correction as in the Career Bridge Finder. It changes the training columns of the Pathways tab, the share of job losses with a bridge in 16 states (the largest change: Maine, 78.7% to 74.5% in the independent version), and training counts by county. Every other number is unchanged.</li><li><b>November 23, 2026.</b> Career Bridge Finder: short-term training programs are now matched by the occupations each provider lists for its program. Before, a broad field-of-study code could list unrelated courses (for example, networking certifications under Data Scientists).</li><li><b>November 22, 2026.</b> New Program skills view: for 1,430 program families, the work activities and skills behind each program, the share AI can take on in each (the model's task-level cost test, linked to work activities and skills through O*NET 31), the tasks AI can take on and the human-core tasks, and a four-step curriculum review. Linked from every college profile's Largest programs table.</li><li><b>November 22, 2026.</b> New Career Bridge Finder: for any occupation in any state, the closest growing occupations by skills in common, the skills that carry over and the skills to add (O*NET 31), and the college programs, short-term training and apprenticeships that lead there. Linked from the state and county briefs.</li><li><b>November 20, 2026.</b> State and county briefs: new sections on the work people do (jobs by occupation group), how much the work itself changes (High, Medium and Lower), and four kinds of change in High occupations, with graduates from local colleges in the same fields. College profiles: new Curriculum change section. Existing figures unchanged.</li><li><b>November 18, 2026.</b> State and county briefs added: a two-page executive summary for every state and county, with industries (BLS QCEW 2025 and OEWS May 2025 staffing patterns), a slow-recovery stress test and county comparisons.</li><li><b>Version 2 · November 18, 2026.</b> State and institution data and the headline figures re-run with the November 2026 state workbooks; college profiles added for 5,668 institutions, with local industries from BLS QCEW 2025, the program map and the AI line; data updated quarterly from here on.</li><li><b>Version 1 · October 25, 2026.</b> First release. Study, data and code registered on <a href="https://osf.io/ae95y">OSF</a>.</li></ul></div>
 
 <p class="muted" style="margin: 14px 0 0; font-size: 13px">Each edition keeps its own version of the data on OSF, so earlier results stay citable after an update.</p>
 
@@ -249,7 +279,7 @@ dl.kv dt { color: var(--ink-3); } dl.kv dd { margin: 2px 0 0; font-weight: 600; 
 <nav aria-label="Footer"><a href="about.html">About</a><a href="index.html#faq">FAQ</a><a href="surveys.html">Surveys</a><a href="index.html">Home</a><a href="research.html">Research</a></nav>
 </div>
 </footer>
-<script src="assets/work2035.js?v=20261118"></script>
+<script src="assets/work2035.js?v=20261125"></script>
 <script src="assets/impact.js?v=20261120"></script>
 <script src="assets/mobile-tables.js?v=1"></script>
 </body>

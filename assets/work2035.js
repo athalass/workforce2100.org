@@ -8,19 +8,71 @@
   var catChip = { 'Growing': 'chip-green', 'Stable': 'chip-gray', 'Moderate decline': 'chip-amber', 'Substantially reduced': 'chip-red', 'Eliminated': 'chip-red' };
   var tierChip = { 'Invest': 'chip-green', 'Reinvent': 'chip-blue', 'Consolidate or Review': 'chip-amber', 'Transfer-oriented': 'chip-gray' };
   var D = null;
-  var st = { tab: 'occupations', olim: 25, plim: 25, meas: 'wi', sel: 'MD' };
+  var st = { tab: 'occupations', view: 'occupations', olim: 25, plim: 25, meas: 'wi', sel: 'MD', oexp: {}, pexp: {} };
 
   // ---------- Tabs ----------
   var TABS = ['occupations', 'stateimpact', 'programs', 'institutions', 'value'];
   function setTab(t, push) {
     if (t === 'states') t = 'stateimpact';
     if (TABS.indexOf(t) < 0) t = 'occupations';
-    st.tab = t;
-    Array.prototype.forEach.call(document.querySelectorAll('#tabs [data-tab]'), function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === t)); });
+    st.tab = t; if (t === 'occupations' || t === 'programs') st.view = t;
+    var pillT = t === 'programs' ? 'occupations' : t;
+    Array.prototype.forEach.call(document.querySelectorAll('#tabs [data-tab]'), function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === pillT)); });
     TABS.forEach(function (x) { $('tab-' + x).hidden = !D || x !== t; });
     if (push) history.replaceState(null, '', '#' + t);
   }
-  $('tabs').addEventListener('click', function (e) { var b = e.target.closest('[data-tab]'); if (b) setTab(b.getAttribute('data-tab'), true); });
+  $('tabs').addEventListener('click', function (e) { var b = e.target.closest('[data-tab]'); if (!b) return; var t = b.getAttribute('data-tab'); setTab(t === 'occupations' && (st.tab === 'programs' || st.tab === 'occupations') ? st.tab : (t === 'occupations' ? st.view : t), true); });
+  Array.prototype.forEach.call(document.querySelectorAll('.viewsw button'), function (b) { b.addEventListener('click', function () { st.view = b.getAttribute('data-view'); setTab(st.view, true); }); });
+
+  // ---------- Links between occupations and programs (data/links.json, loaded on first use) ----------
+  var L = null, Lp = null, OCC = {}, PROG = {};
+  function links() { if (!Lp) Lp = fetch('data/links.json?v=20261125').then(function (r) { return r.json(); }).then(function (x) { L = x; return x; }); return Lp; }
+  var LVL = { Bachelor: "Bachelor's", Graduate: 'Graduate', Associate: 'Associate', Certificate: 'Certificate' };
+  function getSt() { try { return localStorage.getItem('w2100_st') || ''; } catch (e) { return ''; } }
+  function setSt(v) { try { localStorage.setItem('w2100_st', v); } catch (e) {} }
+  function occDetail(o) {
+    var top = ((L.o[o.s] || [])[0] || [0, 0])[1], ps = (L.o[o.s] || []).filter(function (x) { return PROG[x[0]] && x[1] >= Math.max(50, top * 0.03); });
+    var left = ps.length ? '<h4>Programs that lead here</h4><ul class="xlist">' + ps.map(function (x) { var p = PROG[x[0]];
+        return '<li><a href="#programs" data-goprog="' + esc(x[0]) + '">' + esc(p.f) + '</a><span class="r">' + esc(LVL[p.l] || p.l) + ' · about ' + fmtInt(x[1]) + ' graduates a year</span></li>'; }).join('') + '</ul>'
+      : '<h4>Programs that lead here</h4><p class="sub" style="margin: 0">No college program leads mainly to this job; most people enter through on-the-job training or other jobs.</p>';
+    var opts = D.states.slice().sort(function (a, b) { return a.nm < b.nm ? -1 : 1; }).map(function (x) { return '<option value="' + x.ab + '"' + (x.ab === getSt() ? ' selected' : '') + '>' + esc(x.nm) + '</option>'; }).join('');
+    var right = '<h4>Where can these workers go?</h4><div class="xact"><p>Nearby jobs that use the skills ' + esc(o.t.toLowerCase()) + ' already have, with the training that closes the gap. Bridges differ by state.</p>' +
+      '<div class="row"><select aria-label="State" data-bst><option value="">Choose a state</option>' + opts + '</select><a class="btn btn-dark" data-bgo="' + o.s + '" href="bridges.html' + (getSt() ? '?st=' + getSt() + '&o=' + o.s : '') + '">Career Bridge Finder →</a></div></div>';
+    return '<div class="xgrid"><div>' + left + '</div><div>' + right + '</div></div>';
+  }
+  function progDetail(p) {
+    var key = p.c + '|' + p.l, os = (L.p[key] || []).filter(function (x) { return OCC[x[0]]; });
+    var left = '<h4>Where graduates work</h4>' + (os.length ? '<ul class="xlist">' + os.map(function (x) { var o = OCC[x[0]];
+        return '<li><a href="#occupations" data-goocc="' + o.s + '">' + esc(o.t) + '</a><span class="r">' + pct(x[1]) + ' of graduates\' work · <span class="chip ' + catChip[o.c] + '">' + spct(o.n) + '</span></span></li>'; }).join('') + '</ul>'
+      : '<p class="sub" style="margin: 0">No occupation data for this program.</p>');
+    var right = '<h4>Skills view</h4><div class="xact"><p>The work graduates do, which parts AI can take on, and the skills that stay with people.</p>' +
+      (L.p[key] ? '<a class="btn btn-dark" href="skills.html?p=' + encodeURIComponent(key) + '">Skills view for this program →</a>' : '<p class="sub">Not available for this program.</p>') + '</div>';
+    return '<div class="xgrid"><div>' + left + '</div><div>' + right + '</div></div>';
+  }
+  function toggle(kind, key) {
+    var set = kind === 'o' ? st.oexp : st.pexp;
+    if (set[key]) delete set[key]; else set[key] = 1;
+    links().then(function () { kind === 'o' ? renderOcc() : renderProg(); });
+  }
+  document.addEventListener('click', function (e) {
+    var x = e.target.closest('[data-xo],[data-xp]');
+    if (x) { toggle(x.hasAttribute('data-xo') ? 'o' : 'p', x.getAttribute('data-xo') || x.getAttribute('data-xp')); return; }
+    var g = e.target.closest('[data-goprog]');
+    if (g) { e.preventDefault(); var p = PROG[g.getAttribute('data-goprog')]; st.view = 'programs';
+      $('pq').value = p.f; $('pl').value = p.l; $('pt').value = 'all'; $('pc').value = 'all'; st.plim = 25; st.pexp = {}; st.pexp[p.c + '|' + p.l] = 1;
+      setTab('programs', true); renderProg(); $('tab-programs').scrollIntoView({ behavior: 'smooth' }); return; }
+    var h = e.target.closest('[data-goocc]');
+    if (h) { e.preventDefault(); var o = OCC[h.getAttribute('data-goocc')]; st.view = 'occupations';
+      $('oq').value = o.t; $('og').value = 'all'; $('oc').value = 'all'; $('oqd').value = 'all'; st.olim = 25; st.oexp = {}; st.oexp[o.s] = 1;
+      setTab('occupations', true); renderOcc(); $('tab-occupations').scrollIntoView({ behavior: 'smooth' }); return; }
+    var b = e.target.closest('[data-bgo]');
+    if (b && !getSt()) { e.preventDefault(); var sel = b.parentNode.querySelector('[data-bst]'); sel.focus(); sel.style.outline = '3px solid rgba(31,95,139,.35)'; }
+  });
+  document.addEventListener('change', function (e) {
+    var s = e.target.closest('[data-bst]'); if (!s) return;
+    setSt(s.value); var a = s.parentNode.querySelector('[data-bgo]'); a.href = 'bridges.html' + (s.value ? '?st=' + s.value + '&o=' + a.getAttribute('data-bgo') : '');
+    if (s.value) location.href = a.href;
+  });
 
   // ---------- Occupations ----------
   function renderOcc() {
@@ -36,11 +88,12 @@
     $('occCount').textContent = rows.length.toLocaleString('en-US') + ' of ' + D.occ.length + ' occupations' + (rows.length > st.olim ? ' · showing ' + st.olim : '');
     $('occBody').innerHTML = rows.slice(0, st.olim).map(function (o) {
       var v = o.v == null ? 'No data' : (o.v < 0 ? '−$' + Math.abs(o.v).toFixed(2) : '$' + o.v.toFixed(2));
-      return '<tr><td style="min-width: 240px"><div style="font-weight: 600">' + esc(o.t) + '</div><div class="sub">' + esc(o.s) + ' · ' + esc(o.g) + '</div></td>' +
+      var open = !!(st.oexp[o.s] && L);
+      return '<tr' + (open ? ' class="xopen"' : '') + '><td style="min-width: 240px"><button type="button" class="xbtn" data-xo="' + o.s + '" aria-expanded="' + open + '"><span class="car" aria-hidden="true">▶</span><span class="nm">' + esc(o.t) + '</span></button><div class="sub" style="margin-left: 18px">' + esc(o.s) + ' · ' + esc(o.g) + '</div></td>' +
         '<td class="num">' + fmtInt(o.e) + '</td><td class="num">' + (o.w == null ? '—' : '$' + o.w.toFixed(2) + '/hr') + '</td>' +
         '<td style="min-width: 150px"><div class="bar"><div class="track" aria-hidden="true"><div class="fill" style="width: ' + Math.min(100, o.r / 0.45 * 100).toFixed(1) + '%"></div></div><span style="font-weight: 600; min-width: 40px; text-align: right">' + pct(o.r) + '</span></div></td>' +
         '<td style="min-width: 190px"><span class="chip ' + catChip[o.c] + '">' + spct(o.n) + ' · ' + esc(o.c) + '</span><div class="sub" style="margin-top: 6px">Range ' + spct(o.lo) + ' to ' + spct(o.hi) + '</div></td>' +
-        '<td style="white-space: nowrap">' + esc(o.q) + '</td><td class="num">' + v + '</td></tr>';
+        '<td style="white-space: nowrap">' + esc(o.q) + '</td><td class="num">' + v + '</td></tr>' + (open ? '<tr class="xrow"><td colspan="7">' + occDetail(o) + '</td></tr>' : '');
     }).join('') || '<tr><td colspan="7" class="muted" style="text-align: center; padding: 28px">No occupations match. Try a different search or clear the filters.</td></tr>';
     $('occMore').hidden = rows.length <= st.olim;
   }
@@ -60,10 +113,11 @@
     $('progCount').textContent = rows.length.toLocaleString('en-US') + ' program families, largest first' + (rows.length > st.plim ? ' · showing ' + st.plim : '');
     $('progBody').innerHTML = rows.slice(0, st.plim).map(function (p) {
       var col = p.cc === 'High' ? '#1F5F8B' : p.cc === 'Medium' ? '#5D88AC' : '#9DB3C6';
-      return '<tr><td style="min-width: 260px"><div style="font-weight: 600">' + esc(p.f) + '</div><div class="sub">CIP ' + esc(p.c) + ' · ' + fmtInt(p.i) + ' institutions</div></td>' +
+      var key = p.c + '|' + p.l, open = !!(st.pexp[key] && L);
+      return '<tr' + (open ? ' class="xopen"' : '') + '><td style="min-width: 260px"><button type="button" class="xbtn" data-xp="' + esc(key) + '" aria-expanded="' + open + '"><span class="car" aria-hidden="true">▶</span><span class="nm">' + esc(p.f) + '</span></button><div class="sub" style="margin-left: 18px">CIP ' + esc(p.c) + ' · ' + fmtInt(p.i) + ' institutions</div></td>' +
         '<td>' + (p.l === 'Bachelor' ? "Bachelor's" : esc(p.l)) + '</td><td class="num">' + fmtInt(p.n) + '</td><td class="num" style="font-weight: 600">' + spct(p.d) + '</td>' +
         '<td style="white-space: nowrap"><span class="chip ' + tierChip[p.k] + '">' + esc(p.k) + '</span></td>' +
-        '<td style="min-width: 170px"><div class="bar"><div class="track" aria-hidden="true"><div class="fill" style="width: ' + Math.min(100, p.h * 100).toFixed(1) + '%; background: ' + col + '"></div></div><span style="min-width: 110px">' + pct(p.h) + ' · ' + esc(p.cc) + '</span></div></td></tr>';
+        '<td style="min-width: 170px"><div class="bar"><div class="track" aria-hidden="true"><div class="fill" style="width: ' + Math.min(100, p.h * 100).toFixed(1) + '%; background: ' + col + '"></div></div><span style="min-width: 110px">' + pct(p.h) + ' · ' + esc(p.cc) + '</span></div></td></tr>' + (open ? '<tr class="xrow"><td colspan="6">' + progDetail(p) + '</td></tr>' : '');
     }).join('') || '<tr><td colspan="6" class="muted" style="text-align: center; padding: 28px">No programs match. Try a different search or clear the filters.</td></tr>';
     $('progMore').hidden = rows.length <= st.plim;
   }
@@ -128,6 +182,7 @@
   // ---------- Load ----------
   fetch('data/work2035_data.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
     D = d;
+    d.occ.forEach(function (o) { OCC[o.s] = o; }); d.prog.forEach(function (p) { PROG[p.c + '|' + p.l] = p; });
     var groups = {}; d.occ.forEach(function (o) { groups[o.g] = 1; });
     $('og').insertAdjacentHTML('beforeend', Object.keys(groups).sort().map(function (g) { return '<option>' + esc(g) + '</option>'; }).join(''));
     $('loading').hidden = true;

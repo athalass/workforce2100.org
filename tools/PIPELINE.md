@@ -143,8 +143,8 @@ September and December) reads this file and tools/sources.csv, checks every sour
 - JSON: every file in data/ parses; profiles, briefs and bridges index.json list every state file; every program in
   data/skills/index.json has an entry in its CIP2 file.
 - Unchanged inputs give unchanged outputs: rebuild into a scratch folder and `diff -r` against data/ before swapping.
-- Maryland on brief.html?st=MD (current inputs): +62,675 net, -39,882 slow, 172,980 jobs lost. Update these numbers
-  here after a yearly run.
+- Maryland on brief.html?st=MD (current inputs, checked Nov 25, 2026): about 164,000 in shrinking occupations (6.3%),
+  net +63,900 (+2.4%), slow recovery -38,100; 447,000 jobs' worth of work AI takes over (17.0%). Update after a yearly run.
 - Institution count (5,668 now) agrees on profile.html and work-2035.html; program count (1,432) on index.html.
 - Pages: work-2035 (every tab), profile (one college; search), brief (a state and a county), bridges (search; Work 2035
   tab), skills (one program); phone width; no console errors; print preview of a brief.

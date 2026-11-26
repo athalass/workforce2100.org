@@ -92,7 +92,7 @@
       return '<tr' + (open ? ' class="xopen"' : '') + '><td style="min-width: 240px"><button type="button" class="xbtn" data-xo="' + o.s + '" aria-expanded="' + open + '"><span class="car" aria-hidden="true">▶</span><span class="nm">' + esc(o.t) + '</span></button><div class="sub" style="margin-left: 18px">' + esc(o.s) + ' · ' + esc(o.g) + '</div></td>' +
         '<td class="num">' + fmtInt(o.e) + '</td><td class="num">' + (o.w == null ? '—' : '$' + o.w.toFixed(2) + '/hr') + '</td>' +
         '<td style="min-width: 150px"><div class="bar"><div class="track" aria-hidden="true"><div class="fill" style="width: ' + Math.min(100, o.r / 0.45 * 100).toFixed(1) + '%"></div></div><span style="font-weight: 600; min-width: 40px; text-align: right">' + pct(o.r) + '</span></div></td>' +
-        '<td style="min-width: 190px"><span class="chip ' + catChip[o.c] + '">' + spct(o.n) + ' · ' + esc(o.c) + '</span><div class="sub" style="margin-top: 6px">Range ' + spct(o.lo) + ' to ' + spct(o.hi) + '</div></td>' +
+        '<td style="min-width: 190px"><span class="chip ' + catChip[o.c] + '">' + spct(o.n) + ' · ' + esc(o.c) + '</span>' + (o.lo == null ? '' : '<div class="sub" style="margin-top: 6px">Range ' + spct(o.lo) + ' to ' + spct(o.hi) + '</div>') + '</td>' +
         '<td style="white-space: nowrap">' + esc(o.q) + '</td><td class="num">' + v + '</td></tr>' + (open ? '<tr class="xrow"><td colspan="7">' + occDetail(o) + '</td></tr>' : '');
     }).join('') || '<tr><td colspan="7" class="muted" style="text-align: center; padding: 28px">No occupations match. Try a different search or clear the filters.</td></tr>';
     $('occMore').hidden = rows.length <= st.olim;
@@ -180,7 +180,7 @@
   });
 
   // ---------- Load ----------
-  fetch('data/work2035_data.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
+  fetch('data/work2035_data.json?v=20261126').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
     D = d;
     d.occ.forEach(function (o) { OCC[o.s] = o; }); d.prog.forEach(function (p) { PROG[p.c + '|' + p.l] = p; });
     var groups = {}; d.occ.forEach(function (o) { groups[o.g] = 1; });

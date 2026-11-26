@@ -54,7 +54,7 @@ Layer 3  Pages and scripts (HTML + assets/*.js, with ?v= cache versions)
 
 | Site data | Builder (tools/) | Inputs | Shown on | Version to bump |
 |---|---|---|---|---|
-| `data/work2035_data.json` | `work2035/make_data.py` | Occupation_Outlook_2035_v2.xlsx, Program_Roadmap_2035_v1.xlsx, Price_of_Judgment_Results_Tables.xlsx, governance_quadrants.csv | work-2035.html: Occupations, Academic programs; States wage index | `work2035.js?v=` |
+| `data/work2035_data.json` | `work2035/make_data.py` -> `work2035/independent.py` | Occupation_Outlook_2035_v2.xlsx, Program_Roadmap_2035_v1.xlsx, Price_of_Judgment_Results_Tables.xlsx, governance_quadrants.csv | work-2035.html: Occupations, Academic programs; States wage index | `work2035.js?v=` |
 | `data/impact_data.json` | `profiles/extract_states.py` -> `profiles/to_site.py` -> `profiles/merge_wi.py` | 51 state workbooks; work2035_data.json (wi) | work-2035.html: Institutions, States/Counties, Value of AI | `impact.js?v=` |
 | `data/profiles/<ST>.json`, `index.json` | `profiles/prep_all.py` -> `profiles/add_industries.py` -> `profiles/hide_institutions.py` -> `profiles/make_shell.py` | state workbooks; work2035_data.json (program AI shares); QCEW county file; BLS matrix.xlsx | profile.html (curriculum change is computed in profile.js) | `profile.js?v=`, `profile.css?v=` |
 | `data/briefs/<ST>.json`, `index.json` | `briefs/build_staffing.py` -> `briefs/build_briefs.py` | state workbooks; US_Work_2035_Mobility.xlsx; QCEW county file; OEWS national industry files (oesm25in4.zip); BLS matrix.xlsx; data/profiles | brief.html | `V` in assets/brief.js and `brief.js?v=` |
@@ -120,6 +120,8 @@ September and December) reads this file and tools/sources.csv, checks every sour
 2. National model: unzip Occupation_Outlook_scripts_v2.zip and run model/ in README.txt order (occ_model.py ...
    deploy_check.py); then the Price of Judgment scripts. Save the outputs in Drive under new version numbers.
 3. `python3 tools/work2035/make_data.py <Occupation_Outlook.xlsx> <Program_Roadmap.xlsx> <Price_of_Judgment_Results_Tables.xlsx> <governance_quadrants.csv> data/work2035_data.json`
+   then, after step 5 (impact_data.json), `python3 tools/work2035/independent.py . <Independent_version> <US_Work_2035_Independent_vs_MGI.xlsx>`:
+   puts the independent model's national rates into the Jobs & programs table (the site shows the independent model only).
 4. State pipeline (README_State_pipeline.md): `python3 pipeline/nat_county.py`, then `run_all.sh` for the 51 states
    (ND=200), `nat_mobility.py`, `nat_ranking.py`; check the quality flags. Maryland: `ST=MD COMPAT=1` must still
    reproduce the Maryland report when its own inputs are unchanged. Zip the outputs as a new State workbooks zip.

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the numbers are built · Workforce 2100</title>
+<meta name="description" content="How Workforce 2100 estimates which work AI takes on, how much of it happens by 2035 and how many people may need to change occupation, with one occupation worked through every step.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20261122">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='3' y='19' width='22' height='3' rx='1.5' fill='%239DB3C6'/%3E%3Crect x='3' y='12.5' width='22' height='3' rx='1.5' fill='%235D88AC'/%3E%3Crect x='3' y='6' width='22' height='3' rx='1.5' fill='%231F5F8B'/%3E%3C/svg%3E">
+<style>
+.m-wrap{max-width:860px}
+.m-chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:28px 0 8px;counter-reset:st}
+.m-chain a{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:12px;padding:14px 14px 12px;position:relative}
+.m-chain a:hover{border-color:var(--blue)}
+.m-chain b{display:block;font-size:15px;margin:2px 0 4px}
+.m-chain .n{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.06em;text-transform:uppercase}
+.m-chain .v{font-family:var(--serif);font-size:26px;font-weight:600;display:block;margin:6px 0 2px}
+.m-chain .s{font-size:13px;color:var(--ink-3);display:block;line-height:1.4}
+.m-step{padding:44px 0 8px;border-top:1px solid var(--line);margin-top:36px;scroll-margin-top:80px}
+.m-step h2{font-family:var(--serif);font-size:30px;margin:0 0 6px}
+.m-step .q{color:var(--ink-3);font-size:15px;margin:0 0 18px}
+.m-step p,.m-step li{font-size:16.5px;line-height:1.65}
+.m-formula{background:var(--tint);border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15px;line-height:1.6;overflow-x:auto}
+.m-formula code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14.5px;white-space:nowrap}
+.m-ex{border-left:3px solid var(--blue);padding:4px 0 4px 18px;margin:20px 0}
+.m-ex h3{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin:0 0 8px}
+.m-ex table{border-collapse:collapse;font-size:15px;width:100%;max-width:560px}
+.m-ex td{padding:6px 0;border-bottom:1px solid var(--line)}
+.m-ex td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:16px}
+.m-ex tr.t td{font-weight:700;border-bottom:0}
+.m-where{font-size:15px;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:18px 0 0}
+.m-src{font-size:14px;color:var(--ink-3)}
+@media (max-width:760px){.m-chain{grid-template-columns:repeat(2,minmax(0,1fr))}.m-step h2{font-size:25px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="19" width="22" height="3" rx="1.5" fill="#9DB3C6"/><rect x="3" y="12.5" width="22" height="3" rx="1.5" fill="#5D88AC"/><rect x="3" y="6" width="22" height="3" rx="1.5" fill="#1F5F8B"/></svg>
+<span>Workforce 2100<small>Research on AI, work and education</small></span>
+</a>
+<nav class="nav" aria-label="Main">
+<a href="index.html#what-we-study">What we study</a>
+<a href="research.html">Research</a>
+<a href="surveys.html">Surveys</a>
+<a href="about.html">About</a>
+<a href="index.html#contact">Contact</a>
+<a class="btn btn-primary" href="work-2035.html">Explore the data</a>
+</nav>
+</div>
+</header>
+
+<main id="main">
+<section class="legal-hero org"><div class="wrap m-wrap"><p class="eyebrow">Method</p><h1>How the numbers are built</h1>
+<p class="legal-meta">Every number on this site comes from the same four steps. Below, one occupation, bookkeeping, accounting and auditing clerks (1.37 million jobs in 2025), goes through all four, with the real numbers from our model.</p>
+<nav class="m-chain" aria-label="The four steps">
+<a href="#step1"><span class="n">Step 1 · Task</span><b>Does AI pay for this task?</b><span class="v">$12.70</span><span class="s">AI's full cost per hour, vs a $20.92 wage</span></a>
+<a href="#step2"><span class="n">Step 2 · Job</span><b>How much of the job is that?</b><span class="v">67%</span><span class="s">of work hours AI could free</span></a>
+<a href="#step3"><span class="n">Step 3 · 2035</span><b>How much happens by 2035?</b><span class="v">38%</span><span class="s">of work hours, 525,000 jobs' worth</span></a>
+<a href="#step4"><span class="n">Step 4 · People</span><b>What happens to people?</b><span class="v">−33%</span><span class="s">jobs by 2035, after new demand</span></a>
+</nav></div></section>
+
+<section class="legal-wrap"><div class="wrap m-wrap">
+
+<div class="m-step" id="step1" style="border-top:0;margin-top:0">
+<h2>1. Does AI pay for this task?</h2>
+<p class="q">The unit is a task, not a job. A bookkeeper's job is 30 tasks in O*NET.</p>
+<p>Each source answers a different question about the same task:</p>
+<ul>
+<li><b>What is the work?</b> O*NET lists each occupation's tasks. Core tasks count twice as much as supplemental ones. O*NET's rating of how important it is to be exact or accurate tells us how costly a mistake is in the job.</li>
+<li><b>Could AI do it?</b> Eloundou et al. (2024) label each task: not exposed, exposed, or exposed with extra tools (counted at three quarters).</li>
+<li><b>How well does it work in practice?</b> The Anthropic Economic Index (January 2026) shows how often AI succeeds at the task and how much of the original time a person still spends working with it and checking it. Tasks seen in fewer than 30 conversations take the typical values of their occupation, or of their occupation group.</li>
+<li><b>Does it pay?</b> AI has to cost less than the person who does the task now, once checking and mistakes are paid for.</li>
+</ul>
+<div class="m-formula">For each hour of exposed work:<br><code>AI's full cost = AI cost + checking + failures</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= c + w<sub>v</sub>·v + (1 − p)·[d·w<sub>d</sub> + (1 − d)·L]</code><br>
+<span class="m-src">c: AI's cost per hour of work ($2 in our 2035 case). w<sub>v</sub>·v: checking time at an experienced worker's wage (75th percentile). 1 − p: how often AI fails; 90% of failures (d) are caught and redone at the entry-level wage w<sub>d</sub> (25th percentile), 10% slip through and cost L = 5 × that wage × how costly mistakes are in the job. AI pays when its full cost is below w<sub>d</sub>.</span></div>
+<div class="m-ex"><h3>Bookkeeping clerks: "operate accounting software to record, store and analyze information"</h3>
+<table>
+<tr><td>Entry-level wage (w<sub>d</sub>)</td><td>$20.92 an hour</td></tr>
+<tr><td>AI succeeds today / in our 2035 case (failures halve)</td><td>42% / 71%</td></tr>
+<tr><td>AI cost per hour</td><td>$2.00</td></tr>
+<tr><td>Checking: $29.55 × 5.5% of the time</td><td>$1.63</td></tr>
+<tr><td>Failures: 29% × (90% redone at $20.92 + 10% missed at $122)</td><td>$9.06</td></tr>
+<tr class="t"><td>AI's full cost, below the $20.92 wage: AI pays</td><td>≈ $12.70</td></tr>
+</table>
+<p style="margin:12px 0 0">People keep the checking time and the redoing of caught failures, about 32% of each exposed hour. The other <b>68% of the hour is freed</b>.</p></div>
+<p>Not every task passes. Legal secretaries' tasks fail the test today: AI succeeds only 27% of the time, so redoing and missed errors cost more than the wage.</p>
+<p class="m-where"><b>On the site:</b> <i>AI value per hour</i> in Jobs &amp; programs is this test with today's values ($5 an hour, today's success rates): the wage minus AI's full cost (<a href="research.html#judgment">The Price of Judgment</a>).</p>
+</div>
+
+<div class="m-step" id="step2">
+<h2>2. How much of the job is that?</h2>
+<p class="q">Add up the tasks, each weighted by how much of the job it is.</p>
+<div class="m-formula"><code>Freed share = Σ (weight × exposure × pays × freed) ÷ Σ weight</code><br><span class="m-src">For each task: its weight (core 2, supplemental 1), its exposure (0, 0.75 or 1), whether AI pays (1 or 0) and the freed share of its hour.</span></div>
+<div class="m-ex"><h3>Bookkeeping clerks: all 30 tasks</h3>
+<table>
+<tr><td>Work hours AI could do (exposed)</td><td>90%</td></tr>
+<tr><td>Work hours where AI could do the task and it pays</td><td>90%</td></tr>
+<tr class="t"><td>Work hours freed if every employer used AI fully</td><td>67%</td></tr>
+</table></div>
+<p>For bookkeeping the cost test removes almost nothing: AI is cheap and reliable enough on these tasks. The 23-point gap between 90% and 67% is the checking and redoing that stays with people.</p>
+<p class="m-where"><b>On the site:</b> the share of work hours where AI pays (90% here) is the <i>work hours</i> measure for programs, the AI line and the curriculum change level in the college profiles; the skills view carries it from tasks to work activities.</p>
+</div>
+
+<div class="m-step" id="step3">
+<h2>3. How much of it happens by 2035?</h2>
+<p class="q">Employers do not all adopt at once, and some work keeps a person in charge.</p>
+<ul>
+<li><b>How fast employers adopt AI.</b> The Census Business Trends and Outlook Survey (November 2025 to October 2026) shows the share of firms using AI, weighted by employment. We project it to 2035 with a standard adoption curve and allow firms several years to go from first use to full use. By the end of 2035 that comes to about 85% of the work where AI pays.</li>
+<li><b>Who decides.</b> Where mistakes are costly or the work is complex, AI moves more slowly: by 15% (complex work), 25% (costly mistakes) or 40% (both). Bookkeeping is in the "AI assists" group: costly mistakes, routine work.</li>
+<li><b>More of the same work.</b> When a job gets cheaper to do, people buy more of it. Between 10% and 50% of freed hours go into doing more, depending on the occupation group; 10% for office support.</li>
+</ul>
+<div class="m-ex"><h3>Bookkeeping clerks</h3>
+<table>
+<tr><td>Work hours freed if fully adopted (step 2)</td><td>67%</td></tr>
+<tr><td>× adopted by the end of 2035</td><td>× 0.85</td></tr>
+<tr><td>× who decides (AI assists)</td><td>× 0.75</td></tr>
+<tr><td>× not absorbed by doing more</td><td>× 0.90</td></tr>
+<tr class="t"><td>Work AI takes over by 2035</td><td>38% of work hours</td></tr>
+<tr><td>In jobs: 38% × 1,373,680</td><td>≈ 525,000 jobs' worth</td></tr>
+<tr><td>In hours, at 2,080 a year</td><td>≈ 1.1 billion hours</td></tr>
+</table></div>
+<p>This is work, not people. Most of it is spread across workers who keep their jobs and spend their time differently.</p>
+<p class="m-where"><b>On the site:</b> <i>AI reduction</i> in Jobs &amp; programs, <i>work AI takes over</i> in the state and county briefs and on the States/Counties tab, and the 25.3 million jobs' worth (16.3% of jobs) at the top of the Explore the data page.</p>
+</div>
+
+<div class="m-step" id="step4">
+<h2>4. What happens to people?</h2>
+<p class="q">Work AI takes over is only half the picture. Jobs are also created.</p>
+<ul>
+<li><b>Growth without AI.</b> Each occupation's growth from the BLS 2025–35 projections. BLS already lowered 44 occupations because of AI; those take the growth of similar occupations, so AI is not counted twice.</li>
+<li><b>New jobs from the money AI saves.</b> We keep BLS's total for US employment, so the work AI removes is replaced by new demand. The savings are spent the way BLS projects spending to grow, and BLS tables turn that spending into jobs by industry and occupation. These jobs lean toward health care, personal care and food service.</li>
+<li><b>Net change</b> = growth without AI + new jobs − work AI takes over. Occupations where it is negative shrink; the people in those lost jobs may need to change occupation.</li>
+</ul>
+<div class="m-ex"><h3>Bookkeeping clerks, 2025–2035</h3>
+<table>
+<tr><td>Growth without AI, plus new jobs from the savings</td><td>+5.0%</td></tr>
+<tr><td>Work AI takes over (step 3)</td><td>−38.3%</td></tr>
+<tr class="t"><td>Net change</td><td>−33.3%</td></tr>
+<tr><td>Fewer bookkeeping jobs in 2035</td><td>≈ 457,000</td></tr>
+<tr><td>Likely range (10th to 90th percentile)</td><td>−47% to −19%</td></tr>
+</table></div>
+<p>Added up over every occupation that shrinks, about <b>9.7 million people (6.2% of jobs)</b> work in occupations with fewer jobs in 2035. Total US jobs still grow, because health care, personal care and other occupations grow more.</p>
+<p><b>Slow recovery.</b> If only 75% of the displaced work is replaced by 2035, every occupation grows less, and more people are in shrinking occupations. The briefs show this as a second number.</p>
+<p class="m-where"><b>On the site:</b> <i>net change</i> and the outlook in Jobs &amp; programs (and, for programs, the demand for graduates and the tier); <i>jobs lost in shrinking occupations</i> in the briefs and on the States/Counties tab; the Career Bridge Finder starts from the occupations that shrink.</p>
+</div>
+
+<div class="m-step">
+<h2>States, counties and colleges</h2>
+<p>States and counties use the same occupation rates, with the cost test rerun at each state's own wages, applied to each place's own mix of jobs (OEWS May 2025 for states, QCEW and ACS for counties). Where people live comes from LODES commuting data. Differences between places come from what kind of work they do; local population and industry trends are not modeled. College programs are linked to the occupations their graduates enter (Census ACS for bachelor's and graduate degrees, the CIP–SOC crosswalk for certificates and associate degrees).</p>
+<h2 style="margin-top:28px">What is not included yet</h2>
+<p>Robots and other physical automation, and agentic AI that carries out multi-step work on its own beyond what AI does today. Normal job turnover inside growing occupations. These are model estimates, not forecasts of layoffs; the ranges above show how much they can move.</p>
+<p class="m-src">Sources and versions: <a href="work-2035.html#sources">full list</a>. Papers: <a href="research.html#moving">Where Work Is Moving</a> · <a href="research.html#judgment">The Price of Judgment</a>. Workbooks and code on <a href="https://osf.io/ae95y/">OSF</a>.</p>
+</div>
+</div></section>
+</main>
+
+<footer class="site-footer">
+<div class="wrap">
+<div>Workforce 2100 · Text and our own data under CC BY 4.0, except third-party data as credited<br><a href="index.html#contact">Contact</a><div class="footer-legal"><a href="legal.html">Legal</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div>
+<nav aria-label="Footer"><a href="about.html">About</a><a href="index.html#faq">FAQ</a><a href="methods.html">Method</a><a href="surveys.html">Surveys</a><a href="research.html">Research</a><a href="work-2035.html">Explore the data</a></nav>
+</div>
+</footer>
+</body>
+</html>
